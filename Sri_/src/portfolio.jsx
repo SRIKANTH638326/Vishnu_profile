@@ -51,6 +51,7 @@ export default function App() {
         <MarqueeStrip />
         <CaseStudies />
         <Projects />
+        {/* <Testimonials /> */}
         <FAQ />
         <Contact />
         <Footer />

@@ -10,7 +10,7 @@ export function Testimonials() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.from(".testimonial-card, .testimonial-stat-card", {
+            gsap.from(".testimonial-bento-item", {
                 y: 40,
                 opacity: 0,
                 duration: 0.7,
@@ -27,48 +27,109 @@ export function Testimonials() {
     }, []);
 
     return (
-        <section className="section" ref={sectionRef}>
+        <section className="section-pad" ref={sectionRef} style={{ position: "relative" }}>
             <div className="container">
-                <p className="text-label" style={{ marginBottom: 12 }}>What Clients Say</p>
-                <h2 className="heading-lg" style={{ marginBottom: 16 }}>
-                    Client <span className="accent">Testimonials</span>
-                </h2>
-                <p className="text-body" style={{ maxWidth: 600, marginBottom: 60 }}>
-                    Here's what people say about working with me. Their trust and satisfaction motivate me to keep delivering work that makes an impact.
-                </p>
+                <div style={{ marginBottom: 48, maxWidth: 600 }}>
+                    <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(48px, 6vw, 64px)", lineHeight: 1, textTransform: "uppercase", marginBottom: 16 }}>
+                        WHAT MY CLIENTS SAY
+                    </h2>
+                    <p style={{ color: "var(--secondary-text)", fontSize: "16px", lineHeight: 1.6 }}>
+                        Here's what my clients have shared about their experiences working with me. Their trust and satisfaction motivate me to continue delivering designs that make an impact.
+                    </p>
+                </div>
 
-                <div className="testimonials-grid">
-                    {TESTIMONIALS.map((t, i) => (
-                        <div key={i} className="testimonial-card">
-                            <div className="testimonial-stars">
-                                {[...Array(5)].map((_, j) => (
-                                    <span key={j}>★</span>
-                                ))}
-                            </div>
-                            <p className="testimonial-text">"{t.text}"</p>
-                            <div className="testimonial-author">
-                                <div className="testimonial-avatar">{t.initials}</div>
-                                <div>
-                                    <div className="testimonial-name">{t.name}</div>
-                                    <div className="testimonial-role">{t.role}</div>
-                                </div>
+                <div className="testimonials-bento-grid">
+                    {/* Item 1: Testimonial 1 */}
+                    <div className="testimonial-bento-item t-card-dark">
+                        <div>
+                            <div className="stars">★★★★★</div>
+                            <p className="t-text">"{TESTIMONIALS[0].text}"</p>
+                        </div>
+                        <div className="t-author">
+                            <div className="t-avatar"><img src={`https://ui-avatars.com/api/?name=${TESTIMONIALS[0].name.replace(' ', '+')}&background=random`} alt={TESTIMONIALS[0].name} /></div>
+                            <div>
+                                <div className="t-name">{TESTIMONIALS[0].name}</div>
+                                <div className="t-role">{TESTIMONIALS[0].role}</div>
                             </div>
                         </div>
-                    ))}
-
-                    {/* Satisfaction stat card */}
-                    <div className="testimonial-stat-card">
-                        <div className="testimonial-stat-number">98%</div>
-                        <div className="testimonial-stat-label">Client Satisfaction Rate</div>
                     </div>
 
-                    {/* Clients worked with stat card */}
-                    <div className="testimonial-stat-card">
-                        <div className="testimonial-stat-number">5+</div>
-                        <div className="testimonial-stat-label">Happy Clients Worldwide</div>
+                    {/* Item 2: Testimonial 2 */}
+                    <div className="testimonial-bento-item t-card-dark">
+                        <div>
+                            <div className="stars">★★★★★</div>
+                            <p className="t-text">"{TESTIMONIALS[1].text}"</p>
+                        </div>
+                        <div className="t-author">
+                            <div className="t-avatar"><img src={`https://ui-avatars.com/api/?name=${TESTIMONIALS[1].name.replace(' ', '+')}&background=random`} alt={TESTIMONIALS[1].name} /></div>
+                            <div>
+                                <div className="t-name">{TESTIMONIALS[1].name}</div>
+                                <div className="t-role">{TESTIMONIALS[1].role}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Item 3: Stat 1 (White) */}
+                    <div className="testimonial-bento-item t-card-white">
+                        <p className="t-stat-desc" style={{ color: "#666" }}>I've worked with 50+ happy clients</p>
+                        <div>
+                            <div className="t-stat-num">98%</div>
+                            <div className="t-stat-label">Satisfaction Rate</div>
+                        </div>
+                    </div>
+
+                    {/* Item 4: Stat 2 (Lime) */}
+                    <div className="testimonial-bento-item t-card-lime">
+                        <p className="t-stat-desc">My work helped clients grow their revenue by 200%</p>
+                        <div>
+                            <div className="t-stat-num">200%</div>
+                            <div className="t-stat-label">Growth</div>
+                        </div>
+                    </div>
+
+                    {/* Item 5: Testimonial 3 */}
+                    <div className="testimonial-bento-item t-card-dark">
+                        <div>
+                            <div className="stars">★★★★★</div>
+                            <p className="t-text">"{TESTIMONIALS[2].text}"</p>
+                        </div>
+                        <div className="t-author">
+                            <div className="t-avatar"><img src={`https://ui-avatars.com/api/?name=${TESTIMONIALS[2].name.replace(' ', '+')}&background=random`} alt={TESTIMONIALS[2].name} /></div>
+                            <div>
+                                <div className="t-name">{TESTIMONIALS[2].name}</div>
+                                <div className="t-role">{TESTIMONIALS[2].role}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Item 6: Testimonial 4 */}
+                    <div className="testimonial-bento-item t-card-dark">
+                        <div>
+                            <div className="stars">★★★★★</div>
+                            <p className="t-text">"{TESTIMONIALS[3].text}"</p>
+                        </div>
+                        <div className="t-author">
+                            <div className="t-avatar"><img src={`https://ui-avatars.com/api/?name=${TESTIMONIALS[3].name.replace(' ', '+')}&background=random`} alt={TESTIMONIALS[3].name} /></div>
+                            <div>
+                                <div className="t-name">{TESTIMONIALS[3].name}</div>
+                                <div className="t-role">{TESTIMONIALS[3].role}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Scroll Indicator Dot - purely decorative following the image design */}
+            <div style={{ position: "absolute", right: "5%", top: "50%", transform: "translateY(-50%)", display: "none" }} className="decorative-dot">
+                <div style={{ width: 12, height: 12, backgroundColor: "var(--accent)", borderRadius: "50%" }}></div>
+            </div>
+            <style>
+                {`
+                @media (min-width: 1400px) {
+                    .decorative-dot { display: block !important; }
+                }
+                `}
+            </style>
         </section>
     );
 }

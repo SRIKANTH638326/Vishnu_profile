@@ -94,3 +94,34 @@ export const FAQ_DATA = [
     { q: "DO YOU OFFER REVISIONS?", a: "Yes, standard projects include two rounds of revisions to ensure you're completely satisfied with the final result." },
     { q: "HOW DO I GET STARTED?", a: "Simply reach out via the contact form or email, and we'll schedule a discovery call to discuss your needs." }
 ];
+
+export const TESTIMONIALS = [
+    {
+        id: 1,
+        text: "Duncan truly understood my vision and turned it into impactful designs. The results went beyond my expectations!",
+        name: "John Harris",
+        role: "Marketing Director",
+        initials: "JH",
+    },
+    {
+        id: 2,
+        text: "He took the time to understand our goals and delivered a design that resonated perfectly with our audience.",
+        name: "Michael Lee",
+        role: "Product Manager",
+        initials: "ML",
+    },
+    {
+        id: 3,
+        text: "His design skills are unmatched. He transformed my ideas into a high-performing, visually striking website.",
+        name: "Sarah Johnson",
+        role: "CEO",
+        initials: "SJ",
+    },
+    {
+        id: 4,
+        text: "As a small business owner, I appreciated how stress-free Duncan made the process.",
+        name: "Laura Bennett",
+        role: "Small Business Owner",
+        initials: "LB",
+    }
+];
