@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import Lenis from "@studio-freight/lenis";
 import { Cursor } from "./components/common/Cursor";
 import { Particles } from "./components/common/Particles";
 import { Navbar } from "./components/layout/Navbar";
@@ -15,10 +17,18 @@ import "./styles/global.css";
 
 export default function App() {
   const active = useScrollSpy();
+
+  useEffect(() => {
+    const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
+
   return (
-    <div style={{ fontFamily: "'DM Sans',sans-serif", background: "#050509", color: "#fff" }}>
+    <div style={{ background: "var(--bg)", color: "var(--text)" }}>
       <Cursor />
-      <Particles count={48} />
+      <Particles count={24} />
       <div style={{ position: "relative", zIndex: 1 }}>
         <Navbar active={active} />
         <Hero />
