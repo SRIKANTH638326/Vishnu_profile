@@ -1,79 +1,159 @@
 import { useState } from "react";
-import { GlowBlob } from "../common/GlowBlob";
-import { Reveal } from "../common/Reveal";
+import { motion } from "framer-motion";
+import portrait from "../../assets/hero-portrait.png";
 
 export function Contact() {
-    const [form, setForm] = useState({ name: "", email: "", message: "" });
+    const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
     const [sent, setSent] = useState(false);
+
     const submit = () => {
         if (form.name && form.email && form.message) {
             setSent(true);
             setTimeout(() => setSent(false), 3000);
-            setForm({ name: "", email: "", message: "" });
+            setForm({ name: "", email: "", service: "", message: "" });
         }
     };
 
     return (
-        <section id="Contact" className="section-pad" style={{ background: "#050509" }}>
-            <GlowBlob style={{ width: 600, height: 500, background: "rgba(99,102,241,0.09)", bottom: 0, right: 0 }} />
-            <div className="container" style={{ maxWidth: 1100 }}>
-                <Reveal style={{ textAlign: "center" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 16 }}>
-                        <div style={{ width: 32, height: 2, background: "linear-gradient(90deg,transparent,#6366f1)" }} />
-                        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: "#6366f1" }}>Contact</span>
-                        <div style={{ width: 32, height: 2, background: "linear-gradient(90deg,#6366f1,transparent)" }} />
-                    </div>
-                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "#fff", marginBottom: 14 }}>
-                        Let's work <span className="shimmer-text">together</span>
-                    </h2>
-                    <p style={{ color: "#475569", maxWidth: 480, margin: "0 auto 56px" }}>Open to Data Analyst, Business Analyst, and Power BI Analyst roles. Let's talk.</p>
-                </Reveal>
-
-                <div className="grid-2">
-                    <Reveal delay={0.1}>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                            {[
-                                { label: "Email", value: "srikanthc061@gmail.com", href: "mailto:srikanthc061@gmail.com", icon: "✉️", color: "#6366f1" },
-                                { label: "LinkedIn", value: "srikanthc-270b00347", href: "https://www.linkedin.com/in/srikanthc-270b00347", icon: "💼", color: "#8b5cf6" },
-                                { label: "Portfolio", value: "behance.net/srikanth07", href: "https://www.behance.net/srikanth07", icon: "🎨", color: "#06b6d4" },
-                                { label: "Phone", value: "+91 8110813471", href: "tel:+918110813471", icon: "📱", color: "#f43f5e" },
-                            ].map(c => (
-                                <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer"
-                                    style={{ display: "flex", alignItems: "center", gap: 16, padding: 20, borderRadius: 18, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", transition: "all 0.25s", cursor: "none" }}
-                                    onMouseEnter={e => { e.currentTarget.style.transform = "translateX(7px)"; e.currentTarget.style.borderColor = c.color + "55"; e.currentTarget.style.background = c.color + "0f"; }}
-                                    onMouseLeave={e => { e.currentTarget.style.transform = "translateX(0)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}>
-                                    <div style={{ width: 44, height: 44, borderRadius: 12, background: c.color + "20", fontSize: 20, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{c.icon}</div>
-                                    <div>
-                                        <div style={{ fontSize: 11, color: "#475569", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>{c.label}</div>
-                                        <div style={{ fontSize: 13, color: "#cbd5e1" }}>{c.value}</div>
-                                    </div>
-                                </a>
-                            ))}
+        <section id="Contact" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)" }}>
+            <div className="container" style={{ maxWidth: 1000 }}>
+                <div className="grid-2" style={{ alignItems: "center" }}>
+                    
+                    {/* Left Column: Portrait */}
+                    <motion.div 
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        style={{ position: "relative", justifySelf: "center", width: "100%", maxWidth: 360, margin: "0 auto" }}
+                    >
+                        <div style={{ borderRadius: 16, overflow: "hidden", background: "#f3f3f3" }}>
+                            <img src={portrait} alt="Portrait" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", filter: "brightness(0.95)" }} />
                         </div>
-                    </Reveal>
+                        {/* Hand Badge */}
+                        <div style={{ 
+                            position: "absolute", 
+                            bottom: -20, 
+                            left: -20, 
+                            width: 80, 
+                            height: 80, 
+                            borderRadius: "50%", 
+                            background: "var(--accent)", 
+                            display: "flex", 
+                            alignItems: "center", 
+                            justifyContent: "center",
+                            boxShadow: "0 10px 20px rgba(0,0,0,0.2)"
+                        }}>
+                            <span style={{ fontSize: 32, color: "#000" }}>✋🏼</span>
+                        </div>
+                    </motion.div>
 
-                    <Reveal delay={0.2}>
-                        <div style={{ padding: 36, borderRadius: 28, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                {[{ k: "name", p: "Your Name", t: "text" }, { k: "email", p: "Your Email", t: "email" }].map(({ k, p, t }) => (
-                                    <input key={k} type={t} placeholder={p} value={form[k]} onChange={e => setForm({ ...form, [k]: e.target.value })}
-                                        style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#fff", fontSize: 14, outline: "none", transition: "border-color 0.2s", cursor: "none", fontFamily: "inherit" }}
-                                        onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.55)"}
-                                        onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"} />
-                                ))}
-                                <textarea rows={4} placeholder="Your Message" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-                                    style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#fff", fontSize: 14, outline: "none", resize: "none", transition: "border-color 0.2s", cursor: "none", fontFamily: "inherit" }}
-                                    onFocus={e => e.target.style.borderColor = "rgba(99,102,241,0.55)"}
-                                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.08)"} />
-                                <button onClick={submit}
-                                    style={{ padding: "16px", borderRadius: 12, background: sent ? "linear-gradient(135deg,#10b981,#059669)" : "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", fontWeight: 800, fontSize: 14, border: "none", cursor: "none", transition: "all 0.3s", boxShadow: "0 8px 28px rgba(99,102,241,0.38)", fontFamily: "inherit" }}
-                                    onMouseEnter={e => e.currentTarget.style.transform = "scale(1.025)"}
-                                    onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
-                                    {sent ? "✓ Message Sent!" : "Send Message →"}
+                    {/* Right Column: Form */}
+                    <motion.div 
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        style={{ display: "flex", flexDirection: "column" }}
+                    >
+                        <h2 style={{ 
+                            fontFamily: "var(--font-heading)", 
+                            fontSize: "clamp(2.5rem, 5vw, 4rem)", 
+                            fontWeight: 700, 
+                            textTransform: "uppercase", 
+                            lineHeight: 1, 
+                            marginBottom: 16 
+                        }}>
+                            LET'S WORK TOGETHER
+                        </h2>
+                        <p style={{ color: "var(--secondary-text)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 40, maxWidth: 400 }}>
+                            Let's build something impactful together—whether it's your brand, your website, or your next big idea.
+                        </p>
+
+                        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                            {/* Row 1: Name and Email */}
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+                                <div>
+                                    <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--accent)", marginBottom: 8, fontFamily: "var(--font-heading)" }}>Name</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="John Smith" 
+                                        value={form.name} 
+                                        onChange={e => setForm({ ...form, name: e.target.value })}
+                                        style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.08)", border: "none", color: "var(--text)", fontSize: 14, outline: "none", fontFamily: "inherit" }}
+                                    />
+                                </div>
+                                <div>
+                                    <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--accent)", marginBottom: 8, fontFamily: "var(--font-heading)" }}>Email</label>
+                                    <input 
+                                        type="email" 
+                                        placeholder="johnsmith@gmail.com" 
+                                        value={form.email} 
+                                        onChange={e => setForm({ ...form, email: e.target.value })}
+                                        style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.08)", border: "none", color: "var(--text)", fontSize: 14, outline: "none", fontFamily: "inherit" }}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Row 2: Service Needed */}
+                            <div>
+                                <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--accent)", marginBottom: 8, fontFamily: "var(--font-heading)" }}>Service Needed ?</label>
+                                <div style={{ position: "relative" }}>
+                                    <select 
+                                        value={form.service} 
+                                        onChange={e => setForm({ ...form, service: e.target.value })}
+                                        style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.08)", border: "none", color: "var(--text)", fontSize: 14, outline: "none", fontFamily: "inherit", appearance: "none" }}
+                                    >
+                                        <option value="" disabled style={{ color: "rgba(255,255,255,0.5)" }}>Select...</option>
+                                        <option value="ui_ux" style={{ background: "#222" }}>UI/UX Design</option>
+                                        <option value="dev" style={{ background: "#222" }}>Web Development</option>
+                                        <option value="data" style={{ background: "#222" }}>Data Analytics</option>
+                                        <option value="other" style={{ background: "#222" }}>Other</option>
+                                    </select>
+                                    <div style={{ position: "absolute", right: 16, top: 18, pointerEvents: "none", color: "var(--secondary-text)" }}>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Row 3: Message */}
+                            <div>
+                                <label style={{ display: "block", fontSize: 13, fontWeight: 700, color: "var(--accent)", marginBottom: 8, fontFamily: "var(--font-heading)" }}>What Can I Help You...</label>
+                                <textarea 
+                                    rows={4} 
+                                    placeholder="Hello, I'd like to enquire about..." 
+                                    value={form.message} 
+                                    onChange={e => setForm({ ...form, message: e.target.value })}
+                                    style={{ width: "100%", padding: "14px 16px", borderRadius: 12, background: "rgba(255,255,255,0.08)", border: "none", color: "var(--text)", fontSize: 14, outline: "none", resize: "none", fontFamily: "inherit" }}
+                                />
+                            </div>
+
+                            {/* Action Button */}
+                            <div style={{ marginTop: 8 }}>
+                                <button 
+                                    onClick={submit}
+                                    style={{ 
+                                        padding: "12px 32px", 
+                                        borderRadius: 100, 
+                                        background: "transparent", 
+                                        border: "1px solid var(--accent)", 
+                                        color: "var(--accent)", 
+                                        fontFamily: "var(--font-heading)", 
+                                        fontWeight: 700, 
+                                        fontSize: 16, 
+                                        textTransform: "uppercase", 
+                                        cursor: "pointer", 
+                                        transition: "all 0.3s",
+                                        letterSpacing: "0.05em"
+                                    }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = "var(--accent)"; e.currentTarget.style.color = "#000"; e.currentTarget.style.transform = "scale(1.05)"; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--accent)"; e.currentTarget.style.transform = "scale(1)"; }}
+                                >
+                                    {sent ? "SENT!" : "SUBMIT"}
                                 </button>
                             </div>
+
                         </div>
-                    </Reveal>
+                    </motion.div>
+
                 </div>
             </div>
         </section>

@@ -29,7 +29,7 @@ export function About() {
                             flexDirection: "column",
                             justifyContent: "center"
                         }}>
-                        <p style={{ fontSize: "clamp(1.1rem, 1.5vw, 1.4rem)", lineHeight: 1.6, color: "rgba(255,255,255,0.8)", marginBottom: 24 }}>
+                        <p style={{ fontSize: "clamp(1.1rem, 1.5vw, 1.4rem)", lineHeight: 1.6, color: "var(--text)", marginBottom: 24, opacity: 0.9 }}>
                             I'm a <span style={{ color: "var(--accent)", fontWeight: 600 }}>Data Analytics professional</span> with a deep-rooted passion for UI/UX Design. I specialize in bridging the gap between complex data structures and intuitive visual storytelling.
                         </p>
                         <p style={{ fontSize: "1.1rem", lineHeight: 1.6, color: "var(--secondary-text)" }}>
@@ -57,7 +57,7 @@ export function About() {
                     <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
                         style={{ 
                             gridColumn: "span 4", 
-                            background: "rgba(255,255,255,0.03)", 
+                            background: "var(--card-bg)", 
                             border: "1px solid var(--border)", 
                             borderRadius: 32, 
                             padding: 32,
@@ -94,7 +94,7 @@ export function About() {
                                     justifyContent: "space-between", 
                                     alignItems: "center", 
                                     padding: "16px 20px", 
-                                    background: "rgba(255,255,255,0.03)", 
+                                    background: "var(--border)", 
                                     borderRadius: 16, 
                                     textDecoration: "none",
                                     color: "var(--text)",
@@ -102,8 +102,8 @@ export function About() {
                                     fontWeight: 500,
                                     transition: "0.2s"
                                 }}
-                                onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.08)"}
-                                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.03)"}>
+                                onMouseEnter={e => e.currentTarget.style.background = "var(--card-bg)"}
+                                onMouseLeave={e => e.currentTarget.style.background = "var(--border)"}>
                                 {link.name} <span>↗</span>
                             </a>
                         ))}
@@ -113,7 +113,7 @@ export function About() {
                     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
                         style={{ 
                             gridColumn: "span 8", 
-                            background: "rgba(255,255,255,0.03)", 
+                            background: "var(--card-bg)", 
                             border: "1px solid var(--border)", 
                             borderRadius: 32, 
                             padding: 32,
@@ -127,7 +127,7 @@ export function About() {
                         </div>
                         <div style={{ display: "flex", gap: 12 }}>
                             {["Tableau", "PowerBI", "Figma"].map(tool => (
-                                <span key={tool} style={{ padding: "8px 16px", borderRadius: 100, background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", fontSize: 12, fontWeight: 600 }}>{tool}</span>
+                                <span key={tool} style={{ padding: "8px 16px", borderRadius: 100, background: "var(--card-bg)", border: "1px solid var(--border)", fontSize: 12, fontWeight: 600 }}>{tool}</span>
                             ))}
                         </div>
                     </motion.div>

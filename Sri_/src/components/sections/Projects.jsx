@@ -30,13 +30,13 @@ function ProjectCard({ p }) {
                 style={{
                     position: "relative",
                     borderRadius: 24,
-                    background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: "var(--card-bg)",
+                    border: "1px solid var(--border)",
                     overflow: "hidden",
                     cursor: "none",
                     height: "100%",
                     transition: "border-color 0.4s ease, box-shadow 0.4s ease",
-                    borderColor: isHovered ? p.color + "66" : "rgba(255,255,255,0.07)",
+                    borderColor: isHovered ? p.color + "66" : "var(--border)",
                     boxShadow: isHovered ? `0 20px 40px -10px ${p.color}33` : "none"
                 }}
             >
@@ -58,12 +58,12 @@ function ProjectCard({ p }) {
                         {/* Emoji icon with scale and rotation on hover */}
                         <div style={{ width: 56, height: 56, borderRadius: 18, background: p.color + "22", fontSize: 28, display: "flex", alignItems: "center", justifyContent: "center", transition: "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)", transform: isHovered ? "scale(1.15) rotate(-8deg)" : "scale(1)" }}>{p.emoji}</div>
                         {/* Arrow Link icon moving up and right */}
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: isHovered ? p.color : "rgba(255,255,255,0.04)", display: "flex", alignItems: "center", justifyContent: "center", color: isHovered ? "#fff" : "#475569", fontSize: 16, transition: "all 0.4s ease", transform: isHovered ? "translate(6px, -6px)" : "none", boxShadow: isHovered ? `0 8px 16px ${p.color}44` : "none" }}>↗</div>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, background: isHovered ? p.color : "var(--border)", display: "flex", alignItems: "center", justifyContent: "center", color: isHovered ? "#fff" : "var(--secondary-text)", fontSize: 16, transition: "all 0.4s ease", transform: isHovered ? "translate(6px, -6px)" : "none", boxShadow: isHovered ? `0 8px 16px ${p.color}44` : "none" }}>↗</div>
                     </div>
 
-                    <h3 style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 12, transition: "color 0.3s ease" }}>{p.title}</h3>
+                    <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--text)", marginBottom: 12, transition: "color 0.3s ease" }}>{p.title}</h3>
 
-                    <p style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.75, marginBottom: 24, transition: "color 0.3s" }}>{p.desc}</p>
+                    <p style={{ color: "var(--secondary-text)", fontSize: 14, lineHeight: 1.75, marginBottom: 24, transition: "color 0.3s" }}>{p.desc}</p>
 
                     {/* Tags with staggered float animation */}
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -79,14 +79,14 @@ function ProjectCard({ p }) {
 
 export function Projects() {
     return (
-        <section id="Projects" className="section-pad" style={{ background: "#050509", position: "relative" }}>
+        <section id="Projects" className="section-pad" style={{ background: "var(--bg)", position: "relative" }}>
             {/* Ambient Background Glow */}
-            <div style={{ position: "absolute", top: "20%", left: "-10%", width: 600, height: 600, background: "radial-gradient(circle, rgba(99,102,241,0.05) 0%, rgba(5,5,9,0) 70%)", pointerEvents: "none", zIndex: 0 }} />
+            <div style={{ position: "absolute", top: "20%", left: "-10%", width: 600, height: 600, background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)", opacity: 0.1, pointerEvents: "none", zIndex: 0 }} />
 
             <div className="container" style={{ position: "relative", zIndex: 1 }}>
                 <Reveal><SLabel>Projects</SLabel></Reveal>
                 <Reveal delay={0.05}>
-                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "#fff", marginBottom: 52 }}>
+                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "var(--text)", marginBottom: 52 }}>
                         What I've <span className="shimmer-text">Built</span>
                     </h2>
                 </Reveal>

@@ -1,12 +1,21 @@
 :root {
-    --bg: #131313;
+    --bg: #0A0A0A;
     --text: #FFFFFF;
     --accent: #C4FF6B;
-    --secondary-text: #8E8E93;
-    --card-bg: rgba(44, 44, 46, 0.4);
-    --border: rgba(255, 255, 255, 0.08);
+    --secondary-text: rgba(255, 255, 255, 0.6);
+    --border: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.03);
     --font-heading: 'Antonio', sans-serif;
     --font-body: 'Inter', sans-serif;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+:root[data-theme='light'] {
+    --bg: #FFFFFF;
+    --text: #000000;
+    --secondary-text: rgba(0, 0, 0, 0.6);
+    --border: rgba(0, 0, 0, 0.1);
+    --card-bg: rgba(0, 0, 0, 0.04);
 }
 
 *,
@@ -49,7 +58,7 @@ body::after {
 }
 
 ::-webkit-scrollbar-track {
-    background: #050509;
+    background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -270,7 +279,7 @@ a {
 .menu-toggle span {
     width: 24px;
     height: 2px;
-    background: #fff;
+    background: var(--text);
     transition: 0.3s;
 }
 
@@ -289,7 +298,7 @@ a {
 .nav-mobile {
     position: fixed;
     inset: 0;
-    background: rgba(5, 5, 9, 0.98);
+    background: var(--bg);
     backdrop-filter: blur(20px);
     z-index: 100;
     display: flex;

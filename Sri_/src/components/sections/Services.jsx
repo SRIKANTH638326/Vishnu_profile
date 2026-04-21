@@ -86,7 +86,7 @@ function AccordionItem({ service, isOpen, toggle }) {
                     <span style={{ fontSize: 24, fontWeight: 700, fontFamily: "var(--font-heading)", color: isOpen ? "var(--accent)" : "var(--secondary-text)", transition: "0.3s" }}>
                         {service.id}.
                     </span>
-                    <h3 style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)", fontWeight: 700, fontFamily: "var(--font-heading)", textTransform: "uppercase", color: isOpen ? "var(--accent)" : "rgba(255,255,255,0.9)", transition: "0.3s" }}>
+                    <h3 style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)", fontWeight: 700, fontFamily: "var(--font-heading)", textTransform: "uppercase", color: isOpen ? "var(--accent)" : "var(--text)", transition: "0.3s" }}>
                         {service.title}
                     </h3>
                 </div>
@@ -115,7 +115,7 @@ function AccordionItem({ service, isOpen, toggle }) {
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: i * 0.1 }}
-                                        style={{ display: "flex", alignItems: "center", gap: 12, color: "rgba(255,255,255,0.7)", fontSize: 15 }}
+                                        style={{ display: "flex", alignItems: "center", gap: 12, color: "var(--secondary-text)", fontSize: 15 }}
                                     >
                                         <div style={{ width: 18, height: 18, borderRadius: "50%", border: "1.5px solid var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)" }}>
                                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">

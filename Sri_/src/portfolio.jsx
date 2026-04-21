@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "@studio-freight/lenis";
 import { Cursor } from "./components/common/Cursor";
 import { Particles } from "./components/common/Particles";
@@ -10,6 +10,7 @@ import { Skills } from "./components/sections/Skills";
 import { CaseStudies } from "./components/sections/CaseStudies";
 import { Projects } from "./components/sections/Projects";
 import { Services } from "./components/sections/Services";
+import { FAQ } from "./components/sections/FAQ";
 import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/layout/Footer";
 import { useScrollSpy } from "./hooks/useScrollSpy";
@@ -17,6 +18,18 @@ import "./styles/global.css";
 
 export default function App() {
   const active = useScrollSpy();
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
@@ -31,13 +44,14 @@ export default function App() {
       <Particles count={24} />
       <div style={{ position: "relative", zIndex: 1 }}>
         <Navbar active={active} />
-        <Hero />
+        <Hero theme={theme} toggleTheme={toggleTheme} />
         <About />
-        <MarqueeStrip />
+        <Services />
         <Skills />
+        <MarqueeStrip />
         <CaseStudies />
         <Projects />
-        <Services />
+        <FAQ />
         <Contact />
         <Footer />
       </div>

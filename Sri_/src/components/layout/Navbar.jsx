@@ -19,19 +19,19 @@ export function Navbar({ active }) {
 
     return (
         <nav style={{ position: "fixed", top: 24, left: 0, right: 0, zIndex: 1000, display: "flex", justifyContent: "center", pointerEvents: "none" }}>
-            <motion.div 
+            <motion.div
                 layout
-                initial={{ y: -100 }} 
-                animate={{ y: 0 }} 
-                transition={{ 
-                    type: "spring", 
-                    damping: 25, 
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{
+                    type: "spring",
+                    damping: 25,
                     stiffness: 150,
                     mass: 0.8
                 }}
-                style={{ 
+                style={{
                     pointerEvents: "auto",
-                    background: scrolled ? "rgba(10, 10, 11, 0.85)" : "rgba(255, 255, 255, 0.04)",
+                    background: "var(--nav-bg, var(--card-bg))",
                     backdropFilter: "blur(20px)",
                     border: "1px solid var(--border)",
                     borderRadius: 100,
@@ -41,33 +41,33 @@ export function Navbar({ active }) {
                     gap: 6,
                     boxShadow: scrolled ? "0 25px 50px -12px rgba(0,0,0,0.5)" : "none",
                 }}>
-                
+
                 {/* Profile Group */}
-                <motion.div 
+                <motion.div
                     layout
                     style={{ display: "flex", alignItems: "center", gap: 0 }}
                 >
-                    <motion.button 
+                    <motion.button
                         layout
-                        onClick={() => scrollTo("Hero")} 
-                        style={{ 
-                            background: "var(--accent)", 
-                            color: "#000", 
-                            height: 40, 
+                        onClick={() => scrollTo("Hero")}
+                        style={{
+                            background: "var(--accent)",
+                            color: "#000",
+                            height: 40,
                             width: 40,
-                            borderRadius: 100, 
-                            border: "none", 
-                            fontWeight: 800, 
-                            fontSize: 16, 
-                            cursor: "pointer", 
-                            display: "flex", 
-                            alignItems: "center", 
+                            borderRadius: 100,
+                            border: "none",
+                            fontWeight: 800,
+                            fontSize: 16,
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
                             justifyContent: "center",
                             zIndex: 2
                         }}>
                         S
                     </motion.button>
-                    
+
                     <AnimatePresence>
                         {scrolled && (
                             <motion.span
@@ -83,34 +83,34 @@ export function Navbar({ active }) {
                     </AnimatePresence>
                 </motion.div>
 
-                <motion.div 
+                <motion.div
                     layout
-                    style={{ width: scrolled ? 1 : 0, height: 20, background: "var(--border)", margin: scrolled ? "0 8px" : 0, opacity: scrolled ? 1 : 0 }} 
+                    style={{ width: scrolled ? 1 : 0, height: 20, background: "var(--border)", margin: scrolled ? "0 8px" : 0, opacity: scrolled ? 1 : 0 }}
                 />
 
                 {/* Main Content Area */}
                 <motion.div layout style={{ display: "flex", alignItems: "center" }}>
                     <AnimatePresence mode="wait">
                         {!scrolled ? (
-                            <motion.div 
+                            <motion.div
                                 key="links"
                                 initial={{ opacity: 0, filter: "blur(4px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
                                 exit={{ opacity: 0, filter: "blur(4px)" }}
                                 transition={{ duration: 0.2 }}
-                                className="nav-desktop" 
+                                className="nav-desktop"
                                 style={{ display: "flex", alignItems: "center", gap: 2 }}
                             >
                                 {NAV_LINKS.map((link) => (
                                     <button key={link} onClick={() => scrollTo(link)}
-                                        style={{ 
+                                        style={{
                                             padding: "8px 18px",
                                             fontSize: 13,
                                             fontWeight: 500,
                                             borderRadius: 100,
                                             border: "none",
-                                            background: active === link ? "rgba(255,255,255,0.08)" : "transparent",
-                                            color: active === link ? "var(--accent)" : "rgba(255,255,255,0.6)",
+                                            background: active === link ? "var(--border)" : "transparent",
+                                            color: active === link ? "var(--accent)" : "var(--secondary-text)",
                                             cursor: "pointer",
                                             transition: "0.3s ease"
                                         }}>
@@ -119,26 +119,26 @@ export function Navbar({ active }) {
                                 ))}
                             </motion.div>
                         ) : (
-                            <motion.div 
+                            <motion.div
                                 key="status"
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
-                                style={{ 
-                                    display: "flex", 
-                                    alignItems: "center", 
-                                    gap: 12, 
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 12,
                                     padding: "0 16px 0 8px",
                                     height: 40,
                                     borderRadius: 100,
-                                    background: "rgba(255,255,255,0.02)"
+                                    background: "var(--border)"
                                 }}
                             >
                                 <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                     <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)" }} />
                                     <div style={{ position: "absolute", width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "status-pulse 2s infinite" }} />
                                 </div>
-                                <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.7)", whiteSpace: "nowrap", textTransform: "capitalize", letterSpacing: "0.05em" }}>
+                                <span style={{ fontSize: 12, fontWeight: 500, color: "var(--secondary-text)", whiteSpace: "nowrap", textTransform: "capitalize", letterSpacing: "0.05em" }}>
                                     Available for Work
                                 </span>
                             </motion.div>
@@ -150,15 +150,15 @@ export function Navbar({ active }) {
                 <motion.div layout style={{ display: "flex", alignItems: "center" }}>
                     <AnimatePresence>
                         {!scrolled ? (
-                            <motion.a 
+                            <motion.a
                                 key="cta"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 href="mailto:srikanthc061@gmail.com"
-                                style={{ 
+                                style={{
                                     marginLeft: 6,
-                                    background: "rgba(255,255,255,0.05)",
+                                    background: "var(--border)",
                                     border: "1px solid var(--border)",
                                     color: "var(--text)",
                                     padding: "10px 22px",
@@ -170,21 +170,21 @@ export function Navbar({ active }) {
                                 Let's Talk
                             </motion.a>
                         ) : (
-                            <motion.button 
+                            <motion.button
                                 key="menu"
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.8 }}
-                                onClick={() => setMenuOpen(!menuOpen)} 
-                                style={{ 
-                                    width: 40, 
-                                    height: 40, 
-                                    borderRadius: "50%", 
-                                    background: "rgba(255,255,255,0.05)", 
-                                    border: "1px solid var(--border)", 
-                                    display: "flex", 
-                                    alignItems: "center", 
-                                    justifyContent: "center", 
+                                onClick={() => setMenuOpen(!menuOpen)}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    borderRadius: "50%",
+                                    background: "var(--card-bg)",
+                                    border: "1px solid var(--border)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
                                     cursor: "pointer",
                                     marginLeft: 6
                                 }}

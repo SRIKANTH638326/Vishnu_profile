@@ -85,3 +85,12 @@ export const SERVICES = [
         accent: "var(--accent)"
     },
 ];
+
+export const FAQ_DATA = [
+    { q: "WHAT SERVICES DO YOU OFFER?", a: "I offer UI/UX design, web design, graphic design, and brand identity development." },
+    { q: "HOW DOES THE DESIGN PROCESS WORK?", a: "We start with discovery and research, move into wireframing and prototyping, and finish with high-fidelity visual design and testing." },
+    { q: "HOW LONG DOES A PROJECT USUALLY TAKE?", a: "Most projects take between 2 to 6 weeks, depending on the scope and complexity." },
+    { q: "WHAT DO I NEED TO PROVIDE BEFORE STARTING A PROJECT?", a: "I'll need a project brief, any existing brand guidelines or assets, and your goals for the project." },
+    { q: "DO YOU OFFER REVISIONS?", a: "Yes, standard projects include two rounds of revisions to ensure you're completely satisfied with the final result." },
+    { q: "HOW DO I GET STARTED?", a: "Simply reach out via the contact form or email, and we'll schedule a discovery call to discuss your needs." }
+];

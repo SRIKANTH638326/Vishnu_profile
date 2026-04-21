@@ -6,12 +6,12 @@ import { CASE_STUDIES } from "../../data/portfolioData";
 
 export function CaseStudies() {
     return (
-        <section id="Case Studies" className="section-pad" style={{ background: "#070710" }}>
+        <section id="Case Studies" className="section-pad" style={{ background: "var(--bg)" }}>
             <GlowBlob style={{ width: 500, height: 300, background: "rgba(99,102,241,0.07)", top: "30%", right: "-5%" }} />
             <div className="container">
                 <Reveal><SLabel>Case Studies</SLabel></Reveal>
                 <Reveal delay={0.05}>
-                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "#fff", marginBottom: 52 }}>
+                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "var(--text)", marginBottom: 52 }}>
                         Deep <span className="shimmer-text">Dives</span>
                     </h2>
                 </Reveal>
@@ -23,8 +23,8 @@ export function CaseStudies() {
                                 onMouseEnter={e => e.currentTarget.style.borderColor = cs.accent + "88"}
                                 onMouseLeave={e => e.currentTarget.style.borderColor = cs.accent + "33"}>
                                 <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase", color: cs.accent, marginBottom: 16 }}>{cs.tag}</div>
-                                <h3 style={{ fontSize: 18, fontWeight: 900, color: "#fff", marginBottom: 12, lineHeight: 1.3 }}>{cs.title}</h3>
-                                <p style={{ color: "#64748b", fontSize: 13, lineHeight: 1.75, flex: 1, marginBottom: 20 }}>{cs.desc}</p>
+                                <h3 style={{ fontSize: 18, fontWeight: 900, color: "var(--text)", marginBottom: 12, lineHeight: 1.3 }}>{cs.title}</h3>
+                                <p style={{ color: "var(--secondary-text)", fontSize: 13, lineHeight: 1.75, flex: 1, marginBottom: 20 }}>{cs.desc}</p>
                                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                                     {cs.metrics.map(m => (
                                         <span key={m} style={{ fontSize: 11, padding: "4px 12px", borderRadius: 99, background: cs.accent + "22", color: cs.accent, border: `1px solid ${cs.accent}44`, fontWeight: 700 }}>{m}</span>
