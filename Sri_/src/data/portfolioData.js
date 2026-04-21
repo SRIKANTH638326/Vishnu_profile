@@ -36,8 +36,52 @@ export const PROJECTS = [
 ];
 
 export const SERVICES = [
-    { icon: "◈", title: "UI/UX Design", desc: "Research-driven design from wireframes to polished prototypes. Experiences people love.", accent: "#6366f1" },
-    { icon: "⬡", title: "Web Development", desc: "Responsive, performant frontends with React, Tailwind, and modern toolchains.", accent: "#8b5cf6" },
-    { icon: "◎", title: "Data Analytics", desc: "Transform raw data into actionable insight — EDA, Power BI dashboards, SQL, Python.", accent: "#06b6d4" },
-    { icon: "◱", title: "Prototyping", desc: "High-fidelity Figma prototypes that validate concepts before a single line of code.", accent: "#f43f5e" },
+    { 
+        id: "01",
+        title: "UI/UX DESIGN", 
+        desc: "As a digital designer, I am a visual storyteller, crafting experiences that connect deeply and spark creativity.",
+        features: [
+            "Wireframing and prototyping",
+            "User Interface design for web and mobile apps",
+            "Usability testing and user feedback analysis",
+            "Interaction design and micro-animations"
+        ],
+        accent: "var(--accent)"
+    },
+    { 
+        id: "02",
+        title: "GRAPHIC DESIGN", 
+        desc: "Creating compelling visual identities and assets that communicate your brand's unique message effectively.",
+        features: [
+            "Visual identity and branding systems",
+            "Marketing materials and social assets",
+            "Typography and layout design",
+            "Custom illustration and iconography"
+        ],
+        accent: "var(--accent)"
+    },
+    { 
+        id: "03",
+        title: "WEB DESIGN", 
+        desc: "Combining aesthetics with functionality to build high-performance, responsive websites that convert.",
+        features: [
+            "Responsive layout architecture",
+            "Modern frontend implementation",
+            "Performance optimization",
+            "Content management integration"
+        ],
+        accent: "var(--accent)"
+    },
+    { 
+        id: "04",
+        title: "BRANDING", 
+        desc: "Developing consistent and memorable brand experiences that resonate with your target audience.",
+        features: [
+            "Brand strategy and positioning",
+            "Logo design and development",
+            "Brand voice and messaging",
+            "Style guides and documentation"
+        ],
+        accent: "var(--accent)"
+    },
 ];

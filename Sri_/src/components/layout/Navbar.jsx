@@ -19,70 +19,184 @@ export function Navbar({ active }) {
 
     return (
         <nav style={{ position: "fixed", top: 24, left: 0, right: 0, zIndex: 1000, display: "flex", justifyContent: "center", pointerEvents: "none" }}>
-            <motion.div initial={{ y: -100 }} animate={{ y: 0 }} transition={{ type: "spring", damping: 20 }}
+            <motion.div 
+                layout
+                initial={{ y: -100 }} 
+                animate={{ y: 0 }} 
+                transition={{ 
+                    type: "spring", 
+                    damping: 25, 
+                    stiffness: 150,
+                    mass: 0.8
+                }}
                 style={{ 
                     pointerEvents: "auto",
-                    background: scrolled ? "rgba(26, 26, 27, 0.7)" : "rgba(255, 255, 255, 0.03)",
+                    background: scrolled ? "rgba(10, 10, 11, 0.85)" : "rgba(255, 255, 255, 0.04)",
                     backdropFilter: "blur(20px)",
                     border: "1px solid var(--border)",
                     borderRadius: 100,
-                    padding: "8px 12px",
+                    padding: "6px",
                     display: "flex",
                     alignItems: "center",
-                    gap: 8,
-                    boxShadow: scrolled ? "0 20px 40px rgba(0,0,0,0.3)" : "none",
-                    transition: "all 0.4s cubic-bezier(0.22, 1, 0.36, 1)"
+                    gap: 6,
+                    boxShadow: scrolled ? "0 25px 50px -12px rgba(0,0,0,0.5)" : "none",
                 }}>
                 
-                {/* Logo */}
-                <button onClick={() => scrollTo("Hero")} style={{ background: "var(--accent)", color: "#000", width: 36, height: 36, borderRadius: "50%", border: "none", fontWeight: 800, fontSize: 14, cursor: "pointer", marginRight: 8 }}>
-                    S
-                </button>
+                {/* Profile Group */}
+                <motion.div 
+                    layout
+                    style={{ display: "flex", alignItems: "center", gap: 0 }}
+                >
+                    <motion.button 
+                        layout
+                        onClick={() => scrollTo("Hero")} 
+                        style={{ 
+                            background: "var(--accent)", 
+                            color: "#000", 
+                            height: 40, 
+                            width: 40,
+                            borderRadius: 100, 
+                            border: "none", 
+                            fontWeight: 800, 
+                            fontSize: 16, 
+                            cursor: "pointer", 
+                            display: "flex", 
+                            alignItems: "center", 
+                            justifyContent: "center",
+                            zIndex: 2
+                        }}>
+                        S
+                    </motion.button>
+                    
+                    <AnimatePresence>
+                        {scrolled && (
+                            <motion.span
+                                initial={{ width: 0, opacity: 0, marginLeft: 0 }}
+                                animate={{ width: "auto", opacity: 1, marginLeft: 12 }}
+                                exit={{ width: 0, opacity: 0, marginLeft: 0 }}
+                                transition={{ duration: 0.3, ease: "circOut" }}
+                                style={{ overflow: "hidden", whiteSpace: "nowrap", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "0.08em", fontSize: 13, fontWeight: 700 }}
+                            >
+                                {/* Srikanth */}
+                            </motion.span>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
 
-                {/* desktop links */}
-                <div className="nav-desktop" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    {NAV_LINKS.map((link) => (
-                        <button key={link} onClick={() => scrollTo(link)}
-                            style={{ 
-                                padding: "10px 18px",
-                                fontSize: 13,
-                                fontWeight: 500,
-                                borderRadius: 100,
-                                border: "none",
-                                background: active === link ? "rgba(255,255,255,0.08)" : "transparent",
-                                color: active === link ? "var(--accent)" : "rgba(255,255,255,0.6)",
-                                cursor: "pointer",
-                                transition: "0.2s"
-                            }}>
-                            {link}
-                        </button>
-                    ))}
-                </div>
+                <motion.div 
+                    layout
+                    style={{ width: scrolled ? 1 : 0, height: 20, background: "var(--border)", margin: scrolled ? "0 8px" : 0, opacity: scrolled ? 1 : 0 }} 
+                />
 
-                {/* CTA */}
-                <a href="mailto:srikanthc061@gmail.com"
-                    style={{ 
-                        marginLeft: 8,
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid var(--border)",
-                        color: "var(--text)",
-                        padding: "10px 24px",
-                        borderRadius: 100,
-                        fontSize: 13,
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        transition: "0.3s"
-                    }}>
-                    Hire Me
-                </a>
+                {/* Main Content Area */}
+                <motion.div layout style={{ display: "flex", alignItems: "center" }}>
+                    <AnimatePresence mode="wait">
+                        {!scrolled ? (
+                            <motion.div 
+                                key="links"
+                                initial={{ opacity: 0, filter: "blur(4px)" }}
+                                animate={{ opacity: 1, filter: "blur(0px)" }}
+                                exit={{ opacity: 0, filter: "blur(4px)" }}
+                                transition={{ duration: 0.2 }}
+                                className="nav-desktop" 
+                                style={{ display: "flex", alignItems: "center", gap: 2 }}
+                            >
+                                {NAV_LINKS.map((link) => (
+                                    <button key={link} onClick={() => scrollTo(link)}
+                                        style={{ 
+                                            padding: "8px 18px",
+                                            fontSize: 13,
+                                            fontWeight: 500,
+                                            borderRadius: 100,
+                                            border: "none",
+                                            background: active === link ? "rgba(255,255,255,0.08)" : "transparent",
+                                            color: active === link ? "var(--accent)" : "rgba(255,255,255,0.6)",
+                                            cursor: "pointer",
+                                            transition: "0.3s ease"
+                                        }}>
+                                        {link}
+                                    </button>
+                                ))}
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                key="status"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                style={{ 
+                                    display: "flex", 
+                                    alignItems: "center", 
+                                    gap: 12, 
+                                    padding: "0 16px 0 8px",
+                                    height: 40,
+                                    borderRadius: 100,
+                                    background: "rgba(255,255,255,0.02)"
+                                }}
+                            >
+                                <div style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                    <div style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)" }} />
+                                    <div style={{ position: "absolute", width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", animation: "status-pulse 2s infinite" }} />
+                                </div>
+                                <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.7)", whiteSpace: "nowrap", textTransform: "capitalize", letterSpacing: "0.05em" }}>
+                                    Available for Work
+                                </span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
 
-                {/* Mobile Menu Toggle */}
-                <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)} style={{ width: 36, height: 36, borderRadius: "50%", background: "none", border: "1px solid var(--border)", display: "none", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-                    <div style={{ width: 18, height: 2, background: "var(--text)", position: "relative" }}>
-                        <div style={{ position: "absolute", top: menuOpen ? 0 : -6, width: 18, height: 2, background: "var(--text)", transform: menuOpen ? "rotate(45deg)" : "none", transition: "0.2s" }} />
-                        <div style={{ position: "absolute", bottom: menuOpen ? 0 : -6, width: 18, height: 2, background: "var(--text)", transform: menuOpen ? "rotate(-45deg)" : "none", transition: "0.2s" }} />
-                    </div>
-                </button>
+                {/* Right Group: Action */}
+                <motion.div layout style={{ display: "flex", alignItems: "center" }}>
+                    <AnimatePresence>
+                        {!scrolled ? (
+                            <motion.a 
+                                key="cta"
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.9 }}
+                                href="mailto:srikanthc061@gmail.com"
+                                style={{ 
+                                    marginLeft: 6,
+                                    background: "rgba(255,255,255,0.05)",
+                                    border: "1px solid var(--border)",
+                                    color: "var(--text)",
+                                    padding: "10px 22px",
+                                    borderRadius: 100,
+                                    fontSize: 13,
+                                    fontWeight: 600,
+                                    textDecoration: "none"
+                                }}>
+                                Let's Talk
+                            </motion.a>
+                        ) : (
+                            <motion.button 
+                                key="menu"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                onClick={() => setMenuOpen(!menuOpen)} 
+                                style={{ 
+                                    width: 40, 
+                                    height: 40, 
+                                    borderRadius: "50%", 
+                                    background: "rgba(255,255,255,0.05)", 
+                                    border: "1px solid var(--border)", 
+                                    display: "flex", 
+                                    alignItems: "center", 
+                                    justifyContent: "center", 
+                                    cursor: "pointer",
+                                    marginLeft: 6
+                                }}
+                            >
+                                <div style={{ width: 14, height: 2, background: "var(--text)", position: "relative" }}>
+                                    <div style={{ position: "absolute", top: menuOpen ? 0 : -5, width: 14, height: 1.5, background: "var(--text)", transform: menuOpen ? "rotate(45deg)" : "none", transition: "0.3s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+                                    <div style={{ position: "absolute", bottom: menuOpen ? 0 : -5, width: 14, height: 1.5, background: "var(--text)", transform: menuOpen ? "rotate(-45deg)" : "none", transition: "0.3s cubic-bezier(0.4, 0, 0.2, 1)" }} />
+                                </div>
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
             </motion.div>
 
             {/* Mobile Nav Overlay omitted for brevity, can be added if needed */}
