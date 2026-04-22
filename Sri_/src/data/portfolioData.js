@@ -23,16 +23,53 @@ export const SKILLS_DATA = {
 };
 
 export const CASE_STUDIES = [
-    { tag: "Data Analytics", title: "Churn Analysis Dashboard", desc: "End-to-end churn prediction pipeline using Python & Power BI. Identified key churn drivers, reducing projected churn rate by 23%.", metrics: ["23% churn reduction", "15K+ records", "Power BI"], accent: "#8b5cf6", bg: "rgba(139,92,246,0.08)" },
-    { tag: "Risk Analytics", title: "Banking Risk Analysis", desc: "Built a comprehensive risk scoring model with SQL & Python. Delivered executive dashboards highlighting high-risk segments.", metrics: ["SQL + Python", "Risk Scoring", "EDA"], accent: "#06b6d4", bg: "rgba(6,182,212,0.08)" },
-    { tag: "UI/UX Design", title: "ZikraByte Design System", desc: "Created a scalable design system in Figma for ZikraByte Solutions — components, tokens, responsive layouts, and interaction specs.", metrics: ["Figma", "60+ components", "Design Tokens"], accent: "#f43f5e", bg: "rgba(244,63,94,0.08)" },
+    { 
+        tag: "Insights", 
+        date: "Apr 30, 2025",
+        title: "5 DESIGN TRENDS THAT WILL DEFINE 2024", 
+        desc: "Explore the top design trends for 2024 that will influence web, UI/UX, and branding projects, helping you stay ahead of the curve.",
+        accent: "var(--accent)", 
+        image: "design-trends.png"
+    },
+    { 
+        tag: "Tutorials", 
+        date: "Apr 30, 2025",
+        title: "HOW TO STREAMLINE YOUR DESIGN WORKFLOW", 
+        desc: "Discover practical strategies to improve your design process, save time, and deliver quality work more efficiently.",
+        accent: "rgba(255,255,255,0.6)", 
+        image: "workflow.png"
+    },
 ];
 
 export const PROJECTS = [
-    { title: "Sales Intelligence Dashboard", desc: "Interactive Power BI dashboard tracking revenue KPIs, regional performance, and product trends across 12 months.", tags: ["Power BI", "DAX", "SQL"], emoji: "📈", color: "#6366f1" },
-    { title: "Data Cleaning & EDA Suite", desc: "Automated Python pipeline — outlier detection, null imputation, and visual EDA reports from messy datasets.", tags: ["Python", "Pandas", "Matplotlib"], emoji: "🧹", color: "#8b5cf6" },
-    { title: "FITA Academy UI Redesign", desc: "Full UX overhaul of the FITA Academy learning portal — improved navigation, responsive layouts, and accessibility.", tags: ["Figma", "React", "Tailwind"], emoji: "🎓", color: "#06b6d4" },
-    { title: "Banking Risk Portal", desc: "Web dashboard surfacing real-time risk metrics from SQL backend — built with React and REST APIs.", tags: ["React", "SQL", "Python"], emoji: "🏦", color: "#f59e0b" },
+    { 
+        title: "SUMMER VIBES FESTIVAL CAMPAIGN", 
+        desc: "Created promotional materials for the \"Summer Vibes Festival,\" including posters, flyers, and social media graphics.", 
+        tag: "Graphic Design",
+        image: "festival.png",
+        color: "#ffbf48"
+    },
+    { 
+        title: "CORAL SPIRAL ABSTRACT", 
+        desc: "A visually striking 3D abstract artwork featuring a coral-colored spiral form with smooth, flowing curves and a soft pink gradient background.", 
+        tag: "Branding",
+        image: "abstract.png",
+        color: "#f43f5e"
+    },
+    { 
+        title: "CYBERPUNK INTERFACE HUD", 
+        desc: "Futuristic user interface design with holographic blueprints and intricate data visualizations for a mission-critical tech platform.", 
+        tag: "UI/UX",
+        image: "cyberpunk.png",
+        color: "#06b6d4"
+    },
+    { 
+        title: "MINIMALIST VOGUE PACKAGING", 
+        desc: "High-end cosmetic packaging design focusing on elegant typography, neutral palettes, and a sophisticated minimalist aesthetic.", 
+        tag: "Product Design",
+        image: "packaging.png",
+        color: "#a78bfa"
+    },
 ];
 
 export const SERVICES = [

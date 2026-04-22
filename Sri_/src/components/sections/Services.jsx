@@ -39,21 +39,13 @@ export function Services() {
                     </div>
 
                     {/* Right Column: Tilted Image */}
-                    <div style={{ position: "sticky", top: 150 }}>
+                    <div className="services-image-col">
                         <motion.div 
                             initial={{ opacity: 0, x: 50, rotate: 5 }}
                             whileInView={{ opacity: 1, x: 0, rotate: -8 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1, ease: "circOut" }}
-                            style={{ 
-                                position: "relative",
-                                width: "100%",
-                                maxWidth: 500,
-                                borderRadius: 24,
-                                overflow: "hidden",
-                                boxShadow: "-40px 40px 80px rgba(0,0,0,0.5)",
-                                border: "1px solid var(--border)"
-                            }}
+                            className="services-image-card"
                         >
                             <img src={workspaceImg} alt="Workspace" style={{ width: "100%", height: "auto", display: "block" }} />
                             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(45deg, rgba(196, 255, 107, 0.05), transparent)" }} />
@@ -61,6 +53,35 @@ export function Services() {
                     </div>
                 </div>
             </div>
+
+            <style>{`
+                .services-image-col {
+                    position: sticky;
+                    top: 150px;
+                }
+                .services-image-card {
+                    position: relative;
+                    width: 100%;
+                    max-width: 500px;
+                    border-radius: 24px;
+                    overflow: hidden;
+                    box-shadow: -40px 40px 80px rgba(0,0,0,0.5);
+                    border: 1px solid var(--border);
+                }
+                @media (max-width: 992px) {
+                    .services-image-col {
+                        position: relative;
+                        top: 0;
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 40px;
+                    }
+                    .services-image-card {
+                        max-width: 100%;
+                        transform: rotate(0) !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 }

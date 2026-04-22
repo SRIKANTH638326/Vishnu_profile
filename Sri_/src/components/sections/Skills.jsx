@@ -13,17 +13,9 @@ export function Skills() {
                     </h2>
                 </motion.div>
 
-                <div style={{ 
-                    display: "grid", 
-                    gridTemplateColumns: "repeat(12, 1fr)", 
-                    gap: 24, 
-                    width: "100%" 
-                }}>
+                <div className="skills-bento-grid">
                     {Object.entries(SKILLS_DATA).map(([cat, skills], ci) => {
-                        // Custom sizing for Bento feel
-                        const span = cat === "Data & Analytics" ? "span 12" : "span 6";
-                        const mobileSpan = "span 12";
-
+                        const isData = cat === "Data & Analytics";
                         return (
                             <motion.div 
                                 key={cat} 
@@ -31,10 +23,10 @@ export function Skills() {
                                 whileInView={{ opacity: 1, y: 0 }} 
                                 viewport={{ once: true }}
                                 transition={{ delay: ci * 0.1 }}
-                                style={{ gridColumn: window.innerWidth > 992 ? span : mobileSpan }}
+                                className={`skills-cat-card ${isData ? "skills-cat-wide" : "skills-cat-half"}`}
                             >
                                 <TiltCard style={{ 
-                                    padding: 40, 
+                                    padding: "clamp(24px, 4vw, 40px)", 
                                     borderRadius: 32, 
                                     height: "100%", 
                                     background: "var(--card-bg)", 
@@ -70,6 +62,24 @@ export function Skills() {
                     })}
                 </div>
             </div>
+
+            <style>{`
+                .skills-bento-grid {
+                    display: grid;
+                    grid-template-columns: repeat(12, 1fr);
+                    gap: 24px;
+                    width: 100%;
+                }
+                .skills-cat-wide { grid-column: span 12; }
+                .skills-cat-half { grid-column: span 6; }
+
+                @media (max-width: 992px) {
+                    .skills-cat-half, .skills-cat-wide {
+                        grid-column: span 12;
+                    }
+                }
+            `}</style>
         </section>
     );
 }
+

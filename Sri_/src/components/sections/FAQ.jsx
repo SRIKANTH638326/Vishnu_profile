@@ -19,7 +19,7 @@ export function FAQ() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        style={{ position: "sticky", top: "120px" }}
+                        className="faq-title-col"
                     >
                         <h2 style={{ 
                             fontFamily: "var(--font-heading)", 

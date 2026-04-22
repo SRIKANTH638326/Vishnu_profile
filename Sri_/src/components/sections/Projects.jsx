@@ -1,103 +1,183 @@
-import { useRef, useState } from "react";
-import { Reveal } from "../common/Reveal";
-import { SLabel } from "../common/SLabel";
-import { TiltCard } from "../common/TiltCard";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { PROJECTS } from "../../data/portfolioData";
+import festivalImg from "../../assets/projects/festival.png";
+import abstractImg from "../../assets/projects/abstract.png";
+import cyberpunkImg from "../../assets/projects/cyberpunk.png";
+import packagingImg from "../../assets/projects/packaging.png";
 
-function ProjectCard({ p }) {
-    const cardRef = useRef(null);
-    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-    const [isHovered, setIsHovered] = useState(false);
+const imageMap = {
+    "festival.png": festivalImg,
+    "abstract.png": abstractImg,
+    "cyberpunk.png": cyberpunkImg,
+    "packaging.png": packagingImg
+};
 
-    const handleMouseMove = (e) => {
-        if (!cardRef.current) return;
-        const rect = cardRef.current.getBoundingClientRect();
-        setMousePos({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-        });
-    };
+function ProjectCard({ p, i, progress, range, targetScale }) {
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ['start end', 'start start']
+    });
+
+    const imageScale = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
+    const scale = useTransform(progress, range, [1, targetScale]);
 
     return (
-        <TiltCard
-            style={{ height: "100%", padding: 0 }}
-        >
-            <div
-                ref={cardRef}
-                onMouseMove={handleMouseMove}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                style={{
-                    position: "relative",
-                    borderRadius: 24,
-                    background: "var(--card-bg)",
-                    border: "1px solid var(--border)",
-                    overflow: "hidden",
-                    cursor: "none",
-                    height: "100%",
-                    transition: "border-color 0.4s ease, box-shadow 0.4s ease",
-                    borderColor: isHovered ? p.color + "66" : "var(--border)",
-                    boxShadow: isHovered ? `0 20px 40px -10px ${p.color}33` : "none"
-                }}
+        <div ref={container} className="project-card-sticky-wrapper">
+            <motion.div 
+                style={{ scale }}
+                className="project-card-inner"
             >
-                {/* Spotlight Layer */}
-                <div
-                    style={{
-                        position: "absolute",
-                        inset: 0,
-                        pointerEvents: "none",
-                        background: `radial-gradient(500px circle at ${mousePos.x}px ${mousePos.y}px, ${p.color}1a, transparent 40%)`,
-                        opacity: isHovered ? 1 : 0,
-                        transition: "opacity 0.4s ease"
-                    }}
-                />
-
-                {/* Content */}
-                <div style={{ position: "relative", zIndex: 1, padding: 32 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                        {/* Emoji icon with scale and rotation on hover */}
-                        <div style={{ width: 56, height: 56, borderRadius: 18, background: p.color + "22", fontSize: 28, display: "flex", alignItems: "center", justifyContent: "center", transition: "transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)", transform: isHovered ? "scale(1.15) rotate(-8deg)" : "scale(1)" }}>{p.emoji}</div>
-                        {/* Arrow Link icon moving up and right */}
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: isHovered ? p.color : "var(--border)", display: "flex", alignItems: "center", justifyContent: "center", color: isHovered ? "#fff" : "var(--secondary-text)", fontSize: 16, transition: "all 0.4s ease", transform: isHovered ? "translate(6px, -6px)" : "none", boxShadow: isHovered ? `0 8px 16px ${p.color}44` : "none" }}>↗</div>
-                    </div>
-
-                    <h3 style={{ fontSize: 18, fontWeight: 800, color: "var(--text)", marginBottom: 12, transition: "color 0.3s ease" }}>{p.title}</h3>
-
-                    <p style={{ color: "var(--secondary-text)", fontSize: 14, lineHeight: 1.75, marginBottom: 24, transition: "color 0.3s" }}>{p.desc}</p>
-
-                    {/* Tags with staggered float animation */}
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                        {p.tags.map((t, idx) => (
-                            <span key={t} style={{ fontSize: 11, padding: "6px 14px", borderRadius: 99, background: p.color + "18", color: p.color, border: `1px solid ${p.color}44`, fontWeight: 700, transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", transitionDelay: isHovered ? `${idx * 0.05}s` : "0s", transform: isHovered ? "translateY(-4px)" : "none", boxShadow: isHovered ? `0 6px 16px ${p.color}22` : "none" }}>{t}</span>
-                        ))}
-                    </div>
+                {/* Background Image */}
+                <div className="project-card-image-wrap">
+                    <motion.div style={{ scale: imageScale, height: "100%", width: "100%" }}>
+                        <img 
+                            src={imageMap[p.image]} 
+                            alt={p.title} 
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                        />
+                    </motion.div>
                 </div>
-            </div>
-        </TiltCard>
+
+                {/* Overlay */}
+                <div className="project-card-overlay">
+                    <span className="project-card-tag">{p.tag}</span>
+
+                    <h3 className="project-card-title">{p.title}</h3>
+
+                    <p className="project-card-desc">{p.desc}</p>
+                </div>
+            </motion.div>
+        </div>
     );
 }
 
 export function Projects() {
-    return (
-        <section id="Projects" className="section-pad" style={{ background: "var(--bg)", position: "relative" }}>
-            {/* Ambient Background Glow */}
-            <div style={{ position: "absolute", top: "20%", left: "-10%", width: 600, height: 600, background: "radial-gradient(circle, var(--accent) 0%, transparent 70%)", opacity: 0.1, pointerEvents: "none", zIndex: 0 }} />
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ['start start', 'end end']
+    });
 
-            <div className="container" style={{ position: "relative", zIndex: 1 }}>
-                <Reveal><SLabel>Projects</SLabel></Reveal>
-                <Reveal delay={0.05}>
-                    <h2 style={{ fontSize: "clamp(2rem,4vw,3.4rem)", fontWeight: 900, color: "var(--text)", marginBottom: 52 }}>
-                        What I've <span className="shimmer-text">Built</span>
+    return (
+        <section id="Projects" ref={container} style={{ position: "relative", background: "var(--bg)" }}>
+            <div className="container" style={{ paddingTop: "100px", paddingBottom: "100px" }}>
+                <div style={{ marginBottom: "60px" }}>
+                    <h2 style={{ 
+                        fontFamily: "var(--font-heading)", 
+                        fontSize: "clamp(48px, 7vw, 90px)", 
+                        fontWeight: 700, 
+                        lineHeight: 1, 
+                        textTransform: "uppercase", 
+                        color: "var(--text)",
+                        marginBottom: "16px"
+                    }}>
+                        Featured <span className="shimmer-text">Projects</span>
                     </h2>
-                </Reveal>
-                <div className="grid-2">
-                    {PROJECTS.map((p, i) => (
-                        <Reveal key={p.title} delay={i * 0.1}>
-                            <ProjectCard p={p} />
-                        </Reveal>
-                    ))}
+                    <p style={{ 
+                        color: "var(--secondary-text)", 
+                        maxWidth: "500px", 
+                        fontSize: "clamp(16px, 1.2vw, 18px)", 
+                        lineHeight: 1.6
+                    }}>
+                        These selected projects reflect my passion for blending strategy with creativity — solving real problems through thoughtful design and impactful storytelling.
+                    </p>
+                </div>
+
+                <div className="projects-stack-container">
+                    {PROJECTS.map((p, i) => {
+                        const targetScale = 1 - ((PROJECTS.length - i) * 0.04);
+                        return <ProjectCard 
+                            key={p.title} 
+                            p={p} 
+                            i={i} 
+                            progress={scrollYProgress} 
+                            range={[i * 0.25, 1]} 
+                            targetScale={targetScale}
+                        />
+                    })}
                 </div>
             </div>
+
+            <style>{`
+                .projects-stack-container {
+                    position: relative;
+                }
+                .project-card-sticky-wrapper {
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: sticky;
+                    top: 0;
+                }
+                .project-card-inner {
+                    position: relative;
+                    height: 550px;
+                    width: 100%;
+                    max-width: 1100px;
+                    border-radius: 40px;
+                    overflow: hidden;
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    background: #111;
+                    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+                }
+                .project-card-image-wrap {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 0;
+                }
+                .project-card-overlay {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 40px;
+                    text-align: center;
+                }
+                .project-card-tag {
+                    background: var(--accent);
+                    color: #000;
+                    padding: 8px 20px;
+                    border-radius: 100px;
+                    font-size: 13px;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    margin-bottom: 24px;
+                    letter-spacing: 0.1em;
+                }
+                .project-card-title {
+                    font-family: var(--font-heading);
+                    font-size: clamp(36px, 5vw, 72px);
+                    font-weight: 700;
+                    line-height: 1;
+                    text-transform: uppercase;
+                    color: #fff;
+                    max-width: 900px;
+                    margin-bottom: 20px;
+                }
+                .project-card-desc {
+                    color: rgba(255, 255, 255, 0.6);
+                    font-size: clamp(14px, 1.1vw, 17px);
+                    max-width: 550px;
+                    line-height: 1.6;
+                }
+
+                @media (max-width: 768px) {
+                    .project-card-inner {
+                        height: 450px;
+                        border-radius: 24px;
+                    }
+                    .project-card-sticky-wrapper {
+                        height: 80vh;
+                    }
+                }
+            `}</style>
         </section>
     );
 }
