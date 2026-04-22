@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite Sri_",
-    "build": "vite build Sri_",
+    "build": "vite build Sri_ --outDir ../dist --emptyOutDir",
     "preview": "vite preview Sri_"
   },
   "devDependencies": {
