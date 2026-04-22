@@ -22,7 +22,7 @@ export function Services() {
                                 What I can <br /> do for you
                             </h2>
                             <p style={{ color: "var(--secondary-text)", fontSize: "clamp(0.95rem, 1.1vw, 1.2rem)", lineHeight: 1.6, maxWidth: 480, marginBottom: 60 }}>
-                                As a digital designer, I am a visual storyteller, crafting experiences that connect deeply and spark creativity.
+                                As a digital designer, I am a visual storyteller, crafting experiences that connect deeply and spark creativity
                             </p>
                         </motion.div>
 
