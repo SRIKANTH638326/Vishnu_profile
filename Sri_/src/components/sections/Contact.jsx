@@ -15,36 +15,49 @@ export function Contact() {
     };
 
     return (
-        <section id="Contact" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)" }}>
-            <div className="container" style={{ maxWidth: 1000 }}>
-                <div className="grid-2" style={{ alignItems: "center" }}>
+        <section id="Contact" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)", position: "relative", overflow: "hidden" }}>
+            <div className="container">
+                <div style={{ display: "flex", alignItems: "center", gap: "clamp(40px, 8vw, 100px)", flexWrap: "wrap", justifyContent: "center" }}>
                     
-                    {/* Left Column: Portrait */}
+                    {/* Left Column: Portrait with Badge */}
                     <motion.div 
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        style={{ position: "relative", justifySelf: "center", width: "100%", maxWidth: 360, margin: "0 auto" }}
+                        style={{ position: "relative", width: "100%", maxWidth: 420 }}
                     >
-                        <div style={{ borderRadius: 16, overflow: "hidden", background: "#f3f3f3" }}>
-                            <img src={portrait} alt="Portrait" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover", filter: "brightness(0.95)" }} />
-                        </div>
-                        {/* Hand Badge */}
                         <div style={{ 
-                            position: "absolute", 
-                            bottom: -20, 
-                            left: -20, 
-                            width: 80, 
-                            height: 80, 
-                            borderRadius: "50%", 
-                            background: "var(--accent)", 
-                            display: "flex", 
-                            alignItems: "center", 
-                            justifyContent: "center",
-                            boxShadow: "0 10px 20px rgba(0,0,0,0.2)"
+                            borderRadius: 32, 
+                            overflow: "hidden", 
+                            border: "1px solid var(--border)",
+                            boxShadow: "0 40px 100px rgba(0,0,0,0.4)"
                         }}>
-                            <span style={{ fontSize: 32, color: "#000" }}>✋🏼</span>
+                            <img src={portrait} alt="Portrait" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover" }} />
                         </div>
+                        
+                        {/* Special Hand Badge */}
+                        <motion.div 
+                            initial={{ scale: 0, rotate: -20 }}
+                            whileInView={{ scale: 1, rotate: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ type: "spring", delay: 0.4 }}
+                            style={{ 
+                                position: "absolute", 
+                                bottom: "5%", 
+                                left: "-5%", 
+                                width: "clamp(80px, 15vw, 120px)", 
+                                height: "clamp(80px, 15vw, 120px)", 
+                                borderRadius: "50%", 
+                                background: "#C4FF6B", 
+                                display: "flex", 
+                                alignItems: "center", 
+                                justifyContent: "center",
+                                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                                zIndex: 5
+                            }}
+                        >
+                            <span style={{ fontSize: "clamp(32px, 5vw, 48px)", color: "#000" }}>🖐️</span>
+                        </motion.div>
                     </motion.div>
 
                     {/* Right Column: Form */}
@@ -52,25 +65,25 @@ export function Contact() {
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        style={{ display: "flex", flexDirection: "column" }}
+                        style={{ flex: "1", minWidth: 320, maxWidth: 600 }}
                     >
                         <h2 style={{ 
                             fontFamily: "var(--font-heading)", 
-                            fontSize: "clamp(2.5rem, 5vw, 4rem)", 
-                            fontWeight: 700, 
+                            fontSize: "clamp(3rem, 6vw, 6rem)", 
+                            fontWeight: 800, 
                             textTransform: "uppercase", 
-                            lineHeight: 1, 
-                            marginBottom: 16 
+                            lineHeight: 0.9, 
+                            marginBottom: 24,
+                            letterSpacing: "-0.01em"
                         }}>
-                            LET'S WORK TOGETHER
+                            LET'S WORK <br /> TOGETHER
                         </h2>
-                        <p style={{ color: "var(--secondary-text)", fontSize: "0.95rem", lineHeight: 1.6, marginBottom: 40, maxWidth: 400 }}>
+                        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "clamp(1rem, 1.1vw, 1.15rem)", lineHeight: 1.5, marginBottom: 48, maxWidth: 500 }}>
                             Let's build something impactful together—whether it's your brand, your website, or your next big idea.
                         </p>
 
-                        <div className="contact-form-stack">
-                            {/* Row 1: Name and Email */}
-                            <div className="contact-row">
+                        <div className="contact-form-layout">
+                            <div className="contact-grid">
                                 <div className="contact-field">
                                     <label className="field-label">Name</label>
                                     <input 
@@ -93,7 +106,6 @@ export function Contact() {
                                 </div>
                             </div>
 
-                            {/* Row 2: Service Needed */}
                             <div className="contact-field">
                                 <label className="field-label">Service Needed ?</label>
                                 <div style={{ position: "relative" }}>
@@ -102,23 +114,22 @@ export function Contact() {
                                         onChange={e => setForm({ ...form, service: e.target.value })}
                                         className="field-input select-input"
                                     >
-                                        <option value="" disabled style={{ color: "rgba(255,255,255,0.5)" }}>Select...</option>
-                                        <option value="ui_ux" style={{ background: "#222" }}>UI/UX Design</option>
-                                        <option value="dev" style={{ background: "#222" }}>Web Development</option>
-                                        <option value="data" style={{ background: "#222" }}>Data Analytics</option>
-                                        <option value="other" style={{ background: "#222" }}>Other</option>
+                                        <option value="" disabled>Select...</option>
+                                        <option value="ui_ux">UI/UX Design</option>
+                                        <option value="dev">Web Development</option>
+                                        <option value="data">Data Analytics</option>
+                                        <option value="other">Other</option>
                                     </select>
-                                    <div style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--secondary-text)" }}>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                                    <div style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "rgba(255,255,255,0.4)" }}>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Row 3: Message */}
                             <div className="contact-field">
                                 <label className="field-label">What Can I Help You...</label>
                                 <textarea 
-                                    rows={4} 
+                                    rows={5} 
                                     placeholder="Hello, I'd like to enquire about..." 
                                     value={form.message} 
                                     onChange={e => setForm({ ...form, message: e.target.value })}
@@ -126,14 +137,15 @@ export function Contact() {
                                 />
                             </div>
 
-                            {/* Action Button */}
-                            <div style={{ marginTop: 8 }}>
-                                <button 
+                            <div style={{ marginTop: 12 }}>
+                                <motion.button 
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
                                     onClick={submit}
                                     className="submit-btn"
                                 >
                                     {sent ? "SENT!" : "SUBMIT"}
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
                     </motion.div>
@@ -141,24 +153,23 @@ export function Contact() {
             </div>
 
             <style>{`
-                .contact-form-stack { display: flex; flexDirection: column; gap: 20px; }
-                .contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-                .field-label { display: block; fontSize: 13px; fontWeight: 700; color: var(--accent); margin-bottom: 8px; font-family: var(--font-heading); text-transform: uppercase; }
-                .field-input { width: 100%; padding: 14px 16px; border-radius: 12px; background: rgba(255,255,255,0.08); border: none; color: var(--text); font-size: 14px; outline: none; font-family: inherit; }
-                .select-input { appearance: none; }
+                .contact-form-layout { display: flex; flex-direction: column; gap: 24px; }
+                .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+                .field-label { display: block; font-size: 14px; font-weight: 700; color: #C4FF6B; margin-bottom: 12px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.05em; }
+                .field-input { width: 100%; padding: 18px 24px; border-radius: 20px; background: #1A1A1A; border: 1px solid rgba(255,255,255,0.05); color: #fff; font-size: 15px; outline: none; transition: 0.3s; }
+                .field-input:focus { border-color: #C4FF6B; background: #222; }
+                .select-input { appearance: none; cursor: pointer; }
                 .field-textarea { resize: none; }
-                .submit-btn { padding: 12px 32px; border-radius: 100px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-family: var(--font-heading); fontWeight: 700; font-size: 16px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; letter-spacing: 0.05em; }
-                
-                .submit-btn:hover { background: var(--accent); color: #000; transform: scale(1.05); }
+                .submit-btn { padding: 16px 48px; border-radius: 100px; background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff; font-family: var(--font-heading); font-weight: 700; font-size: 20px; text-transform: uppercase; cursor: pointer; transition: 0.3s; letter-spacing: 0.05em; }
+                .submit-btn:hover { border-color: #C4FF6B; color: #C4FF6B; }
 
                 @media (max-width: 640px) {
-                    .contact-row { grid-template-columns: 1fr; }
-                }
-                @media (max-width: 992px) {
-                    #Contact .grid-2 { grid-template-columns: 1fr; gap: 48px; }
+                    .contact-grid { grid-template-columns: 1fr; }
+                    .container { padding: 0 20px; }
                 }
             `}</style>
         </section>
     );
 }
+
 

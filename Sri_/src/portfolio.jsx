@@ -1,26 +1,31 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Lenis from "@studio-freight/lenis";
 import { Cursor } from "./components/common/Cursor";
 import { Particles } from "./components/common/Particles";
 import { Navbar } from "./components/layout/Navbar";
-import { Hero } from "./components/sections/Hero";
-import { About } from "./components/sections/About";
-// import { MarqueeStrip } from "./components/sections/MarqueeStrip";
-import { Skills } from "./components/sections/Skills";
-import { CaseStudies } from "./components/sections/CaseStudies";
-import { Projects } from "./components/sections/Projects";
-import { Services } from "./components/sections/Services";
-import { FAQ } from "./components/sections/FAQ";
-import { Contact } from "./components/sections/Contact";
 import { Footer } from "./components/layout/Footer";
 import Loader from "./components/common/Loader";
 import { ThemeToggle } from "./components/common/ThemeToggle";
-import { useScrollSpy } from "./hooks/useScrollSpy";
 import "./styles/global.css";
-import { Testimonials } from "./components/sections/Testimonials";
+
+// Pages
+import { Home } from "./pages/Home";
+import { AboutUs } from "./pages/AboutUs";
+import { ProjectsPage } from "./pages/ProjectsPage";
+import { BlogsPage } from "./pages/BlogsPage";
+import { ContactPage } from "./pages/ContactPage";
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 export default function App() {
-  const active = useScrollSpy();
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
@@ -59,34 +64,38 @@ export default function App() {
   }
 
   return (
-    <div style={{ background: "var(--bg)", color: "var(--text)" }}>
-      <Cursor />
-      <Particles count={24} />
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <Navbar active={active} />
-        <Hero />
-        <About />
-        <Services />
-        <Skills />
-        {/* <MarqueeStrip /> */}
-        <CaseStudies />
-        <Projects />
-        <Testimonials />
-        <FAQ />
-        <Contact />
-        <Footer />
-        
-        {/* Fixed Theme Toggle */}
-        <div style={{ 
-          position: "fixed", 
-          bottom: "32px", 
-          left: "50%", 
-          transform: "translateX(-50%)", 
-          zIndex: 9999 
-        }}>
-          <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+    <BrowserRouter>
+      <ScrollToTop />
+      <div style={{ background: "var(--bg)", color: "var(--text)" }}>
+        <Cursor />
+        <Particles count={24} />
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <Navbar />
+          
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/blogs" element={<BlogsPage />} />
+            <Route path="/contact-us" element={<ContactPage />} />
+          </Routes>
+
+
+          <Footer />
+          
+          {/* Fixed Theme Toggle */}
+          <div style={{ 
+            position: "fixed", 
+            bottom: "32px", 
+            left: "50%", 
+            transform: "translateX(-50%)", 
+            zIndex: 9999 
+          }}>
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+          </div>
         </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
+

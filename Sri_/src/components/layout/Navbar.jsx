@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import { NAV_LINKS } from "../../data/portfolioData";
 
 import portrait from "../../assets/hero-portrait.png";
 
-export function Navbar({ active }) {
+export function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const h = () => setScrolled(window.scrollY > 50);
@@ -14,9 +16,21 @@ export function Navbar({ active }) {
         return () => window.removeEventListener("scroll", h);
     }, []);
 
-    const scrollTo = (id) => {
-        setMenuOpen(false);
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const getPath = (link) => {
+        switch(link) {
+            case "Home": return "/";
+            case "About us": return "/about-us";
+            case "Projects": return "/projects";
+            case "Blogs": return "/blogs";
+            case "Contact us": return "/contact-us";
+            default: return "/";
+        }
+    };
+
+
+    const isActive = (link) => {
+        const path = getPath(link);
+        return location.pathname === path;
     };
 
     return (
@@ -91,26 +105,26 @@ export function Navbar({ active }) {
                                 style={{ display: "flex", alignItems: "center", gap: 6 }}
                             >
                                 {/* Profile Area (Small) */}
-                                <motion.button
-                                    layout
-                                    onClick={() => scrollTo("Hero")}
-                                    style={{
-                                        background: "var(--accent)",
-                                        color: "#000",
-                                        height: 40,
-                                        width: 40,
-                                        borderRadius: 100,
-                                        border: "none",
-                                        fontWeight: 800,
-                                        fontSize: 16,
-                                        cursor: "pointer",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        flexShrink: 0
-                                    }}>
-                                    S
-                                </motion.button>
+                                <Link to="/" style={{ textDecoration: "none" }}>
+                                    <motion.div
+                                        layout
+                                        style={{
+                                            background: "var(--accent)",
+                                            color: "#000",
+                                            height: 40,
+                                            width: 40,
+                                            borderRadius: 100,
+                                            fontWeight: 800,
+                                            fontSize: 16,
+                                            cursor: "pointer",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flexShrink: 0
+                                        }}>
+                                        S
+                                    </motion.div>
+                                </Link>
 
                                 <motion.div
                                     layout
@@ -129,21 +143,23 @@ export function Navbar({ active }) {
                                                 style={{ display: "flex", alignItems: "center", gap: 2 }}
                                             >
                                                 {NAV_LINKS.map((link) => (
-                                                    <button key={link} onClick={() => scrollTo(link)}
+                                                    <Link 
+                                                        key={link} 
+                                                        to={getPath(link)}
                                                         style={{
                                                             padding: "8px 18px",
                                                             fontSize: 13,
                                                             fontWeight: 500,
                                                             borderRadius: 100,
-                                                            border: "none",
-                                                            background: active === link ? "var(--border)" : "transparent",
-                                                            color: active === link ? "var(--accent)" : "var(--secondary-text)",
+                                                            textDecoration: "none",
+                                                            background: isActive(link) ? "var(--border)" : "transparent",
+                                                            color: isActive(link) ? "var(--accent)" : "var(--secondary-text)",
                                                             cursor: "pointer",
                                                             transition: "0.3s ease",
                                                             whiteSpace: "nowrap"
                                                         }}>
                                                         {link}
-                                                    </button>
+                                                    </Link>
                                                 ))}
                                             </motion.div>
                                         ) : (
@@ -243,47 +259,55 @@ export function Navbar({ active }) {
                                 {/* Expanded Links */}
                                 <div style={{ display: "flex", flexDirection: "column", gap: 16, width: "100%", alignItems: "center" }}>
                                     {NAV_LINKS.map((link, i) => (
-                                        <motion.button
+                                        <Link
                                             key={link}
-                                            initial={{ opacity: 0, y: 10 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: 0.15 + i * 0.05 }}
-                                            onClick={() => scrollTo(link)}
+                                            to={getPath(link)}
+                                            onClick={() => setMenuOpen(false)}
                                             style={{
                                                 fontSize: 20,
                                                 fontWeight: 600,
-                                                color: active === link ? "var(--accent)" : "rgba(255,255,255,0.7)",
-                                                background: "none",
-                                                border: "none",
+                                                color: isActive(link) ? "var(--accent)" : "rgba(255,255,255,0.7)",
+                                                textDecoration: "none",
                                                 cursor: "pointer",
                                                 transition: "0.2s"
                                             }}
                                         >
-                                            {link}
-                                        </motion.button>
+                                            <motion.span
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.15 + i * 0.05 }}
+                                            >
+                                                {link}
+                                            </motion.span>
+                                        </Link>
                                     ))}
                                 </div>
 
                                 {/* Expanded Footer */}
-                                <motion.button
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: 0.35 }}
-                                    onClick={() => scrollTo("Contact")}
-                                    style={{
-                                        width: "100%",
-                                        background: "var(--accent)",
-                                        color: "#000",
-                                        padding: "16px 0",
-                                        borderRadius: 100,
-                                        border: "none",
-                                        fontSize: 16,
-                                        fontWeight: 700,
-                                        cursor: "pointer"
-                                    }}
+                                <Link
+                                    to="/contact-us"
+                                    onClick={() => setMenuOpen(false)}
+                                    style={{ textDecoration: "none" }}
                                 >
-                                    Contact
-                                </motion.button>
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: 0.35 }}
+                                        style={{
+                                            width: "100%",
+                                            background: "var(--accent)",
+                                            color: "#000",
+                                            padding: "16px 0",
+                                            borderRadius: 100,
+                                            textAlign: "center",
+                                            fontSize: 16,
+                                            fontWeight: 700,
+                                            cursor: "pointer"
+                                        }}
+                                    >
+                                        Contact
+                                    </motion.div>
+                                </Link>
                             </motion.div>
                         )}
                     </AnimatePresence>

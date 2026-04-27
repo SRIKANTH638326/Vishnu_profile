@@ -3,15 +3,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { SERVICES } from "../../data/portfolioData";
 import workspaceImg from "../../assets/workspace-services.png";
 
-export function Services() {
+export function Services({ hideImage = false }) {
     const [openId, setOpenId] = useState("01");
 
     return (
         <section id="Services" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)" }}>
             <div className="container">
-                <div className="grid-2" style={{ alignItems: "flex-start", gap: "clamp(40px, 8vw, 100px)" }}>
+                <div className={hideImage ? "" : "grid-2"} style={{ display: hideImage ? "block" : "grid", alignItems: "flex-start", gap: "clamp(40px, 8vw, 100px)" }}>
                     {/* Left Column: Content + Accordion */}
-                    <div style={{ width: "100%" }}>
+                    <div style={{ width: "100%", maxWidth: hideImage ? "800px" : "none" }}>
                         <motion.div 
                             initial={{ opacity: 0, y: 20 }} 
                             whileInView={{ opacity: 1, y: 0 }} 
@@ -39,19 +39,22 @@ export function Services() {
                     </div>
 
                     {/* Right Column: Tilted Image */}
-                    <div className="services-image-col">
-                        <motion.div 
-                            initial={{ opacity: 0, x: 50, rotate: 5 }}
-                            whileInView={{ opacity: 1, x: 0, rotate: -8 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, ease: "circOut" }}
-                            className="services-image-card"
-                        >
-                            <img src={workspaceImg} alt="Workspace" style={{ width: "100%", height: "auto", display: "block" }} />
-                            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(45deg, rgba(196, 255, 107, 0.05), transparent)" }} />
-                        </motion.div>
-                    </div>
+                    {!hideImage && (
+                        <div className="services-image-col">
+                            <motion.div 
+                                initial={{ opacity: 0, x: 50, rotate: 5 }}
+                                whileInView={{ opacity: 1, x: 0, rotate: -8 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, ease: "circOut" }}
+                                className="services-image-card"
+                            >
+                                <img src={workspaceImg} alt="Workspace" style={{ width: "100%", height: "auto", display: "block" }} />
+                                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(45deg, rgba(196, 255, 107, 0.05), transparent)" }} />
+                            </motion.div>
+                        </div>
+                    )}
                 </div>
+
             </div>
 
             <style>{`

@@ -1,4 +1,4 @@
-export const NAV_LINKS = ["Hero", "About", "Skills", "Case Studies", "Projects", "Services", "Contact"];
+export const NAV_LINKS = ["Home", "About us", "Projects", "Blogs", "Contact us"];
 export const ROLES = ["UI/UX Designer", "Data Analyst", "Frontend Developer", "Power BI Analyst", "Problem Solver"];
 
 export const SKILLS_DATA = {
@@ -160,5 +160,32 @@ export const TESTIMONIALS = [
         name: "Laura Bennett",
         role: "Small Business Owner",
         initials: "LB",
+    }
+];
+
+export const BLOG_DATA = [
+    {
+        id: 1,
+        title: "The Future of AI in UI/UX Design",
+        date: "May 15, 2025",
+        category: "AI & Design",
+        image: "blog-ai.png",
+        desc: "How artificial intelligence is reshaping the way we create and interact with digital interfaces."
+    },
+    {
+        id: 2,
+        title: "Data Visualization Best Practices",
+        date: "May 10, 2025",
+        category: "Analytics",
+        image: "blog-data.png",
+        desc: "Transforming complex datasets into clear, actionable insights through effective visual storytelling."
+    },
+    {
+        id: 3,
+        title: "Mastering Figma for Faster Workflows",
+        date: "May 5, 2025",
+        category: "Productivity",
+        image: "blog-figma.png",
+        desc: "Advanced tips and tricks to optimize your design process and collaborate more effectively in Figma."
     }
 ];
