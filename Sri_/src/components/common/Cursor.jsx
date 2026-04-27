@@ -27,6 +27,9 @@ export function Cursor() {
         return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(raf); };
     }, []);
 
+    // Cursor animation hidden — remove the return null below to re-enable
+    return null;
+
     return (
         <>
             <div ref={dot} style={{ position: "fixed", width: 8, height: 8, background: "#c4ff6b66", borderRadius: "50%", pointerEvents: "none", zIndex: 9999, transform: "translate(-50%,-50%)", boxShadow: "0 0 10px #c4ff6b66" }} />

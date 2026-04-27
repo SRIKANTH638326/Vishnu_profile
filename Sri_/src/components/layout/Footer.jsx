@@ -20,8 +20,9 @@ export function Footer() {
                     onMouseEnter={e => e.currentTarget.style.transform = "translateY(-4px)"}
                     onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}>↑</button>
             </div>
-            <div style={{ textAlign: "center", marginTop: 20, fontSize: 11, color: "var(--secondary-text)", opacity: 0.6 }}>
-                © {new Date().getFullYear()} Srikanth C. All rights reserved.
+            <div style={{ textAlign: "center", marginTop: 20, fontSize: 11, color: "var(--secondary-text)", opacity: 0.6, display: "flex", justifyContent: "center", gap: "10px" }}>
+                <span>© {new Date().getFullYear()} Srikanth C. All rights reserved.</span>
+                <a href="/admin/login" style={{ color: "inherit", textDecoration: "none" }}>· Admin</a>
             </div>
         </footer>
     );

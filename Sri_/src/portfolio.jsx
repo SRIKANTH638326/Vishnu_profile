@@ -16,6 +16,38 @@ import { ProjectsPage } from "./pages/ProjectsPage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
 
+// Admin Imports
+import { AdminProvider } from "./context/AdminContext";
+import { ProtectedRoute } from "./components/admin/ProtectedRoute";
+import { AdminLayout } from "./components/admin/AdminLayout";
+import { Login } from "./pages/admin/Login";
+import { Dashboard } from "./pages/admin/Dashboard";
+import { ManageProjects } from "./pages/admin/ManageProjects";
+import { ManageBlogs } from "./pages/admin/ManageBlogs";
+import { Messages } from "./pages/admin/Messages";
+import { Settings } from "./pages/admin/Settings";
+import { ManageExperience } from "./pages/admin/ManageExperience";
+import { ManageTestimonials } from "./pages/admin/ManageTestimonials";
+import { ManageSkills } from "./pages/admin/ManageSkills";
+import { ManageServices } from "./pages/admin/ManageServices";
+
+
+
+// Simple wrapper to check if we are in admin mode to hide public layout
+const PublicLayout = ({ children }) => {
+  const { pathname } = useLocation();
+  const isAdminPath = pathname.startsWith("/admin");
+
+  return (
+    <>
+      {!isAdminPath && <Navbar />}
+      {children}
+      {!isAdminPath && <Footer />}
+    </>
+  );
+};
+
+
 // Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -64,24 +96,41 @@ export default function App() {
   }
 
   return (
-    <BrowserRouter>
-      <ScrollToTop />
+    <AdminProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+
       <div style={{ background: "var(--bg)", color: "var(--text)" }}>
         <Cursor />
         <Particles count={24} />
         <div style={{ position: "relative", zIndex: 1 }}>
-          <Navbar />
-          
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/blogs" element={<BlogsPage />} />
-            <Route path="/contact-us" element={<ContactPage />} />
-          </Routes>
+          <PublicLayout>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/blogs" element={<BlogsPage />} />
+              <Route path="/contact-us" element={<ContactPage />} />
 
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<Login />} />
+              <Route path="admin" element={<ProtectedRoute />}>
+                <Route element={<AdminLayout />}>
+                  <Route path="dashboard" element={<Dashboard />} />
+                  <Route path="projects" element={<ManageProjects />} />
+                  <Route path="blogs" element={<ManageBlogs />} />
+                  <Route path="messages" element={<Messages />} />
+                  <Route path="settings" element={<Settings />} />
+                  <Route path="experience" element={<ManageExperience />} />
+                  <Route path="testimonials" element={<ManageTestimonials />} />
+                  <Route path="skills" element={<ManageSkills />} />
+                  <Route path="services" element={<ManageServices />} />
+                </Route>
+              </Route>
+            </Routes>
+          </PublicLayout>
 
-          <Footer />
           
           {/* Fixed Theme Toggle */}
           <div style={{ 
@@ -95,7 +144,9 @@ export default function App() {
           </div>
         </div>
       </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AdminProvider>
   );
 }
+
 
