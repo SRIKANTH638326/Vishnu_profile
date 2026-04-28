@@ -13,15 +13,13 @@ const scrollbarStyle = `
 import {
   FiGrid,
   FiFileText,
-  FiClipboard,
   FiBriefcase,
-  FiMessageSquare,
   FiLogOut,
   FiSidebar,
   FiAward,
-  FiStar,
   FiZap,
-  FiLayers
+  FiLayers,
+  FiUser
 } from "react-icons/fi";
 import { useAdmin } from "../../context/AdminContext";
 
@@ -50,39 +48,45 @@ const NavItem = ({ to, icon: Icon, label, active }) => (
 );
 
 
-export const Sidebar = () => {
+export const Sidebar = ({ isOpen, toggle, isMobile }) => {
   const location = useLocation();
   const { logout } = useAdmin();
 
   const mainItems = [
     { to: "/admin/dashboard",    icon: FiGrid,       label: "Dashboard"    },
-    { to: "/admin/projects",     icon: FiFileText,   label: "Projects"     },
-    { to: "/admin/blogs",        icon: FiClipboard,  label: "Blogs"        },
-    { to: "/admin/experience",   icon: FiAward,      label: "Experience"   },
-    { to: "/admin/testimonials", icon: FiStar,       label: "Testimonials" },
+    { to: "/admin/projects",     icon: FiFileText,   label: "Project"      },
     { to: "/admin/skills",       icon: FiZap,        label: "Skills"       },
+    { to: "/admin/experience",   icon: FiAward,      label: "Experience"   },
     { to: "/admin/services",     icon: FiLayers,     label: "Services"     },
-    { to: "/admin/messages",     icon: FiMessageSquare, label: "Messages"  },
+    { to: "/admin/profile",      icon: FiUser,       label: "Profile"      },
     { to: "/admin/settings",     icon: FiBriefcase,  label: "Settings"     },
   ];
 
   return (
-    <div style={{
-      width: "280px",
-      height: "calc(100vh - 40px)",
-      background: "#c4ff6b",
-      margin: "20px",
-      borderRadius: "32px",
-      padding: "32px 16px",
-      display: "flex",
-      flexDirection: "column",
-      position: "fixed",
-      left: 0,
-      top: 0,
-      zIndex: 100,
-      overflow: "hidden",
-      boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
-    }}>
+    <motion.div 
+      initial={false}
+      animate={{ 
+        x: isOpen ? 0 : (isMobile ? "-110%" : "-100%"),
+        opacity: isOpen ? 1 : 0
+      }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      style={{
+        width: "280px",
+        height: isMobile ? "calc(100vh - 20px)" : "calc(100vh - 40px)",
+        background: "#c4ff6b",
+        margin: isMobile ? "10px" : "20px",
+        borderRadius: "32px",
+        padding: "32px 16px",
+        display: "flex",
+        flexDirection: "column",
+        position: "fixed",
+        left: 0,
+        top: 0,
+        zIndex: 100,
+        overflow: "hidden",
+        boxShadow: "0 20px 40px rgba(0,0,0,0.2)"
+      }}
+    >
       <style>{scrollbarStyle}</style>
 
       {/* Top Header */}
@@ -109,7 +113,12 @@ export const Sidebar = () => {
             }}>S</div>
             <span style={{ color: "#000", fontWeight: "bold", fontSize: "1.2rem", letterSpacing: "1px" }}>SRI_</span>
           </div>
-          <FiSidebar color="#000" size={24} style={{ cursor: "pointer", opacity: 0.6 }} />
+          <FiSidebar 
+            onClick={toggle}
+            color="#000" 
+            size={24} 
+            style={{ cursor: "pointer", opacity: 0.6 }} 
+          />
         </div>
         <div style={{ height: "1px", background: "rgba(0,0,0,0.1)", marginBottom: "20px" }}></div>
       </div>
@@ -161,8 +170,6 @@ export const Sidebar = () => {
           <span>Logout</span>
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
-
-

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FiPlus, FiTrash2, FiZap } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { Modal } from "../../components/common/Modal";
+import { DeleteConfirmModal } from "../../components/admin/DeleteConfirmModal";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const defaultSkills = [
   { id: 1, name: "React", level: 90, category: "Frontend" },
@@ -17,6 +19,8 @@ export const ManageSkills = () => {
   const [skills, setSkills] = useState(defaultSkills);
   const [isAdding, setIsAdding] = useState(false);
   const [form, setForm] = useState({ name: "", level: 80, category: "Frontend" });
+  const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
+  const { width } = useWindowSize();
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -24,6 +28,15 @@ export const ManageSkills = () => {
     setSkills([{ id: Date.now(), ...form, level: Number(form.level) }, ...skills]);
     setIsAdding(false);
     setForm({ name: "", level: 80, category: "Frontend" });
+  };
+
+  const handleDelete = (id) => {
+    setDeleteModal({ isOpen: true, id });
+  };
+
+  const confirmDelete = () => {
+    setSkills(skills.filter(s => s.id !== deleteModal.id));
+    setDeleteModal({ isOpen: false, id: null });
   };
 
   const grouped = categories.reduce((acc, cat) => {
@@ -34,21 +47,51 @@ export const ManageSkills = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "40px" }}>
+      <div style={{ 
+        display: "flex", 
+        flexDirection: width < 640 ? "column" : "row",
+        justifyContent: "space-between", 
+        alignItems: width < 640 ? "flex-start" : "center", 
+        gap: "20px",
+        marginBottom: "40px" 
+      }}>
         <div>
-          <h2 style={{ fontSize: "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>Skills</h2>
+          <h2 style={{ 
+            fontSize: width < 640 ? "1.6rem" : "2rem", 
+            fontFamily: "Antonio, sans-serif", 
+            marginBottom: "8px" 
+          }}>
+            Skills
+          </h2>
           <p style={{ color: "rgba(255,255,255,0.5)" }}>Manage your technical skills and proficiency levels.</p>
         </div>
         <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
           onClick={() => setIsAdding(!isAdding)}
-          style={{ display: "flex", alignItems: "center", gap: "8px", padding: "12px 24px", background: "var(--accent)", color: "#000", border: "none", borderRadius: "12px", fontWeight: "bold", cursor: "pointer" }}>
+          style={{ 
+            display: "flex", 
+            alignItems: "center", 
+            justifyContent: "center",
+            gap: "8px", 
+            padding: "12px 24px", 
+            background: "var(--accent)", 
+            color: "#000", 
+            border: "none", 
+            borderRadius: "12px", 
+            fontWeight: "bold", 
+            cursor: "pointer",
+            width: width < 640 ? "100%" : "auto"
+          }}>
           <FiPlus size={20} /> {isAdding ? "Cancel" : "Add Skill"}
         </motion.button>
       </div>
 
       <Modal isOpen={isAdding} onClose={() => setIsAdding(false)} title="Add Skill">
         <form onSubmit={handleAdd}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "20px" }}>
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr 1fr", 
+            gap: "20px" 
+          }}>
             <div>
               <label style={labelStyle}>Skill Name</label>
               <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={inputStyle} placeholder="e.g. React" required />
@@ -82,7 +125,7 @@ export const ManageSkills = () => {
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                     <span style={{ color: "var(--accent)", fontWeight: "bold" }}>{skill.level}%</span>
-                    <button onClick={() => setSkills(skills.filter(s => s.id !== skill.id))} style={{ background: "none", border: "none", color: "#ff4d4d", cursor: "pointer", padding: "2px" }}><FiTrash2 size={16} /></button>
+                    <button onClick={() => handleDelete(skill.id)} style={{ background: "none", border: "none", color: "#ff4d4d", cursor: "pointer", padding: "2px" }}><FiTrash2 size={16} /></button>
                   </div>
                 </div>
                 <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "100px", height: "6px", overflow: "hidden" }}>
@@ -98,6 +141,14 @@ export const ManageSkills = () => {
           </div>
         </div>
       ))}
+
+      <DeleteConfirmModal 
+        isOpen={deleteModal.isOpen}
+        onClose={() => setDeleteModal({ isOpen: false, id: null })}
+        onConfirm={confirmDelete}
+        title="Delete Skill?"
+        message="Are you sure you want to remove this skill from your tech stack?"
+      />
     </div>
   );
 };

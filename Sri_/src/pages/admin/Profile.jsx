@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FiSave, FiUser, FiGlobe, FiShare2, FiLock } from "react-icons/fi";
+import { FiSave, FiUser, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toast } from "../../components/common/Toast";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-const SettingSection = ({ title, icon: Icon, children, width }) => (
+const ProfileSection = ({ title, icon: Icon, children, width }) => (
   <div style={{
     background: "rgba(255, 255, 255, 0.03)",
     border: "1px solid rgba(255, 255, 255, 0.05)",
@@ -42,20 +42,19 @@ const InputGroup = ({ label, placeholder, type = "text", value }) => (
   </div>
 );
 
-export const Settings = () => {
+export const Profile = () => {
   const [showToast, setShowToast] = useState(false);
-  const [activeTab, setActiveTab] = useState("general");
+  const [activeTab, setActiveTab] = useState("personal");
   const { width } = useWindowSize();
+  const isMobile = width < 640;
 
   const handleSave = () => {
     setShowToast(true);
   };
 
   const tabs = [
-    { id: "general", label: "General", icon: FiUser },
-    { id: "seo", label: "SEO & Global", icon: FiGlobe },
-    { id: "social", label: "Social", icon: FiShare2 },
-    { id: "security", label: "Security", icon: FiLock }
+    { id: "personal", label: "Personal Info", icon: FiUser },
+    { id: "contact", label: "Contact Details", icon: FiMail }
   ];
 
   return (
@@ -74,10 +73,10 @@ export const Settings = () => {
             fontFamily: "Antonio, sans-serif", 
             marginBottom: "8px" 
           }}>
-            Settings
+            My Profile
           </h2>
           <p style={{ color: "rgba(255, 255, 255, 0.5)" }}>
-            Configure your portfolio's global identity and security.
+            Manage your personal details and contact information.
           </p>
         </div>
         <motion.button
@@ -87,6 +86,7 @@ export const Settings = () => {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: "8px",
             padding: "12px 24px",
             background: "var(--accent)",
@@ -99,20 +99,19 @@ export const Settings = () => {
           }}
         >
           <FiSave size={20} />
-          Save Changes
+          Save Profile
         </motion.button>
       </div>
 
       {/* Tabs Header */}
       <div style={{ 
         display: "flex", 
-        gap: "4px", 
+        gap: "8px", 
         marginBottom: "32px", 
         borderBottom: "1px solid rgba(255,255,255,0.05)",
         paddingBottom: "8px",
         overflowX: "auto",
-        WebkitOverflowScrolling: "touch",
-        scrollbarWidth: "none"
+        WebkitOverflowScrolling: "touch"
       }}>
         {tabs.map(tab => (
           <button
@@ -122,7 +121,7 @@ export const Settings = () => {
               display: "flex",
               alignItems: "center",
               gap: "10px",
-              padding: "12px 20px",
+              padding: "12px 24px",
               background: activeTab === tab.id ? "rgba(196, 255, 107, 0.1)" : "transparent",
               color: activeTab === tab.id ? "var(--accent)" : "rgba(255,255,255,0.4)",
               border: "none",
@@ -130,7 +129,7 @@ export const Settings = () => {
               cursor: "pointer",
               transition: "0.3s",
               whiteSpace: "nowrap",
-              fontSize: "0.9rem",
+              fontSize: "0.95rem",
               fontWeight: "600"
             }}
           >
@@ -142,59 +141,43 @@ export const Settings = () => {
 
       <motion.div 
         key={activeTab}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {activeTab === "general" && (
-          <SettingSection title="General Profile" icon={FiUser} width={width}>
+        {activeTab === "personal" && (
+          <ProfileSection title="Personal Information" icon={FiUser} width={width}>
             <div style={{ 
               display: "grid", 
-              gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", 
+              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
               gap: "20px" 
             }}>
-              <InputGroup label="Full Name" value="Srikanth" />
-              <InputGroup label="Job Title" value="Full Stack Developer & AI Enthusiast" />
+              <InputGroup label="First Name" value="Srikanth" />
+              <InputGroup label="Last Name" value="Vishnu" />
             </div>
-            <InputGroup label="Bio" placeholder="Tell people about yourself..." />
-          </SettingSection>
+            <InputGroup label="Professional Bio" placeholder="Short bio for your profile..." />
+          </ProfileSection>
         )}
 
-        {activeTab === "seo" && (
-          <SettingSection title="SEO & Global" icon={FiGlobe} width={width}>
-            <InputGroup label="Site Title" value="Srikanth | Portfolio" />
-            <InputGroup label="Meta Description" placeholder="SEO description for Google..." />
-            <InputGroup label="Google Analytics ID" placeholder="UA-XXXXXXXXX-X" />
-          </SettingSection>
-        )}
-
-        {activeTab === "social" && (
-          <SettingSection title="Social Connections" icon={FiShare2} width={width}>
+        {activeTab === "contact" && (
+          <ProfileSection title="Contact Details" icon={FiMail} width={width}>
             <div style={{ 
               display: "grid", 
-              gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", 
+              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
               gap: "20px" 
             }}>
-              <InputGroup label="GitHub URL" value="github.com/srikanth" />
-              <InputGroup label="LinkedIn URL" value="linkedin.com/in/srikanth" />
-              <InputGroup label="Twitter/X URL" value="twitter.com/srikanth" />
-              <InputGroup label="Instagram URL" value="instagram.com/srikanth" />
+              <InputGroup label="Email Address" value="admin@example.com" />
+              <InputGroup label="Phone Number" value="+1 234 567 890" />
             </div>
-          </SettingSection>
-        )}
-
-        {activeTab === "security" && (
-          <SettingSection title="Security" icon={FiLock} width={width}>
-            <InputGroup label="New Admin Password" type="password" placeholder="Leave blank to keep current" />
-          </SettingSection>
+            <InputGroup label="Location" icon={FiMapPin} value="San Francisco, CA" />
+          </ProfileSection>
         )}
       </motion.div>
-
 
       <AnimatePresence>
         {showToast && (
           <Toast 
-            message="Settings saved successfully!" 
+            message="Profile updated successfully!" 
             onClose={() => setShowToast(false)} 
           />
         )}
@@ -202,4 +185,3 @@ export const Settings = () => {
     </div>
   );
 };
-

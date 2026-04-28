@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { FiMail, FiTrash2, FiCheckCircle, FiClock, FiUser } from "react-icons/fi";
 import { adminService } from "../../services/adminService";
 import { Modal } from "../../components/common/Modal";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isReading, setIsReading] = useState(false);
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
 
   useEffect(() => {
     setMessages(adminService.getMessages());
@@ -32,11 +35,11 @@ export const Messages = () => {
 
   return (
     <div>
-      <header style={{ marginBottom: "40px" }}>
-        <h2 style={{ fontSize: "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>
+      <header style={{ marginBottom: isMobile ? "24px" : "40px", textAlign: isMobile ? "center" : "left" }}>
+        <h2 style={{ fontSize: isMobile ? "1.6rem" : "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>
           Inbox
         </h2>
-        <p style={{ color: "rgba(255, 255, 255, 0.5)" }}>
+        <p style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: isMobile ? "0.9rem" : "1rem" }}>
           Manage inquiries and messages from your portfolio visitors.
         </p>
       </header>
@@ -49,14 +52,15 @@ export const Messages = () => {
               background: "rgba(255, 255, 255, 0.03)",
               border: "1px solid rgba(255, 255, 255, 0.05)",
               borderRadius: "20px",
-              padding: "24px",
-              display: "grid",
-              gridTemplateColumns: "auto 1fr auto",
-              alignItems: "center",
-              gap: "24px",
+              padding: isMobile ? "16px" : "24px",
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              alignItems: isMobile ? "flex-start" : "center",
+              gap: isMobile ? "16px" : "24px",
               transition: "0.3s",
               cursor: "pointer",
-              opacity: msg.status === "Read" ? 0.7 : 1
+              opacity: msg.status === "Read" ? 0.7 : 1,
+              position: "relative"
             }}
           >
             <div style={{
@@ -90,7 +94,18 @@ export const Messages = () => {
               <p style={{ fontSize: "0.95rem", color: "rgba(255, 255, 255, 0.7)", margin: 0 }}>{msg.subject}</p>
             </div>
 
-            <div style={{ textAlign: "right", display: "flex", alignItems: "center", gap: "24px" }}>
+            <div style={{ 
+              width: isMobile ? "100%" : "auto",
+              textAlign: isMobile ? "left" : "right", 
+              display: "flex", 
+              flexDirection: isMobile ? "row" : "row",
+              justifyContent: isMobile ? "space-between" : "flex-end",
+              alignItems: "center", 
+              gap: isMobile ? "0" : "24px",
+              borderTop: isMobile ? "1px solid rgba(255,255,255,0.05)" : "none",
+              paddingTop: isMobile ? "12px" : "0",
+              marginTop: isMobile ? "4px" : "0"
+            }}>
               <div style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255, 255, 255, 0.4)", fontSize: "0.85rem" }}>
                 <FiClock size={14} />
                 <span>{msg.date}</span>
@@ -101,7 +116,7 @@ export const Messages = () => {
                   style={{ ...actionButtonStyle, color: "#ff4d4d" }} 
                   title="Delete"
                 >
-                  <FiTrash2 size={18} />
+                  <FiTrash2 size={isMobile ? 20 : 18} />
                 </button>
               </div>
             </div>

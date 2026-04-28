@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FiPlus, FiEdit2, FiTrash2, FiEye } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { Modal } from "../../components/common/Modal";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const ManageBlogs = () => {
   const [blogs, setBlogs] = useState([
@@ -14,6 +15,7 @@ export const ManageBlogs = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
   const [formData, setFormData] = useState({ title: "", content: "", status: "Draft" });
+  const { width } = useWindowSize();
 
   const handleEditClick = (blog) => {
     setEditingBlog(blog);
@@ -33,12 +35,18 @@ export const ManageBlogs = () => {
     <div>
       <div style={{
         display: "flex",
+        flexDirection: width < 640 ? "column" : "row",
         justifyContent: "space-between",
-        alignItems: "center",
+        alignItems: width < 640 ? "flex-start" : "center",
+        gap: "20px",
         marginBottom: "40px"
       }}>
         <div>
-          <h2 style={{ fontSize: "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>
+          <h2 style={{ 
+            fontSize: width < 640 ? "1.6rem" : "2rem", 
+            fontFamily: "Antonio, sans-serif", 
+            marginBottom: "8px" 
+          }}>
             Blog Management
           </h2>
           <p style={{ color: "rgba(255, 255, 255, 0.5)" }}>
@@ -52,6 +60,7 @@ export const ManageBlogs = () => {
           style={{
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: "8px",
             padding: "12px 24px",
             background: "var(--accent)",
@@ -59,7 +68,8 @@ export const ManageBlogs = () => {
             border: "none",
             borderRadius: "12px",
             fontWeight: "bold",
-            cursor: "pointer"
+            cursor: "pointer",
+            width: width < 640 ? "100%" : "auto"
           }}
         >
           <FiPlus size={20} />
@@ -108,58 +118,96 @@ export const ManageBlogs = () => {
         </form>
       </Modal>
 
-      <div style={{
-        background: "rgba(255, 255, 255, 0.03)",
-        border: "1px solid rgba(255, 255, 255, 0.05)",
-        borderRadius: "24px",
-        overflow: "hidden"
-      }}>
-        <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
-          <thead>
-            <tr style={{ background: "rgba(255, 255, 255, 0.02)" }}>
-              <th style={thStyle}>Title</th>
-              <th style={thStyle}>Status</th>
-              <th style={thStyle}>Views</th>
-              <th style={thStyle}>Date</th>
-              <th style={thStyle}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {blogs.map((blog) => (
-              <tr key={blog.id} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.03)" }}>
-                <td style={tdStyle}>{blog.title}</td>
-                <td style={tdStyle}>
+      {width < 1024 ? (
+        /* Card View for Mobile/Tablet */
+        <div style={{ display: "grid", gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", gap: "20px" }}>
+          {blogs.map((blog) => (
+            <div key={blog.id} style={{
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.05)",
+              borderRadius: "20px",
+              padding: "24px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px"
+            }}>
+              <div>
+                <h3 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "12px" }}>{blog.title}</h3>
+                <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
                   <span style={{ 
                     padding: "4px 12px", 
                     background: blog.status === "Published" ? "rgba(163, 230, 53, 0.1)" : "rgba(255, 255, 255, 0.05)", 
                     color: blog.status === "Published" ? "#a3e635" : "rgba(255, 255, 255, 0.5)",
                     borderRadius: "20px",
-                    fontSize: "0.85rem",
+                    fontSize: "0.8rem",
                     fontWeight: "600"
                   }}>
                     {blog.status}
                   </span>
-                </td>
-                <td style={tdStyle}>{blog.views}</td>
-                <td style={tdStyle}>{blog.date}</td>
-                <td style={tdStyle}>
-                  <div style={{ display: "flex", gap: "12px" }}>
-                    <button style={actionButtonStyle} title="View"><FiEye size={16} /></button>
-                    <button 
-                      onClick={() => handleEditClick(blog)}
-                      style={actionButtonStyle} 
-                      title="Edit"
-                    >
-                      <FiEdit2 size={16} />
-                    </button>
-                    <button style={{ ...actionButtonStyle, color: "#ff4d4d" }} title="Delete"><FiTrash2 size={16} /></button>
-                  </div>
-                </td>
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem" }}>
+                    <FiEye size={14} style={{ verticalAlign: "middle", marginRight: "4px" }} />
+                    {blog.views}
+                  </span>
+                </div>
+                <p style={{ color: "rgba(255, 255, 255, 0.3)", fontSize: "0.8rem", marginTop: "12px" }}>{blog.date}</p>
+              </div>
+              <div style={{ display: "flex", gap: "12px", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "16px" }}>
+                <button style={actionButtonStyle}><FiEye size={18} /></button>
+                <button onClick={() => handleEditClick(blog)} style={actionButtonStyle}><FiEdit2 size={18} /></button>
+                <button style={{ ...actionButtonStyle, color: "#ff4d4d" }}><FiTrash2 size={18} /></button>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        /* Table View for Desktop */
+        <div style={{
+          background: "rgba(255, 255, 255, 0.03)",
+          border: "1px solid rgba(255, 255, 255, 0.05)",
+          borderRadius: "24px",
+          overflow: "hidden"
+        }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+            <thead>
+              <tr style={{ background: "rgba(255, 255, 255, 0.02)" }}>
+                <th style={thStyle}>Title</th>
+                <th style={thStyle}>Status</th>
+                <th style={thStyle}>Views</th>
+                <th style={thStyle}>Date</th>
+                <th style={thStyle}>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {blogs.map((blog) => (
+                <tr key={blog.id} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.03)" }}>
+                  <td style={tdStyle}>{blog.title}</td>
+                  <td style={tdStyle}>
+                    <span style={{ 
+                      padding: "4px 12px", 
+                      background: blog.status === "Published" ? "rgba(163, 230, 53, 0.1)" : "rgba(255, 255, 255, 0.05)", 
+                      color: blog.status === "Published" ? "#a3e635" : "rgba(255, 255, 255, 0.5)",
+                      borderRadius: "20px",
+                      fontSize: "0.85rem",
+                      fontWeight: "600"
+                    }}>
+                      {blog.status}
+                    </span>
+                  </td>
+                  <td style={tdStyle}>{blog.views}</td>
+                  <td style={tdStyle}>{blog.date}</td>
+                  <td style={tdStyle}>
+                    <div style={{ display: "flex", gap: "12px" }}>
+                      <button style={actionButtonStyle} title="View"><FiEye size={16} /></button>
+                      <button onClick={() => handleEditClick(blog)} style={actionButtonStyle} title="Edit"><FiEdit2 size={16} /></button>
+                      <button style={{ ...actionButtonStyle, color: "#ff4d4d" }} title="Delete"><FiTrash2 size={16} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Edit Blog Modal */}
       <Modal 

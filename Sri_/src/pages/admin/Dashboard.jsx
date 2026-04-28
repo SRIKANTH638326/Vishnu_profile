@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiUsers, FiBriefcase, FiFileText, FiMessageSquare, FiAward, FiStar, FiZap, FiLayers } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const StatCard = ({ title, value, icon: Icon, color, to }) => {
   const navigate = useNavigate();
@@ -55,6 +56,9 @@ const ActivityRow = ({ label, time, color }) => (
 export const Dashboard = () => {
   const navigate = useNavigate();
   const [views, setViews] = useState(1284);
+  const { width } = useWindowSize();
+  const isMobile = width < 768;
+  const isTablet = width < 1024;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -95,11 +99,11 @@ export const Dashboard = () => {
   return (
     <div>
       {/* Header */}
-      <header style={{ marginBottom: "40px" }}>
-        <h2 style={{ fontSize: "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>
+      <header style={{ marginBottom: isMobile ? "24px" : "40px", textAlign: isMobile ? "center" : "left" }}>
+        <h2 style={{ fontSize: isMobile ? "1.6rem" : "2rem", fontFamily: "Antonio, sans-serif", marginBottom: "8px" }}>
           Welcome back, Srikanth 👋
         </h2>
-        <p style={{ color: "rgba(255, 255, 255, 0.5)" }}>
+        <p style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: isMobile ? "0.9rem" : "1rem" }}>
           Here's an overview of your portfolio today.
         </p>
       </header>
@@ -107,7 +111,7 @@ export const Dashboard = () => {
       {/* Stats Grid */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+        gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(auto-fill, minmax(220px, 1fr))",
         gap: "20px",
         marginBottom: "40px"
       }}>
@@ -115,7 +119,11 @@ export const Dashboard = () => {
       </div>
 
       {/* Bottom Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "24px" }}>
+      <div style={{ 
+        display: "grid", 
+        gridTemplateColumns: isTablet ? "1fr" : "2fr 1fr", 
+        gap: "24px" 
+      }}>
 
         {/* Recent Activity */}
         <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "24px", padding: "32px" }}>

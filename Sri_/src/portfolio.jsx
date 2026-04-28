@@ -27,9 +27,9 @@ import { ManageBlogs } from "./pages/admin/ManageBlogs";
 import { Messages } from "./pages/admin/Messages";
 import { Settings } from "./pages/admin/Settings";
 import { ManageExperience } from "./pages/admin/ManageExperience";
-import { ManageTestimonials } from "./pages/admin/ManageTestimonials";
 import { ManageSkills } from "./pages/admin/ManageSkills";
 import { ManageServices } from "./pages/admin/ManageServices";
+import { Profile } from "./pages/admin/Profile";
 
 
 
@@ -119,12 +119,10 @@ export default function App() {
                 <Route element={<AdminLayout />}>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="projects" element={<ManageProjects />} />
-                  <Route path="blogs" element={<ManageBlogs />} />
-                  <Route path="messages" element={<Messages />} />
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="experience" element={<ManageExperience />} />
-                  <Route path="testimonials" element={<ManageTestimonials />} />
                   <Route path="skills" element={<ManageSkills />} />
+                  <Route path="experience" element={<ManageExperience />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="settings" element={<Settings />} />
                   <Route path="services" element={<ManageServices />} />
                 </Route>
               </Route>

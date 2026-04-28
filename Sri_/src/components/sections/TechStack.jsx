@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 const TOOLS = [
     {
         name: "Framer",
         desc: "My creative playground for building interactive and responsive websites—fast, flexible, and no code.",
-        icon: "⚡" // Replace with actual icons if needed
+        icon: "⚡"
     },
     {
         name: "Figma",
@@ -30,23 +31,43 @@ const TOOLS = [
 ];
 
 export function TechStack({ hideImage = false }) {
-    return (
-        <section id="TechStack" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)" }}>
-            <div className="container">
-                <div style={{ maxWidth: hideImage ? "800px" : "1100px" }}>
-                    
+    const { width } = useWindowSize();
+    const isMobile = width < 768;
 
+    return (
+        <section id="TechStack" className="section-pad" style={{ 
+            background: "var(--bg)", 
+            color: "var(--text)",
+            padding: isMobile ? "60px 0" : "120px 0" 
+        }}>
+            <div className="container">
+                <div style={{ maxWidth: hideImage ? "800px" : "1100px", margin: "0 auto" }}>
+                    
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        style={{ marginBottom: 48 }}
+                        style={{ marginBottom: isMobile ? 32 : 64, textAlign: isMobile ? "center" : "left" }}
                     >
-                        <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(2.5rem, 6vw, 6rem)", fontWeight: 800, textTransform: "uppercase", lineHeight: 0.9, marginBottom: 24 }}>
+                        <h2 style={{ 
+                            fontFamily: "var(--font-heading)", 
+                            fontSize: isMobile ? "2.5rem" : "clamp(3.5rem, 8vw, 6.5rem)", 
+                            fontWeight: 800, 
+                            textTransform: "uppercase", 
+                            lineHeight: 0.9, 
+                            marginBottom: isMobile ? 16 : 24,
+                            letterSpacing: "-0.02em"
+                        }}>
                             MY TECH STACK
                         </h2>
-                        <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.1rem", lineHeight: 1.6, maxWidth: 500 }}>
-                            I build with intention. Framer for fast, interactive web design. Figma for clean interfaces. Notion and X for content. Each tool supports how I think, design.
+                        <p style={{ 
+                            color: "rgba(255,255,255,0.7)", 
+                            fontSize: isMobile ? "0.95rem" : "1.1rem", 
+                            lineHeight: 1.6, 
+                            maxWidth: 500,
+                            margin: isMobile ? "0 auto" : "0"
+                        }}>
+                            I build with intention. Framer for fast, interactive web design. Figma for clean interfaces. Notion and X for content. Each tool supports how I think and design.
                         </p>
                     </motion.div>
 
@@ -54,38 +75,54 @@ export function TechStack({ hideImage = false }) {
                         {TOOLS.map((tool, i) => (
                             <motion.div
                                 key={tool.name}
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, x: isMobile ? 0 : -20, y: isMobile ? 20 : 0 }}
+                                whileInView={{ opacity: 1, x: 0, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
                                 style={{ 
                                     display: "flex", 
-                                    gap: 24, 
-                                    padding: "32px 0", 
+                                    flexDirection: isMobile ? "column" : "row",
+                                    gap: isMobile ? 16 : 24, 
+                                    padding: isMobile ? "24px 0" : "32px 0", 
                                     borderTop: "1px solid rgba(255,255,255,0.1)",
-                                    alignItems: "flex-start"
+                                    alignItems: isMobile ? "center" : "flex-start",
+                                    textAlign: isMobile ? "center" : "left"
                                 }}
                             >
                                 <div style={{ 
-                                    width: 56, 
-                                    height: 56, 
-                                    borderRadius: 16, 
+                                    width: isMobile ? 48 : 56, 
+                                    height: isMobile ? 48 : 56, 
+                                    borderRadius: isMobile ? 12 : 16, 
                                     background: "#1A1A1A", 
                                     display: "flex", 
                                     alignItems: "center", 
                                     justifyContent: "center", 
-                                    fontSize: 24,
+                                    fontSize: isMobile ? 20 : 24,
                                     flexShrink: 0,
                                     border: "1px solid rgba(255,255,255,0.05)"
                                 }}>
                                     {tool.icon}
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8, display: "flex", alignItems: "center", gap: 12 }}>
+                                    <h3 style={{ 
+                                        fontSize: isMobile ? 18 : 20, 
+                                        fontWeight: 700, 
+                                        marginBottom: 8, 
+                                        display: "flex", 
+                                        alignItems: "center", 
+                                        justifyContent: isMobile ? "center" : "flex-start",
+                                        gap: 12 
+                                    }}>
                                         {tool.name}
-                                        {tool.dot && <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#C4FF6B" }} />}
+                                        {tool.dot && <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#C4FF6B" }} />}
                                     </h3>
-                                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 15, lineHeight: 1.5, maxWidth: 400 }}>
+                                    <p style={{ 
+                                        color: "rgba(255,255,255,0.6)", 
+                                        fontSize: isMobile ? 14 : 15, 
+                                        lineHeight: 1.5, 
+                                        maxWidth: 400,
+                                        margin: isMobile ? "0 auto" : "0"
+                                    }}>
                                         {tool.desc}
                                     </p>
                                 </div>

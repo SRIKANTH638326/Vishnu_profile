@@ -1,7 +1,10 @@
 import React from "react";
-import { FiSearch, FiBell, FiUser, FiChevronDown } from "react-icons/fi";
+import { FiSearch, FiBell, FiUser, FiChevronDown, FiMenu } from "react-icons/fi";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
-export const AdminHeader = () => {
+export const AdminHeader = ({ onMenuClick }) => {
+  const { width } = useWindowSize();
+
   return (
     <header style={{
       display: "flex",
@@ -17,33 +20,57 @@ export const AdminHeader = () => {
       borderBottom: "1px solid rgba(255,255,255,0.02)"
     }}>
 
-      {/* Search Bar */}
-      <div style={{ position: "relative", width: "400px" }}>
-        <FiSearch style={{
-          position: "absolute",
-          left: "16px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          color: "rgba(255, 255, 255, 0.3)"
-        }} size={18} />
-        <input 
-          type="text" 
-          placeholder="Search projects, blogs, or messages..." 
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <button 
+          onClick={onMenuClick}
           style={{
-            width: "100%",
-            padding: "12px 16px 12px 48px",
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.05)",
-            borderRadius: "16px",
-            color: "#fff",
-            outline: "none",
-            fontSize: "0.95rem"
+            display: width <= 1024 ? "flex" : "none",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "44px",
+            height: "44px",
+            background: "rgba(255,255,255,0.03)",
+            border: "1px solid rgba(255,255,255,0.05)",
+            borderRadius: "14px",
+            color: "white",
+            cursor: "pointer"
           }}
-        />
+        >
+          <FiMenu size={20} />
+        </button>
+
+        {/* Search Bar */}
+        <div style={{ 
+          position: "relative", 
+          width: width < 768 ? "100%" : "400px",
+          display: width < 480 ? "none" : "block"
+        }}>
+          <FiSearch style={{
+            position: "absolute",
+            left: "16px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "rgba(255, 255, 255, 0.3)"
+          }} size={18} />
+          <input 
+            type="text" 
+            placeholder="Search..." 
+            style={{
+              width: "100%",
+              padding: "12px 16px 12px 48px",
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.05)",
+              borderRadius: "16px",
+              color: "#fff",
+              outline: "none",
+              fontSize: "0.95rem"
+            }}
+          />
+        </div>
       </div>
 
       {/* Right Side Actions */}
-      <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: width < 640 ? "12px" : "24px" }}>
         {/* Notifications */}
         <button style={{
           position: "relative",
@@ -53,7 +80,7 @@ export const AdminHeader = () => {
           width: "44px",
           height: "44px",
           borderRadius: "14px",
-          display: "flex",
+          display: width < 480 ? "none" : "flex",
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer"
@@ -76,12 +103,12 @@ export const AdminHeader = () => {
           display: "flex",
           alignItems: "center",
           gap: "12px",
-          padding: "6px 6px 6px 16px",
-          background: "rgba(255, 255, 255, 0.03)",
+          padding: width < 640 ? "4px" : "6px 6px 6px 16px",
+          background: width < 640 ? "transparent" : "rgba(255, 255, 255, 0.03)",
           borderRadius: "16px",
           cursor: "pointer"
         }}>
-          <div style={{ textAlign: "right" }}>
+          <div style={{ display: width < 640 ? "none" : "block", textAlign: "right" }}>
             <p style={{ fontSize: "0.9rem", fontWeight: "600", margin: 0 }}>Srikanth</p>
             <p style={{ fontSize: "0.75rem", color: "rgba(255, 255, 255, 0.4)", margin: 0 }}>Admin</p>
           </div>
@@ -97,8 +124,6 @@ export const AdminHeader = () => {
           }}>
             <FiUser size={20} />
           </div>
-
-
           <FiChevronDown size={16} color="rgba(255, 255, 255, 0.3)" />
         </div>
       </div>
