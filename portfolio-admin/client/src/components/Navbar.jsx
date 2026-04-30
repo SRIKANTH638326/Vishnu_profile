@@ -11,16 +11,17 @@ const Navbar = ({ onMenuClick }) => {
       justifyContent: "space-between",
       alignItems: "center",
       marginBottom: "40px",
-      padding: "20px 4px",
+      padding: "24px",
       position: "sticky",
       top: 0,
-      zIndex: 50,
+      zIndex: 10,
       background: "rgba(10, 10, 10, 0.8)",
       backdropFilter: "blur(12px)",
-      borderBottom: "1px solid rgba(255,255,255,0.02)"
+      border: "1px solid rgba(255,255,255,0.02)",
+      borderRadius: "16px"
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        <button 
+        <button
           onClick={onMenuClick}
           style={{
             display: width <= 1024 ? "flex" : "none",
@@ -30,7 +31,7 @@ const Navbar = ({ onMenuClick }) => {
             height: "44px",
             background: "rgba(255,255,255,0.03)",
             border: "1px solid rgba(255,255,255,0.05)",
-            borderRadius: "14px",
+            borderRadius: "16px",
             color: "white",
             cursor: "pointer"
           }}
@@ -38,35 +39,35 @@ const Navbar = ({ onMenuClick }) => {
           <FiMenu size={20} />
         </button>
 
-      {/* Search Bar */}
-      <div style={{ 
-        position: "relative", 
-        width: width < 768 ? "100%" : "400px",
-        display: width < 480 ? "none" : "block"
-      }}>
-        <FiSearch style={{
-          position: "absolute",
-          left: "16px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          color: "rgba(255, 255, 255, 0.3)"
-        }} size={18} />
-        <input 
-          type="text" 
-          placeholder="Search..." 
-          style={{
-            width: "100%",
-            padding: "12px 16px 12px 48px",
-            background: "rgba(255, 255, 255, 0.03)",
-            border: "1px solid rgba(255, 255, 255, 0.05)",
-            borderRadius: "16px",
-            color: "#fff",
-            outline: "none",
-            fontSize: "0.95rem"
-          }}
-        />
+        {/* Search Bar */}
+        <div style={{
+          position: "relative",
+          width: width < 768 ? "100%" : "400px",
+          display: width < 480 ? "none" : "block"
+        }}>
+          <FiSearch style={{
+            position: "absolute",
+            left: "16px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "rgba(255, 255, 255, 0.3)"
+          }} size={18} />
+          <input
+            type="text"
+            placeholder="Search..."
+            style={{
+              width: "100%",
+              padding: "12px 16px 12px 48px",
+              background: "rgba(255, 255, 255, 0.03)",
+              border: "1px solid rgba(255, 255, 255, 0.05)",
+              borderRadius: "16px",
+              color: "#fff",
+              outline: "none",
+              fontSize: "0.95rem"
+            }}
+          />
+        </div>
       </div>
-    </div>
 
       {/* Right Side Actions */}
       <div style={{ display: "flex", alignItems: "center", gap: width < 640 ? "12px" : "24px" }}>
@@ -78,7 +79,7 @@ const Navbar = ({ onMenuClick }) => {
           color: "rgba(255, 255, 255, 0.6)",
           width: "44px",
           height: "44px",
-          borderRadius: "14px",
+          borderRadius: "16px",
           display: width < 480 ? "none" : "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -114,7 +115,7 @@ const Navbar = ({ onMenuClick }) => {
           <div style={{
             width: "36px",
             height: "36px",
-            borderRadius: "12px",
+            borderRadius: "16px",
             background: "#c4ff6b", // Lime green theme color
             color: "#000",
             display: "flex",

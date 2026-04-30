@@ -53,29 +53,29 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
   const { logout } = useAdmin();
 
   const mainItems = [
-    { to: "/admin/dashboard",    icon: FiGrid,       label: "Dashboard"    },
-    { to: "/admin/projects",     icon: FiFileText,   label: "Project"      },
-    { to: "/admin/skills",       icon: FiZap,        label: "Skills"       },
-    { to: "/admin/experience",   icon: FiAward,      label: "Experience"   },
-    { to: "/admin/services",     icon: FiLayers,     label: "Services"     },
-    { to: "/admin/profile",      icon: FiUser,       label: "Profile"      },
-    { to: "/admin/settings",     icon: FiBriefcase,  label: "Settings"     },
+    { to: "/admin/dashboard", icon: FiGrid, label: "Dashboard" },
+    { to: "/admin/projects", icon: FiFileText, label: "Project" },
+    { to: "/admin/skills", icon: FiZap, label: "Skills" },
+    { to: "/admin/experience", icon: FiAward, label: "Experience" },
+    { to: "/admin/services", icon: FiLayers, label: "Services" },
+    { to: "/admin/profile", icon: FiUser, label: "Profile" },
+    { to: "/admin/settings", icon: FiBriefcase, label: "Settings" },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={false}
-      animate={{ 
+      animate={{
         x: isOpen ? 0 : (isMobile ? "-110%" : "-100%"),
         opacity: isOpen ? 1 : 0
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       style={{
         width: "280px",
-        height: isMobile ? "calc(100vh - 20px)" : "calc(100vh - 40px)",
+        height: isMobile ? "calc(100vh - 20px)" : "calc(100vh - 48px)",
         background: "#c4ff6b",
-        margin: isMobile ? "10px" : "20px",
-        borderRadius: "32px",
+        margin: isMobile ? "10px" : "24px",
+        borderRadius: "8px",
         padding: "32px 16px",
         display: "flex",
         flexDirection: "column",
@@ -113,21 +113,21 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
             }}>S</div>
             <span style={{ color: "#000", fontWeight: "bold", fontSize: "1.2rem", letterSpacing: "1px" }}>SRI_</span>
           </div>
-          <FiSidebar 
+          <FiSidebar
             onClick={toggle}
-            color="#000" 
-            size={24} 
-            style={{ cursor: "pointer", opacity: 0.6 }} 
+            color="#000"
+            size={24}
+            style={{ cursor: "pointer", opacity: 0.6 }}
           />
         </div>
         <div style={{ height: "1px", background: "rgba(0,0,0,0.1)", marginBottom: "20px" }}></div>
       </div>
 
       {/* Main Menu — explicitly scrollable */}
-      <nav 
-        className="admin-nav" 
+      <nav
+        className="admin-nav"
         data-lenis-prevent="true"
-        style={{ 
+        style={{
           flex: 1,
           overflowY: "auto",
           minHeight: 0,

@@ -130,7 +130,7 @@ const Profile = () => {
         <div style={{ 
           background: "rgba(255, 255, 255, 0.02)", 
           padding: isMobile ? "24px" : "40px", 
-          borderRadius: "24px",
+          borderRadius: "16px",
           border: "1px solid rgba(255, 255, 255, 0.05)"
         }}>
           <div style={{ 

@@ -70,28 +70,26 @@ export const Dashboard = () => {
   const stats = [
     { title: "Total Views",    value: views.toLocaleString(), icon: FiUsers,       color: "#a3e635", to: "/admin/dashboard"  },
     { title: "Projects",       value: "12",                   icon: FiBriefcase,   color: "#60a5fa", to: "/admin/projects"   },
-    { title: "Blog Posts",     value: "8",                    icon: FiFileText,    color: "#f472b6", to: "/admin/blogs"      },
-    { title: "Messages",       value: "3",                    icon: FiMessageSquare, color: "#fbbf24", to: "/admin/messages" },
+    // { title: "Blog Posts",     value: "8",                    icon: FiFileText,    color: "#f472b6", to: "/admin/blogs"      },
+    // { title: "Messages",       value: "3",                    icon: FiMessageSquare, color: "#fbbf24", to: "/admin/messages" },
     { title: "Experience",     value: "2 yrs",                icon: FiAward,       color: "#34d399", to: "/admin/experience" },
-    { title: "Testimonials",   value: "8",                    icon: FiStar,        color: "#f97316", to: "/admin/testimonials" },
+    // { title: "Testimonials",   value: "8",                    icon: FiStar,        color: "#f97316", to: "/admin/testimonials" },
     { title: "Skills",         value: "14",                   icon: FiZap,         color: "#a78bfa", to: "/admin/skills"    },
     { title: "Services",       value: "5",                    icon: FiLayers,      color: "#38bdf8", to: "/admin/services"  },
   ];
 
   const recentActivity = [
-    { label: "New message from John Doe",           time: "2h ago",  color: "#fbbf24" },
     { label: "Project 'AI Dashboard' added",        time: "5h ago",  color: "#60a5fa" },
     { label: "Skill 'TypeScript' updated",          time: "1d ago",  color: "#a78bfa" },
     { label: "Testimonial from Priya Nair added",   time: "2d ago",  color: "#f97316" },
     { label: "Service 'UI/UX Design' updated",      time: "3d ago",  color: "#34d399" },
-    { label: "Blog post published: Framer Motion",  time: "4d ago",  color: "#f472b6" },
   ];
 
   const quickActions = [
     { label: "Add New Project",   to: "/admin/projects",     bg: "var(--accent)", color: "#000" },
-    { label: "Write Blog Post",   to: "/admin/blogs",        bg: "rgba(255,255,255,0.05)", color: "#fff" },
+    // { label: "Write Blog Post",   to: "/admin/blogs",        bg: "rgba(255,255,255,0.05)", color: "#fff" },
     { label: "Add Experience",    to: "/admin/experience",   bg: "rgba(255,255,255,0.05)", color: "#fff" },
-    { label: "Add Testimonial",   to: "/admin/testimonials", bg: "rgba(255,255,255,0.05)", color: "#fff" },
+    // { label: "Add Testimonial",   to: "/admin/testimonials", bg: "rgba(255,255,255,0.05)", color: "#fff" },
     { label: "Update Skills",     to: "/admin/skills",       bg: "rgba(255,255,255,0.05)", color: "#fff" },
     { label: "Manage Services",   to: "/admin/services",     bg: "rgba(255,255,255,0.05)", color: "#fff" },
   ];
@@ -119,10 +117,10 @@ export const Dashboard = () => {
       </div>
 
       {/* Bottom Row */}
-      <div style={{ 
-        display: "grid", 
-        gridTemplateColumns: isTablet ? "1fr" : "2fr 1fr", 
-        gap: "24px" 
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: isTablet ? "1fr" : "2fr 1fr",
+        gap: "24px"
       }}>
 
         {/* Recent Activity */}

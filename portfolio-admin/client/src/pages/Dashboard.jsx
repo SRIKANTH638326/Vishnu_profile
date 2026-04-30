@@ -9,7 +9,7 @@ const StatCard = ({ title, value, change, icon: Icon, color }) => (
     style={{
       background: "rgba(255, 255, 255, 0.03)",
       border: "1px solid rgba(255, 255, 255, 0.05)",
-      borderRadius: "24px",
+      borderRadius: "8px",
       padding: "24px",
       display: "flex",
       flexDirection: "column",
@@ -67,25 +67,25 @@ const Dashboard = () => {
       </header>
 
       {/* Stats Grid */}
-      <div style={{ 
-        display: "grid", 
-        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", 
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
         gap: "20px",
         marginBottom: "40px"
       }}>
         {stats.map(s => <StatCard key={s.title} {...s} />)}
       </div>
 
-      {/* Bottom Row */}
-      <div style={{ 
-        display: "grid", 
-        gridTemplateColumns: width < 1024 ? "1fr" : "2fr 1fr", 
-        gap: "24px" 
+      Bottom Row
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: width < 1024 ? "1fr" : "2fr 1fr",
+        gap: "24px"
       }}>
         {/* Recent Activity */}
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "24px", padding: "32px" }}>
+        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "8px", padding: "32px" }}>
           <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "24px" }}>Recent Activity</h3>
-          {[1,2,3].map(i => (
+          {[1, 2, 3].map(i => (
             <div key={i} style={{ display: "flex", gap: "16px", marginBottom: "20px", paddingBottom: "20px", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
               <div style={{ width: "40px", height: "40px", borderRadius: "10px", background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <FiActivity size={20} color="#c4ff6b" />
@@ -99,7 +99,7 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Tips */}
-        <div style={{ background: "rgba(196, 255, 107, 0.1)", border: "1px solid rgba(196, 255, 107, 0.2)", borderRadius: "24px", padding: "32px", color: "#c4ff6b" }}>
+        <div style={{ background: "rgba(196, 255, 107, 0.1)", border: "1px solid rgba(196, 255, 107, 0.2)", borderRadius: "8px", padding: "32px", color: "#c4ff6b" }}>
           <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "16px" }}>Pro Tip</h3>
           <p style={{ lineHeight: "1.6", color: "rgba(196, 255, 107, 0.8)" }}>
             Keep your portfolio fresh by updating your projects once a month. High engagement is linked to recent activity!

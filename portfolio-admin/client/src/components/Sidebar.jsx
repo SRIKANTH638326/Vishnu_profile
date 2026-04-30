@@ -34,7 +34,7 @@ const NavItem = ({ to, icon: Icon, label, active }) => (
         alignItems: "center",
         gap: "14px",
         padding: "12px 20px",
-        borderRadius: "12px",
+        borderRadius: "8px",
         background: active ? "#000000" : "transparent",
         color: active ? "#c4ff6b" : "#000000",
         transition: "0.3s",
@@ -53,29 +53,29 @@ const Sidebar = ({ isOpen, toggle, isMobile }) => {
   const location = useLocation();
 
   const mainItems = [
-    { to: "/",                   icon: FiGrid,       label: "Dashboard"    },
-    { to: "/projects",           icon: FiFileText,   label: "Project"      },
-    { to: "/skills",             icon: FiZap,        label: "Skills"       },
-    { to: "/experience",         icon: FiAward,      label: "Experience"   },
-    { to: "/profile",            icon: FiUser,       label: "Profile"      },
-    { to: "/settings",           icon: FiBriefcase,  label: "Settings"     },
-    { to: "/services",           icon: FiLayers,     label: "Services"     },
+    { to: "/", icon: FiGrid, label: "Dashboard" },
+    { to: "/projects", icon: FiFileText, label: "Project" },
+    { to: "/skills", icon: FiZap, label: "Skills" },
+    { to: "/experience", icon: FiAward, label: "Experience" },
+    { to: "/profile", icon: FiUser, label: "Profile" },
+    { to: "/settings", icon: FiBriefcase, label: "Settings" },
+    { to: "/services", icon: FiLayers, label: "Services" },
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={false}
-      animate={{ 
+      animate={{
         x: isOpen ? 0 : (isMobile ? "-110%" : "-100%"),
         opacity: isOpen ? 1 : 0
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       style={{
         width: "280px",
-        height: isMobile ? "calc(100vh - 20px)" : "calc(100vh - 40px)",
+        height: isMobile ? "calc(100vh - 20px)" : "calc(100vh - 48px)",
         background: "#c4ff6b",
-        margin: isMobile ? "10px" : "20px",
-        borderRadius: "32px",
+        margin: isMobile ? "10px" : "24px",
+        borderRadius: "8px",
         padding: "32px 16px",
         display: "flex",
         flexDirection: "column",
@@ -113,20 +113,20 @@ const Sidebar = ({ isOpen, toggle, isMobile }) => {
             }}>S</div>
             <span style={{ color: "#000", fontWeight: "bold", fontSize: "1.2rem", letterSpacing: "1px" }}>SRI_</span>
           </div>
-          <FiSidebar 
+          <FiSidebar
             onClick={toggle}
-            color="#000" 
-            size={24} 
-            style={{ cursor: "pointer", opacity: 0.6 }} 
+            color="#000"
+            size={24}
+            style={{ cursor: "pointer", opacity: 0.6 }}
           />
         </div>
         <div style={{ height: "1px", background: "rgba(0,0,0,0.1)", marginBottom: "20px" }}></div>
       </div>
 
       {/* Main Menu — explicitly scrollable */}
-      <nav 
-        className="admin-nav" 
-        style={{ 
+      <nav
+        className="admin-nav"
+        style={{
           flex: 1,
           overflowY: "auto",
           minHeight: 0,
@@ -153,7 +153,7 @@ const Sidebar = ({ isOpen, toggle, isMobile }) => {
             alignItems: "center",
             gap: "14px",
             padding: "12px 20px",
-            borderRadius: "12px",
+            borderRadius: "8px",
             background: "rgba(255, 0, 0, 0.1)",
             color: "#D00",
             border: "none",

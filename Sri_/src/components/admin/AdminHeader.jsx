@@ -2,7 +2,7 @@ import React from "react";
 import { FiSearch, FiBell, FiUser, FiChevronDown, FiMenu } from "react-icons/fi";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
-export const AdminHeader = ({ onMenuClick }) => {
+export const AdminHeader = ({ onMenuClick, isSidebarOpen }) => {
   const { width } = useWindowSize();
 
   return (
@@ -15,24 +15,24 @@ export const AdminHeader = ({ onMenuClick }) => {
       position: "sticky",
       top: 0,
       zIndex: 50,
-      background: "rgba(10, 10, 10, 0.8)",
+      background: "var(--card-bg)",
       backdropFilter: "blur(12px)",
-      borderBottom: "1px solid rgba(255,255,255,0.02)"
+      borderBottom: "1px solid var(--border)"
     }}>
 
       <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-        <button 
+        <button
           onClick={onMenuClick}
           style={{
-            display: width <= 1024 ? "flex" : "none",
+            display: width <= 1024 || !isSidebarOpen ? "flex" : "none",
             alignItems: "center",
             justifyContent: "center",
             width: "44px",
             height: "44px",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.05)",
+            background: "var(--bg)",
+            border: "1px solid var(--border)",
             borderRadius: "14px",
-            color: "white",
+            color: "var(--text)",
             cursor: "pointer"
           }}
         >
@@ -40,8 +40,8 @@ export const AdminHeader = ({ onMenuClick }) => {
         </button>
 
         {/* Search Bar */}
-        <div style={{ 
-          position: "relative", 
+        <div style={{
+          position: "relative",
           width: width < 768 ? "100%" : "400px",
           display: width < 480 ? "none" : "block"
         }}>
@@ -50,18 +50,19 @@ export const AdminHeader = ({ onMenuClick }) => {
             left: "16px",
             top: "50%",
             transform: "translateY(-50%)",
-            color: "rgba(255, 255, 255, 0.3)"
+            color: "var(--text)",
+            opacity: 0.5
           }} size={18} />
-          <input 
-            type="text" 
-            placeholder="Search..." 
+          <input
+            type="text"
+            placeholder="Search..."
             style={{
               width: "100%",
               padding: "12px 16px 12px 48px",
-              background: "rgba(255, 255, 255, 0.03)",
-              border: "1px solid rgba(255, 255, 255, 0.05)",
+              background: "var(--bg)",
+              border: "1px solid var(--border)",
               borderRadius: "16px",
-              color: "#fff",
+              color: "var(--text)",
               outline: "none",
               fontSize: "0.95rem"
             }}
@@ -74,9 +75,9 @@ export const AdminHeader = ({ onMenuClick }) => {
         {/* Notifications */}
         <button style={{
           position: "relative",
-          background: "rgba(255, 255, 255, 0.03)",
-          border: "none",
-          color: "rgba(255, 255, 255, 0.6)",
+          background: "var(--bg)",
+          border: "1px solid var(--border)",
+          color: "var(--text)",
           width: "44px",
           height: "44px",
           borderRadius: "14px",
@@ -94,7 +95,7 @@ export const AdminHeader = ({ onMenuClick }) => {
             height: "8px",
             background: "#ff4d4d",
             borderRadius: "50%",
-            border: "2px solid #000"
+            border: "2px solid var(--card-bg)"
           }}></span>
         </button>
 
@@ -104,19 +105,20 @@ export const AdminHeader = ({ onMenuClick }) => {
           alignItems: "center",
           gap: "12px",
           padding: width < 640 ? "4px" : "6px 6px 6px 16px",
-          background: width < 640 ? "transparent" : "rgba(255, 255, 255, 0.03)",
+          background: width < 640 ? "transparent" : "var(--bg)",
+          border: width < 640 ? "none" : "1px solid var(--border)",
           borderRadius: "16px",
           cursor: "pointer"
         }}>
           <div style={{ display: width < 640 ? "none" : "block", textAlign: "right" }}>
-            <p style={{ fontSize: "0.9rem", fontWeight: "600", margin: 0 }}>Srikanth</p>
-            <p style={{ fontSize: "0.75rem", color: "rgba(255, 255, 255, 0.4)", margin: 0 }}>Admin</p>
+            <p style={{ fontSize: "0.9rem", fontWeight: "600", margin: 0, color: "var(--text)" }}>Srikanth</p>
+            <p style={{ fontSize: "0.75rem", color: "var(--text)", opacity: 0.6, margin: 0 }}>Admin</p>
           </div>
           <div style={{
             width: "36px",
             height: "36px",
             borderRadius: "12px",
-            background: "#c4ff6b", // Lime green theme color
+            background: "var(--accent)", // Use accent variable
             color: "#000",
             display: "flex",
             alignItems: "center",
@@ -124,7 +126,7 @@ export const AdminHeader = ({ onMenuClick }) => {
           }}>
             <FiUser size={20} />
           </div>
-          <FiChevronDown size={16} color="rgba(255, 255, 255, 0.3)" />
+          <FiChevronDown size={16} color="var(--text)" style={{ opacity: 0.5 }} />
         </div>
       </div>
     </header>
