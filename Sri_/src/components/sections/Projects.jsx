@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PROJECTS } from "../../data/portfolioData";
+import { PROJECTS as STATIC_PROJECTS } from "../../data/portfolioData";
+import { adminService } from "../../services/adminService";
 import festivalImg from "../../assets/projects/festival.png";
 import abstractImg from "../../assets/projects/abstract.png";
 import cyberpunkImg from "../../assets/projects/cyberpunk.png";
@@ -13,8 +14,11 @@ const imageMap = {
     "packaging.png": packagingImg
 };
 
+import { useNavigate } from "react-router-dom";
+
 function ProjectCard({ p, i, progress, range, targetScale }) {
     const container = useRef(null);
+    const navigate = useNavigate();
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start end', 'start start']
@@ -23,17 +27,22 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
     const imageScale = useTransform(scrollYProgress, [0, 1], [1.5, 1]);
     const scale = useTransform(progress, range, [1, targetScale]);
 
+    // Determine image source
+    const imgSrc = p.image && imageMap[p.image] ? imageMap[p.image] : (p.image || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop");
+
     return (
         <div ref={container} className="project-card-sticky-wrapper">
             <motion.div 
                 style={{ scale }}
                 className="project-card-inner"
+                onClick={() => navigate(`/projects/${p._id || p.id}`)}
+                whileHover={{ cursor: "pointer" }}
             >
                 {/* Background Image */}
                 <div className="project-card-image-wrap">
                     <motion.div style={{ scale: imageScale, height: "100%", width: "100%" }}>
                         <img 
-                            src={imageMap[p.image]} 
+                            src={imgSrc} 
                             alt={p.title} 
                             style={{ width: "100%", height: "100%", objectFit: "cover" }} 
                         />
@@ -42,11 +51,19 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
 
                 {/* Overlay */}
                 <div className="project-card-overlay">
-                    <span className="project-card-tag">{p.tag}</span>
+                    <span className="project-card-tag">{p.tag || p.category}</span>
 
                     <h3 className="project-card-title">{p.title}</h3>
 
-                    <p className="project-card-desc">{p.desc}</p>
+                    <p className="project-card-desc">{p.desc || p.description}</p>
+                    
+                    <motion.div 
+                        initial={{ opacity: 0, y: 10 }}
+                        whileHover={{ opacity: 1, y: 0 }}
+                        style={{ marginTop: "20px", color: "var(--accent)", fontWeight: "bold", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "1px" }}
+                    >
+                        View Project Details
+                    </motion.div>
                 </div>
             </motion.div>
         </div>
@@ -54,11 +71,31 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
 }
 
 export function Projects() {
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
     const container = useRef(null);
+    
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start start', 'end end']
     });
+
+    useEffect(() => {
+        const getProjects = async () => {
+            setLoading(true);
+            try {
+                const data = await adminService.getProjects();
+                // Merge static and live if needed, or just use live
+                // If live is empty, use static
+                setProjects(data.length > 0 ? data : STATIC_PROJECTS);
+            } catch (err) {
+                setProjects(STATIC_PROJECTS);
+            } finally {
+                setLoading(false);
+            }
+        };
+        getProjects();
+    }, []);
 
     return (
         <section id="Projects" ref={container} style={{ position: "relative", background: "var(--bg)" }}>
@@ -86,14 +123,14 @@ export function Projects() {
                 </div>
 
                 <div className="projects-stack-container">
-                    {PROJECTS.map((p, i) => {
-                        const targetScale = 1 - ((PROJECTS.length - i) * 0.04);
+                    {projects.map((p, i) => {
+                        const targetScale = 1 - ((projects.length - i) * 0.04);
                         return <ProjectCard 
-                            key={p.title} 
+                            key={p._id || p.id || p.title} 
                             p={p} 
                             i={i} 
                             progress={scrollYProgress} 
-                            range={[i * 0.25, 1]} 
+                            range={[i * (1/projects.length), 1]} 
                             targetScale={targetScale}
                         />
                     })}

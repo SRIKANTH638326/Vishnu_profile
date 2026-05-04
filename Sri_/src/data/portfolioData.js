@@ -1,4 +1,4 @@
-export const NAV_LINKS = ["Home", "About us", "Projects", "Blogs", "Contact us"];
+export const NAV_LINKS = ["Home", "About us", "Projects", "Contact us"];
 export const ROLES = ["UI/UX Designer", "Data Analyst", "Frontend Developer", "Power BI Analyst", "Problem Solver"];
 
 export const SKILLS_DATA = {
@@ -23,49 +23,49 @@ export const SKILLS_DATA = {
 };
 
 export const CASE_STUDIES = [
-    { 
-        tag: "Insights", 
+    {
+        tag: "Insights",
         date: "Apr 30, 2025",
-        title: "5 DESIGN TRENDS THAT WILL DEFINE 2024", 
+        title: "5 DESIGN TRENDS THAT WILL DEFINE 2024",
         desc: "Explore the top design trends for 2024 that will influence web, UI/UX, and branding projects, helping you stay ahead of the curve.",
-        accent: "var(--accent)", 
+        accent: "var(--accent)",
         image: "design-trends.png"
     },
-    { 
-        tag: "Tutorials", 
+    {
+        tag: "Tutorials",
         date: "Apr 30, 2025",
-        title: "HOW TO STREAMLINE YOUR DESIGN WORKFLOW", 
+        title: "HOW TO STREAMLINE YOUR DESIGN WORKFLOW",
         desc: "Discover practical strategies to improve your design process, save time, and deliver quality work more efficiently.",
-        accent: "rgba(255,255,255,0.6)", 
+        accent: "rgba(255,255,255,0.6)",
         image: "workflow.png"
     },
 ];
 
 export const PROJECTS = [
-    { 
-        title: "SUMMER VIBES FESTIVAL CAMPAIGN", 
-        desc: "Created promotional materials for the \"Summer Vibes Festival,\" including posters, flyers, and social media graphics.", 
+    {
+        title: "SUMMER VIBES FESTIVAL CAMPAIGN",
+        desc: "Created promotional materials for the \"Summer Vibes Festival,\" including posters, flyers, and social media graphics.",
         tag: "Graphic Design",
         image: "festival.png",
         color: "#ffbf48"
     },
-    { 
-        title: "CORAL SPIRAL ABSTRACT", 
-        desc: "A visually striking 3D abstract artwork featuring a coral-colored spiral form with smooth, flowing curves and a soft pink gradient background.", 
+    {
+        title: "CORAL SPIRAL ABSTRACT",
+        desc: "A visually striking 3D abstract artwork featuring a coral-colored spiral form with smooth, flowing curves and a soft pink gradient background.",
         tag: "Branding",
         image: "abstract.png",
         color: "#f43f5e"
     },
-    { 
-        title: "CYBERPUNK INTERFACE HUD", 
-        desc: "Futuristic user interface design with holographic blueprints and intricate data visualizations for a mission-critical tech platform.", 
+    {
+        title: "CYBERPUNK INTERFACE HUD",
+        desc: "Futuristic user interface design with holographic blueprints and intricate data visualizations for a mission-critical tech platform.",
         tag: "UI/UX",
         image: "cyberpunk.png",
         color: "#06b6d4"
     },
-    { 
-        title: "MINIMALIST VOGUE PACKAGING", 
-        desc: "High-end cosmetic packaging design focusing on elegant typography, neutral palettes, and a sophisticated minimalist aesthetic.", 
+    {
+        title: "MINIMALIST VOGUE PACKAGING",
+        desc: "High-end cosmetic packaging design focusing on elegant typography, neutral palettes, and a sophisticated minimalist aesthetic.",
         tag: "Product Design",
         image: "packaging.png",
         color: "#a78bfa"
@@ -73,9 +73,9 @@ export const PROJECTS = [
 ];
 
 export const SERVICES = [
-    { 
+    {
         id: "01",
-        title: "UI/UX DESIGN", 
+        title: "UI/UX DESIGN",
         desc: "As a digital designer, I am a visual storyteller, crafting experiences that connect deeply and spark creativity.",
         features: [
             "Wireframing and prototyping",
@@ -85,9 +85,9 @@ export const SERVICES = [
         ],
         accent: "var(--accent)"
     },
-    { 
+    {
         id: "02",
-        title: "GRAPHIC DESIGN", 
+        title: "GRAPHIC DESIGN",
         desc: "Creating compelling visual identities and assets that communicate your brand's unique message effectively.",
         features: [
             "Visual identity and branding systems",
@@ -97,9 +97,9 @@ export const SERVICES = [
         ],
         accent: "var(--accent)"
     },
-    { 
+    {
         id: "03",
-        title: "WEB DESIGN", 
+        title: "WEB DESIGN",
         desc: "Combining aesthetics with functionality to build high-performance, responsive websites that convert.",
         features: [
             "Responsive layout architecture",
@@ -109,9 +109,9 @@ export const SERVICES = [
         ],
         accent: "var(--accent)"
     },
-    { 
+    {
         id: "04",
-        title: "BRANDING", 
+        title: "BRANDING",
         desc: "Developing consistent and memorable brand experiences that resonate with your target audience.",
         features: [
             "Brand strategy and positioning",

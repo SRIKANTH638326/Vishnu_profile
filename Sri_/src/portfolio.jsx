@@ -15,6 +15,7 @@ import { AboutUs } from "./pages/AboutUs";
 import { ProjectsPage } from "./pages/ProjectsPage";
 import { BlogsPage } from "./pages/BlogsPage";
 import { ContactPage } from "./pages/ContactPage";
+import { ProjectDetail } from "./pages/ProjectDetail";
 
 // Admin Imports
 import { AdminProvider } from "./context/AdminContext";
@@ -110,7 +111,7 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/projects" element={<ProjectsPage />} />
-              <Route path="/blogs" element={<BlogsPage />} />
+              <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/contact-us" element={<ContactPage />} />
 
               {/* Admin Routes */}

@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, useScroll, useTransform, useSpring } from "framer-motion";
 import { About } from "../components/sections/About";
 import { Services } from "../components/sections/Services";
-import { TechStack } from "../components/sections/TechStack";
 import { Experience } from "../components/sections/Experience";
 import { Skills } from "../components/sections/Skills";
 
@@ -53,7 +52,7 @@ export function AboutUs() {
           </SectionWrapper>
 
           <SectionWrapper id="tech" onInView={() => setActiveSection("tech")}>
-            <TechStack hideImage={true} />
+            <Skills hideImage={true} />
           </SectionWrapper>
 
           <SectionWrapper id="journey" onInView={() => setActiveSection("journey")}>

@@ -89,14 +89,34 @@ export const Modal = ({ isOpen, onClose, title, children }) => {
             </div>
 
             {/* Modal Body */}
-            <div style={{ 
-              maxHeight: "75vh", 
-              overflowY: "auto", 
-              padding: "32px 24px",
-              background: "#0a0a0a"
-            }}>
+            <div 
+              className="modal-scroll-area"
+              data-lenis-prevent
+              style={{ 
+                maxHeight: "85vh", 
+                overflowY: "auto", 
+                padding: "32px 24px",
+                background: "#0a0a0a"
+              }}
+            >
               {children}
             </div>
+
+            <style>{`
+              .modal-scroll-area::-webkit-scrollbar {
+                width: 6px;
+              }
+              .modal-scroll-area::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.02);
+              }
+              .modal-scroll-area::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+              }
+              .modal-scroll-area::-webkit-scrollbar-thumb:hover {
+                background: var(--accent);
+              }
+            `}</style>
           </motion.div>
         </div>
       )}
