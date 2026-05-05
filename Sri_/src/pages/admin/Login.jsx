@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdmin } from "../../context/AdminContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setIsAdmin } = useAdmin();
+  const [showPassword, setShowPassword] = useState(false);
+  const { login: contextLogin } = useAdmin();
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -31,8 +33,7 @@ export const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        setIsAdmin(true);
-        localStorage.setItem("isAdmin", "true");
+        contextLogin(data.token);
         navigate("/admin/dashboard");
       } else {
         setError(data.message || "Invalid login credentials");
@@ -202,33 +203,56 @@ export const Login = () => {
                 Password
               </label>
             </div>
-            <input 
-              type="password" 
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              style={{
-                width: "100%",
-                padding: "16px 20px",
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "16px",
-                color: "#fff",
-                outline: "none",
-                fontSize: "1rem",
-                transition: "0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxSizing: "border-box"
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = "var(--accent)";
-                e.target.style.background = "rgba(196, 255, 107, 0.02)";
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = "rgba(255,255,255,0.1)";
-                e.target.style.background = "rgba(255,255,255,0.03)";
-              }}
-            />
+            <div style={{ position: "relative" }}>
+              <input 
+                type={showPassword ? "text" : "password"} 
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                style={{
+                  width: "100%",
+                  padding: "16px 20px",
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "16px",
+                  color: "#fff",
+                  outline: "none",
+                  fontSize: "1rem",
+                  transition: "0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  boxSizing: "border-box"
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "var(--accent)";
+                  e.target.style.background = "rgba(196, 255, 107, 0.02)";
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "rgba(255,255,255,0.1)";
+                  e.target.style.background = "rgba(255,255,255,0.03)";
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: "absolute",
+                  right: "16px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  background: "none",
+                  border: "none",
+                  color: "rgba(255,255,255,0.3)",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "8px",
+                  zIndex: 2
+                }}
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
           </div>
 
           <AnimatePresence>

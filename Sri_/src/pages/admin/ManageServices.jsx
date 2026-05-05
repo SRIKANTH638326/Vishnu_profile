@@ -3,35 +3,43 @@ import { FiPlus, FiTrash2, FiLayers, FiEdit2 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { Modal } from "../../components/common/Modal";
 import { DeleteConfirmModal } from "../../components/admin/DeleteConfirmModal";
-import { useWindowSize } from "../../hooks/useWindowSize";
-
-const defaultServices = [
-  { id: 1, title: "Web Development", description: "Building responsive, performant websites using React and modern web standards.", icon: "🌐" },
-  { id: 2, title: "UI/UX Design", description: "Crafting beautiful, intuitive interfaces that prioritize user experience.", icon: "🎨" },
-  { id: 3, title: "Backend APIs", description: "Designing scalable REST APIs with Node.js, Express, and MongoDB.", icon: "⚙️" },
-];
+import { adminService } from "../../services/adminService";
 
 export const ManageServices = () => {
-  const [services, setServices] = useState(defaultServices);
+  const [services, setServices] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
   const [form, setForm] = useState({ title: "", description: "", icon: "🚀" });
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
   const { width } = useWindowSize();
 
-  const handleAdd = (e) => {
+  useEffect(() => {
+    const load = async () => {
+      const data = await adminService.getServices();
+      setServices(data);
+    };
+    load();
+  }, []);
+
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (!form.title) return;
-    setServices([{ id: Date.now(), ...form }, ...services]);
-    setIsAdding(false);
-    setForm({ title: "", description: "", icon: "🚀" });
+    const n = await adminService.addService(form);
+    if (n) {
+      setServices(prev => [n, ...prev]);
+      setIsAdding(false);
+      setForm({ title: "", description: "", icon: "🚀" });
+    }
   };
 
   const handleDelete = (id) => {
     setDeleteModal({ isOpen: true, id });
   };
 
-  const confirmDelete = () => {
-    setServices(services.filter(s => s.id !== deleteModal.id));
+  const confirmDelete = async () => {
+    const success = await adminService.deleteService(deleteModal.id);
+    if (success) {
+      setServices(prev => prev.filter(s => (s._id || s.id) !== deleteModal.id));
+    }
     setDeleteModal({ isOpen: false, id: null });
   };
 

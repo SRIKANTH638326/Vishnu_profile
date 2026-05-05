@@ -7,7 +7,7 @@
     --card-bg: rgba(255, 255, 255, 0.03);
     --font-heading: 'Antonio', sans-serif;
     --font-body: 'Inter', sans-serif;
-    transition: background 0.4s ease, color 0.4s ease;
+    transition: bckground 0.4s ease, color 0.4s ease;
 }
 
 :root[data-theme='light'] {

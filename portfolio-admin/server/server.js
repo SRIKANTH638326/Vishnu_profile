@@ -25,6 +25,8 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/messages', require('./routes/messageRoutes'));
 app.use('/api/blogs', require('./routes/blogRoutes'));
 app.use('/api/skills', require('./routes/skillRoutes'));
+app.use('/api/experience', require('./routes/experienceRoutes'));
+app.use('/api/services', require('./routes/serviceRoutes'));
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {

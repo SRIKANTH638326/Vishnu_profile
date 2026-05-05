@@ -13,24 +13,34 @@ export const ManageExperience = () => {
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
   const { width } = useWindowSize();
 
-  useEffect(() => { setItems(adminService.getExperience()); }, []);
+  useEffect(() => { 
+    const load = async () => {
+      const data = await adminService.getExperience();
+      setItems(data);
+    };
+    load();
+  }, []);
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
     if (!form.role) return;
-    const n = adminService.addExperience(form);
-    setItems(prev => [n, ...prev]);
-    setIsAdding(false);
-    setForm({ role: "", company: "", duration: "", description: "" });
+    const n = await adminService.addExperience(form);
+    if (n) {
+      setItems(prev => [n, ...prev]);
+      setIsAdding(false);
+      setForm({ role: "", company: "", duration: "", description: "" });
+    }
   };
 
   const handleDelete = (id) => {
     setDeleteModal({ isOpen: true, id });
   };
 
-  const confirmDelete = () => {
-    adminService.deleteExperience(deleteModal.id);
-    setItems(prev => prev.filter(i => i.id !== deleteModal.id));
+  const confirmDelete = async () => {
+    const success = await adminService.deleteExperience(deleteModal.id);
+    if (success) {
+      setItems(prev => prev.filter(i => (i._id || i.id) !== deleteModal.id));
+    }
     setDeleteModal({ isOpen: false, id: null });
   };
 

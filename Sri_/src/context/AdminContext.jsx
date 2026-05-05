@@ -6,24 +6,26 @@ export const AdminProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(() => {
     return localStorage.getItem("isAdmin") === "true";
   });
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem("token");
+  });
 
-  const login = (password) => {
-    // Basic mock login - in a real app, this would call an API
-    if (password === "admin123") {
-      setIsAdmin(true);
-      localStorage.setItem("isAdmin", "true");
-      return true;
-    }
-    return false;
+  const login = (newToken) => {
+    setIsAdmin(true);
+    setToken(newToken);
+    localStorage.setItem("isAdmin", "true");
+    localStorage.setItem("token", newToken);
   };
 
   const logout = () => {
     setIsAdmin(false);
+    setToken(null);
     localStorage.removeItem("isAdmin");
+    localStorage.removeItem("token");
   };
 
   return (
-    <AdminContext.Provider value={{ isAdmin, setIsAdmin, login, logout }}>
+    <AdminContext.Provider value={{ isAdmin, token, setIsAdmin, login, logout }}>
       {children}
     </AdminContext.Provider>
   );

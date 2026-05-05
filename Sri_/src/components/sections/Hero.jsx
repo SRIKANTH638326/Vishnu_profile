@@ -25,29 +25,29 @@ export function Hero({ theme, toggleTheme }) {
 
     return (
         <section id="Hero" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
-            style={{ 
-                minHeight: "100vh", 
-                display: "flex", 
-                alignItems: "center", 
-                justifyContent: "center", 
-                position: "relative", 
-                overflow: "hidden", 
+            style={{
+                minHeight: "100vh",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative",
+                overflow: "hidden",
                 background: "var(--bg)",
                 padding: "80px 0"
             }}>
-            
+
             {/* Ornament: Floating Dot */}
-            <motion.div 
-                animate={{ y: [0, -10, 0] }} 
+            <motion.div
+                animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                style={{ position: "absolute", top: "20%", left: "15%", width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 20px var(--accent)", opacity: 0.6 }} 
+                style={{ position: "absolute", top: "20%", left: "15%", width: 12, height: 12, borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 20px var(--accent)", opacity: 0.6 }}
             />
 
             <div className="container" style={{ position: "relative", zIndex: 2 }}>
                 <div className="hero-flex-container">
-                    
+
                     {/* Left Side: Name + DIGITAL */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -62,7 +62,7 @@ export function Hero({ theme, toggleTheme }) {
                     </motion.div>
 
                     {/* Center Side: Portrait Card */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 1, ease: "circOut" }}
@@ -75,7 +75,7 @@ export function Hero({ theme, toggleTheme }) {
                             </div>
 
                             {/* "Hi" Bubble */}
-                            <motion.div 
+                            <motion.div
                                 initial={{ scale: 0, rotate: -20 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ delay: 1, type: "spring", stiffness: 200 }}
@@ -88,7 +88,7 @@ export function Hero({ theme, toggleTheme }) {
                     </motion.div>
 
                     {/* Right Side: DESIGNER + Intro */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}

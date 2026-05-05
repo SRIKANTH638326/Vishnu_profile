@@ -1,7 +1,30 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { BLOG_DATA } from "../../data/portfolioData";
+import { BLOG_DATA as STATIC_BLOGS } from "../../data/portfolioData";
+import { adminService } from "../../services/adminService";
 
 export function Blogs() {
+    const [blogs, setBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchBlogs = async () => {
+            try {
+                const data = await adminService.getBlogs();
+                if (data && data.length > 0) {
+                    setBlogs(data);
+                } else {
+                    setBlogs(STATIC_BLOGS);
+                }
+            } catch (err) {
+                setBlogs(STATIC_BLOGS);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBlogs();
+    }, []);
+
     return (
         <section id="Blogs" className="section-pad" style={{ background: "var(--bg)", position: "relative" }}>
             <div className="container">
@@ -17,9 +40,9 @@ export function Blogs() {
                 </motion.div>
 
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 32 }}>
-                    {BLOG_DATA.map((blog, i) => (
+                    {blogs.map((blog, i) => (
                         <motion.div
-                            key={blog.id}
+                            key={blog._id || blog.id}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -48,7 +71,7 @@ export function Blogs() {
                             <div style={{ padding: 32, flex: 1, display: "flex", flexDirection: "column" }}>
                                 <span style={{ color: "var(--secondary-text)", fontSize: 13, marginBottom: 12, display: "block" }}>{blog.date}</span>
                                 <h3 style={{ fontSize: 24, fontWeight: 700, marginBottom: 16, lineHeight: 1.2 }}>{blog.title}</h3>
-                                <p style={{ color: "var(--secondary-text)", fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>{blog.desc}</p>
+                                <p style={{ color: "var(--secondary-text)", fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>{blog.desc || blog.content}</p>
                                 
                                 <div style={{ marginTop: "auto" }}>
                                     <button style={{ background: "none", border: "none", color: "var(--accent)", fontWeight: 700, fontSize: 14, cursor: "pointer", display: "flex", alignItems: "center", gap: 8 }}>

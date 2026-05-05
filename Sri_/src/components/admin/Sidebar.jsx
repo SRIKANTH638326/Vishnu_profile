@@ -19,12 +19,14 @@ import {
   FiAward,
   FiZap,
   FiLayers,
-  FiUser
+  FiUser,
+  FiUsers,
+  FiExternalLink
 } from "react-icons/fi";
 import { useAdmin } from "../../context/AdminContext";
 
-const NavItem = ({ to, icon: Icon, label, active }) => (
-  <Link to={to} style={{ textDecoration: "none" }}>
+const NavItem = ({ to, icon: Icon, label, active, external = false }) => (
+  <Link to={to} style={{ textDecoration: "none" }} target={external ? "_blank" : "_self"}>
     <motion.div
       whileHover={{ x: 5 }}
       style={{
@@ -43,6 +45,7 @@ const NavItem = ({ to, icon: Icon, label, active }) => (
     >
       <Icon size={20} />
       <span style={{ fontSize: "0.95rem" }}>{label}</span>
+      {external && <FiExternalLink size={14} style={{ marginLeft: "auto", opacity: 0.5 }} />}
     </motion.div>
   </Link>
 );
@@ -58,6 +61,7 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
     { to: "/admin/skills", icon: FiZap, label: "Skills" },
     { to: "/admin/experience", icon: FiAward, label: "Experience" },
     { to: "/admin/services", icon: FiLayers, label: "Services" },
+    { to: "/admin/users", icon: FiUsers, label: "Users" },
     { to: "/admin/profile", icon: FiUser, label: "Profile" },
     { to: "/admin/settings", icon: FiBriefcase, label: "Settings" },
   ];
@@ -144,6 +148,15 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
             active={location.pathname === item.to}
           />
         ))}
+        
+        <div style={{ marginTop: "auto", paddingTop: "20px" }}>
+          <NavItem 
+            to="/" 
+            icon={FiExternalLink} 
+            label="View Website" 
+            external={true}
+          />
+        </div>
       </nav>
 
       {/* Logout — fixed at bottom */}

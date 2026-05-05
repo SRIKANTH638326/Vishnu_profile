@@ -6,6 +6,18 @@
 
 const API_URL = "http://localhost:5000/api";
 
+const getHeaders = (isMultipart = false) => {
+  const token = localStorage.getItem("token");
+  const headers = {};
+  if (!isMultipart) {
+    headers["Content-Type"] = "application/json";
+  }
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
+};
+
 export const adminService = {
   // ─── PROJECTS ──────────────────────────────────────────────────────────
   getProjects: async () => {
@@ -23,7 +35,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/projects`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -37,7 +49,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/projects/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -49,7 +61,10 @@ export const adminService = {
 
   deleteProject: async (id) => {
     try {
-      await fetch(`${API_URL}/projects/${id}`, { method: "DELETE" });
+      await fetch(`${API_URL}/projects/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
       return true;
     } catch (err) {
       console.error("Error deleting project:", err);
@@ -73,7 +88,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/blogs`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -87,7 +102,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/blogs/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -99,7 +114,10 @@ export const adminService = {
 
   deleteBlog: async (id) => {
     try {
-      await fetch(`${API_URL}/blogs/${id}`, { method: "DELETE" });
+      await fetch(`${API_URL}/blogs/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
       return true;
     } catch (err) {
       console.error("Error deleting blog:", err);
@@ -110,7 +128,9 @@ export const adminService = {
   // ─── MESSAGES ──────────────────────────────────────────────────────────
   getMessages: async () => {
     try {
-      const res = await fetch(`${API_URL}/messages`);
+      const res = await fetch(`${API_URL}/messages`, {
+        headers: getHeaders()
+      });
       const data = await res.json();
       return Array.isArray(data) ? data : [];
     } catch (err) {
@@ -121,7 +141,10 @@ export const adminService = {
 
   deleteMessage: async (id) => {
     try {
-      await fetch(`${API_URL}/messages/${id}`, { method: "DELETE" });
+      await fetch(`${API_URL}/messages/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
       return true;
     } catch (err) {
       console.error("Error deleting message:", err);
@@ -145,7 +168,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/skills`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -159,7 +182,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/skills/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: getHeaders(),
         body: JSON.stringify(data),
       });
       return await res.json();
@@ -171,7 +194,10 @@ export const adminService = {
 
   deleteSkill: async (id) => {
     try {
-      await fetch(`${API_URL}/skills/${id}`, { method: "DELETE" });
+      await fetch(`${API_URL}/skills/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
       return true;
     } catch (err) {
       console.error("Error deleting skill:", err);
@@ -186,6 +212,7 @@ export const adminService = {
     try {
       const res = await fetch(`${API_URL}/projects/upload`, {
         method: "POST",
+        headers: getHeaders(true),
         body: formData,
       });
       return await res.json();
@@ -205,6 +232,122 @@ export const adminService = {
     return await res.json();
   },
 
-  // NOTE: Experience, Skills, and Services are currently being migrated.
-  // Add their backend routes similar to Projects/Blogs above when ready.
+  // ─── USER MANAGEMENT ──────────────────────────────────────────────────
+  getUsers: async () => {
+    try {
+      const res = await fetch(`${API_URL}/auth/users`, {
+        headers: getHeaders()
+      });
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (err) {
+      console.error("Error fetching users:", err);
+      return [];
+    }
+  },
+
+  registerUser: async (userData) => {
+    try {
+      const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify(userData),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error registering user:", err);
+      return { success: false, message: "Connection failed" };
+    }
+  },
+
+  deleteUser: async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/auth/users/${id}`, {
+        method: "DELETE",
+        headers: getHeaders()
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error deleting user:", err);
+      return { success: false, message: "Connection failed" };
+    }
+  },
+
+  // ─── EXPERIENCE ────────────────────────────────────────────────────────
+  getExperience: async () => {
+    try {
+      const res = await fetch(`${API_URL}/experience`);
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (err) {
+      console.error("Error fetching experience:", err);
+      return [];
+    }
+  },
+
+  addExperience: async (data) => {
+    try {
+      const res = await fetch(`${API_URL}/experience`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error adding experience:", err);
+      return null;
+    }
+  },
+
+  deleteExperience: async (id) => {
+    try {
+      await fetch(`${API_URL}/experience/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
+      return true;
+    } catch (err) {
+      console.error("Error deleting experience:", err);
+      return false;
+    }
+  },
+
+  // ─── SERVICES ──────────────────────────────────────────────────────────
+  getServices: async () => {
+    try {
+      const res = await fetch(`${API_URL}/services`);
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (err) {
+      console.error("Error fetching services:", err);
+      return [];
+    }
+  },
+
+  addService: async (data) => {
+    try {
+      const res = await fetch(`${API_URL}/services`, {
+        method: "POST",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error adding service:", err);
+      return null;
+    }
+  },
+
+  deleteService: async (id) => {
+    try {
+      await fetch(`${API_URL}/services/${id}`, { 
+        method: "DELETE",
+        headers: getHeaders()
+      });
+      return true;
+    } catch (err) {
+      console.error("Error deleting service:", err);
+      return false;
+    }
+  },
 };

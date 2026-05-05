@@ -1,10 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SERVICES } from "../../data/portfolioData";
+import { SERVICES as STATIC_SERVICES } from "../../data/portfolioData";
+import { adminService } from "../../services/adminService";
 import workspaceImg from "../../assets/workspace-services.png";
 
 export function Services({ hideImage = false }) {
-    const [openId, setOpenId] = useState("01");
+    const [services, setServices] = useState([]);
+    const [openId, setOpenId] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const data = await adminService.getServices();
+                if (data && data.length > 0) {
+                    setServices(data);
+                    setOpenId(data[0]._id || data[0].id);
+                } else {
+                    setServices(STATIC_SERVICES);
+                    setOpenId(STATIC_SERVICES[0].id);
+                }
+            } catch (err) {
+                setServices(STATIC_SERVICES);
+                setOpenId(STATIC_SERVICES[0].id);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchServices();
+    }, []);
 
     return (
         <section id="Services" className="section-pad" style={{ background: "var(--bg)", color: "var(--text)" }}>
@@ -12,9 +36,9 @@ export function Services({ hideImage = false }) {
                 <div className={hideImage ? "" : "grid-2"} style={{ display: hideImage ? "block" : "grid", alignItems: "flex-start", gap: "clamp(40px, 8vw, 100px)" }}>
                     {/* Left Column: Content + Accordion */}
                     <div style={{ width: "100%", maxWidth: hideImage ? "800px" : "none" }}>
-                        <motion.div 
-                            initial={{ opacity: 0, y: 20 }} 
-                            whileInView={{ opacity: 1, y: 0 }} 
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             style={{ width: "100%" }}
                         >
@@ -27,12 +51,13 @@ export function Services({ hideImage = false }) {
                         </motion.div>
 
                         <div style={{ display: "flex", flexDirection: "column" }}>
-                            {SERVICES.map((service) => (
-                                <AccordionItem 
-                                    key={service.id} 
-                                    service={service} 
-                                    isOpen={openId === service.id} 
-                                    toggle={() => setOpenId(openId === service.id ? null : service.id)} 
+                            {services.map((service, index) => (
+                                <AccordionItem
+                                    key={service._id || service.id}
+                                    index={index + 1}
+                                    service={service}
+                                    isOpen={openId === (service._id || service.id)}
+                                    toggle={() => setOpenId(openId === (service._id || service.id) ? null : (service._id || service.id))}
                                 />
                             ))}
                         </div>
@@ -41,7 +66,7 @@ export function Services({ hideImage = false }) {
                     {/* Right Column: Tilted Image */}
                     {!hideImage && (
                         <div className="services-image-col">
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, x: 50, rotate: 5 }}
                                 whileInView={{ opacity: 1, x: 0, rotate: -8 }}
                                 viewport={{ once: true }}
@@ -89,18 +114,21 @@ export function Services({ hideImage = false }) {
     );
 }
 
-function AccordionItem({ service, isOpen, toggle }) {
+function AccordionItem({ service, isOpen, toggle, index }) {
+    const formattedIndex = index < 10 ? `0${index}` : index;
+    const features = service.features || [];
+
     return (
         <div style={{ borderTop: "1px solid var(--border)", padding: "30px 0" }}>
-            <button 
+            <button
                 onClick={toggle}
-                style={{ 
-                    width: "100%", 
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "space-between", 
-                    background: "none", 
-                    border: "none", 
+                style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "none",
+                    border: "none",
                     padding: 0,
                     cursor: "pointer",
                     textAlign: "left"
@@ -108,7 +136,7 @@ function AccordionItem({ service, isOpen, toggle }) {
             >
                 <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
                     <span style={{ fontSize: 24, fontWeight: 700, fontFamily: "var(--font-heading)", color: isOpen ? "var(--accent)" : "var(--secondary-text)", transition: "0.3s" }}>
-                        {service.id}.
+                        {formattedIndex}.
                     </span>
                     <h3 style={{ fontSize: "clamp(1.5rem, 2.5vw, 2.2rem)", fontWeight: 700, fontFamily: "var(--font-heading)", textTransform: "uppercase", color: isOpen ? "var(--accent)" : "var(--text)", transition: "0.3s" }}>
                         {service.title}
@@ -117,7 +145,7 @@ function AccordionItem({ service, isOpen, toggle }) {
                 <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }}
                     style={{ color: "var(--secondary-text)" }}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m6 9 6 6 6-6"/>
+                        <path d="m6 9 6 6 6-6" />
                     </svg>
                 </motion.span>
             </button>
@@ -133,8 +161,8 @@ function AccordionItem({ service, isOpen, toggle }) {
                     >
                         <div style={{ paddingTop: 24, paddingLeft: 56 }}>
                             <ul style={{ listStyle: "none", display: "grid", gridTemplateColumns: "1fr", gap: 16 }}>
-                                {service.features.map((feature, i) => (
-                                    <motion.li 
+                                {features.map((feature, i) => (
+                                    <motion.li
                                         key={i}
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
@@ -143,7 +171,7 @@ function AccordionItem({ service, isOpen, toggle }) {
                                     >
                                         <div style={{ width: 18, height: 18, borderRadius: "50%", border: "1.5px solid var(--accent)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent)" }}>
                                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                                                <path d="M20 6 9 17l-5-5"/>
+                                                <path d="M20 6 9 17l-5-5" />
                                             </svg>
                                         </div>
                                         {feature}

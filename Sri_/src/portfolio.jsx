@@ -30,6 +30,7 @@ import { Settings } from "./pages/admin/Settings";
 import { ManageExperience } from "./pages/admin/ManageExperience";
 import { ManageSkills } from "./pages/admin/ManageSkills";
 import { ManageServices } from "./pages/admin/ManageServices";
+import ManageUsers from "./pages/admin/ManageUsers";
 import { Profile } from "./pages/admin/Profile";
 
 
@@ -125,6 +126,7 @@ export default function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="settings" element={<Settings />} />
                   <Route path="services" element={<ManageServices />} />
+                  <Route path="users" element={<ManageUsers />} />
                 </Route>
               </Route>
             </Routes>

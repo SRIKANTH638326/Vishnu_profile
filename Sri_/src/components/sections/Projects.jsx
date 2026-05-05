@@ -32,7 +32,7 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
 
     return (
         <div ref={container} className="project-card-sticky-wrapper">
-            <motion.div 
+            <motion.div
                 style={{ scale }}
                 className="project-card-inner"
                 onClick={() => navigate(`/projects/${p._id || p.id}`)}
@@ -41,10 +41,10 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
                 {/* Background Image */}
                 <div className="project-card-image-wrap">
                     <motion.div style={{ scale: imageScale, height: "100%", width: "100%" }}>
-                        <img 
-                            src={imgSrc} 
-                            alt={p.title} 
-                            style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                        <img
+                            src={imgSrc}
+                            alt={p.title}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
                     </motion.div>
                 </div>
@@ -56,8 +56,8 @@ function ProjectCard({ p, i, progress, range, targetScale }) {
                     <h3 className="project-card-title">{p.title}</h3>
 
                     <p className="project-card-desc">{p.desc || p.description}</p>
-                    
-                    <motion.div 
+
+                    <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         whileHover={{ opacity: 1, y: 0 }}
                         style={{ marginTop: "20px", color: "var(--accent)", fontWeight: "bold", textTransform: "uppercase", fontSize: "0.8rem", letterSpacing: "1px" }}
@@ -74,7 +74,7 @@ export function Projects() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const container = useRef(null);
-    
+
     const { scrollYProgress } = useScroll({
         target: container,
         offset: ['start start', 'end end']
@@ -101,21 +101,21 @@ export function Projects() {
         <section id="Projects" ref={container} style={{ position: "relative", background: "var(--bg)" }}>
             <div className="container" style={{ paddingTop: "100px", paddingBottom: "100px" }}>
                 <div style={{ marginBottom: "60px" }}>
-                    <h2 style={{ 
-                        fontFamily: "var(--font-heading)", 
-                        fontSize: "clamp(48px, 7vw, 90px)", 
-                        fontWeight: 700, 
-                        lineHeight: 1, 
-                        textTransform: "uppercase", 
+                    <h2 style={{
+                        fontFamily: "var(--font-heading)",
+                        fontSize: "clamp(48px, 7vw, 90px)",
+                        fontWeight: 700,
+                        lineHeight: 1,
+                        textTransform: "uppercase",
                         color: "var(--text)",
                         marginBottom: "16px"
                     }}>
                         Featured <span className="shimmer-text">Projects</span>
                     </h2>
-                    <p style={{ 
-                        color: "var(--secondary-text)", 
-                        maxWidth: "500px", 
-                        fontSize: "clamp(16px, 1.2vw, 18px)", 
+                    <p style={{
+                        color: "var(--secondary-text)",
+                        maxWidth: "500px",
+                        fontSize: "clamp(16px, 1.2vw, 18px)",
                         lineHeight: 1.6
                     }}>
                         These selected projects reflect my passion for blending strategy with creativity — solving real problems through thoughtful design and impactful storytelling.
@@ -125,12 +125,12 @@ export function Projects() {
                 <div className="projects-stack-container">
                     {projects.map((p, i) => {
                         const targetScale = 1 - ((projects.length - i) * 0.04);
-                        return <ProjectCard 
-                            key={p._id || p.id || p.title} 
-                            p={p} 
-                            i={i} 
-                            progress={scrollYProgress} 
-                            range={[i * (1/projects.length), 1]} 
+                        return <ProjectCard
+                            key={p._id || p.id || p.title}
+                            p={p}
+                            i={i}
+                            progress={scrollYProgress}
+                            range={[i * (1 / projects.length), 1]}
                             targetScale={targetScale}
                         />
                     })}

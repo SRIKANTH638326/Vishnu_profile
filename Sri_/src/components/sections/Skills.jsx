@@ -31,7 +31,7 @@ export function Skills({ hideImage = false }) {
                         return;
                     }
                 }
-                
+
                 // Fallback
                 if (STATIC_SKILLS) {
                     const flat = Object.values(STATIC_SKILLS).flat();
@@ -53,10 +53,10 @@ export function Skills({ hideImage = false }) {
     return (
         <section id="Skills" style={{ padding: "120px 0", background: "#080808", color: "#fff" }}>
             <div className="container">
-                <div style={{ 
-                    display: "grid", 
-                    gridTemplateColumns: hideImage ? "1fr" : "1.2fr 0.8fr", 
-                    gap: "100px" 
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: hideImage ? "1fr" : "1.2fr 0.8fr",
+                    gap: "100px"
                 }}>
                     <div>
                         <h2 style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", fontWeight: 800, textTransform: "uppercase", marginBottom: "40px" }}>
@@ -64,9 +64,9 @@ export function Skills({ hideImage = false }) {
                         </h2>
                         <div style={{ display: "flex", flexDirection: "column" }}>
                             {skills && skills.map((skill, i) => (
-                                <div 
+                                <div
                                     key={skill._id || skill.name || i}
-                                    style={{ 
+                                    style={{
                                         padding: "32px 0",
                                         borderBottom: "1px solid rgba(255,255,255,0.08)",
                                         display: "flex",
@@ -93,10 +93,10 @@ export function Skills({ hideImage = false }) {
                     {!hideImage && (
                         <div style={{ position: "sticky", top: "100px" }}>
                             <div style={{ width: "100%", borderRadius: "40px", overflow: "hidden" }}>
-                                <img 
-                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
-                                    alt="Stack" 
-                                    style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                                <img
+                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"
+                                    alt="Stack"
+                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
                                 />
                             </div>
                         </div>

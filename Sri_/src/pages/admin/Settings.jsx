@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiSave, FiUser, FiGlobe, FiShare2, FiLock } from "react-icons/fi";
+import { FiSave, FiUser, FiGlobe, FiShare2, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toast } from "../../components/common/Toast";
 import { useWindowSize } from "../../hooks/useWindowSize";
@@ -22,25 +22,55 @@ const SettingSection = ({ title, icon: Icon, children, width }) => (
   </div>
 );
 
-const InputGroup = ({ label, placeholder, type = "text", value }) => (
-  <div>
-    <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>{label}</label>
-    <input 
-      type={type} 
-      defaultValue={value}
-      placeholder={placeholder} 
-      style={{
-        width: "100%",
-        padding: "12px 16px",
-        background: "rgba(255, 255, 255, 0.05)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        borderRadius: "12px",
-        color: "#fff",
-        outline: "none"
-      }} 
-    />
-  </div>
-);
+const InputGroup = ({ label, placeholder, type = "text", value }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const isPassword = type === "password";
+
+  return (
+    <div>
+      <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>{label}</label>
+      <div style={{ position: "relative" }}>
+        <input 
+          type={isPassword ? (showPassword ? "text" : "password") : type} 
+          defaultValue={value}
+          placeholder={placeholder} 
+          style={{
+            width: "100%",
+            padding: isPassword ? "12px 48px 12px 16px" : "12px 16px",
+            background: "rgba(255, 255, 255, 0.05)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            borderRadius: "12px",
+            color: "#fff",
+            outline: "none",
+            boxSizing: "border-box"
+          }} 
+        />
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              position: "absolute",
+              right: "12px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              background: "none",
+              border: "none",
+              color: "rgba(255, 255, 255, 0.3)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4px"
+            }}
+          >
+            {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const Settings = () => {
   const [showToast, setShowToast] = useState(false);

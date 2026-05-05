@@ -20,7 +20,7 @@ export function About({ hideImage = false, isHome = false }) {
         <section id="About" style={{ padding: isHome ? "140px 0" : (hideImage ? "80px 0" : "160px 0 100px"), background: "var(--bg)", position: "relative", overflow: "hidden" }}>
             <div className="container">
                 <div style={{ display: "flex", alignItems: isHome ? "center" : "flex-start", gap: isHome ? 100 : 80, flexWrap: "wrap" }}>
-                    
+
                     {/* Left Column */}
                     <div style={{ flex: isHome ? "1.3" : (hideImage ? "1" : "1.2"), minWidth: 320 }}>
                         <motion.div
@@ -29,12 +29,12 @@ export function About({ hideImage = false, isHome = false }) {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <h1 style={{ 
-                                fontFamily: "var(--font-heading)", 
-                                fontSize: isHome ? "clamp(3.5rem, 8vw, 7rem)" : "clamp(5rem, 12vw, 100px)", 
-                                fontWeight: 800, 
-                                textTransform: "uppercase", 
-                                lineHeight: isHome ? 1 : 0.8, 
+                            <h1 style={{
+                                fontFamily: "var(--font-heading)",
+                                fontSize: isHome ? "clamp(3.5rem, 8vw, 7rem)" : "clamp(5rem, 12vw, 100px)",
+                                fontWeight: 800,
+                                textTransform: "uppercase",
+                                lineHeight: isHome ? 1 : 0.8,
                                 color: "#fff",
                                 marginBottom: isHome ? 30 : 40,
                                 letterSpacing: "-0.02em"
@@ -43,10 +43,10 @@ export function About({ hideImage = false, isHome = false }) {
                             </h1>
 
                             {!isHome && (
-                                <h2 style={{ 
-                                    fontSize: "clamp(1.5rem, 3vw, 2.5rem)", 
-                                    fontWeight: 700, 
-                                    textTransform: "uppercase", 
+                                <h2 style={{
+                                    fontSize: "clamp(1.5rem, 3vw, 2.5rem)",
+                                    fontWeight: 700,
+                                    textTransform: "uppercase",
                                     color: "#fff",
                                     marginBottom: 24,
                                     letterSpacing: "0.02em"
@@ -56,10 +56,10 @@ export function About({ hideImage = false, isHome = false }) {
                             )}
 
                             <div style={{ maxWidth: isHome ? "600px" : "540px" }}>
-                                <p style={{ 
-                                    fontSize: isHome ? "clamp(1.1rem, 1.4vw, 1.3rem)" : "clamp(1rem, 1.2vw, 1.25rem)", 
-                                    lineHeight: 1.6, 
-                                    color: "rgba(255,255,255,0.8)", 
+                                <p style={{
+                                    fontSize: isHome ? "clamp(1.1rem, 1.4vw, 1.3rem)" : "clamp(1rem, 1.2vw, 1.25rem)",
+                                    lineHeight: 1.6,
+                                    color: "rgba(255,255,255,0.8)",
                                     marginBottom: 24,
                                     position: "relative"
                                 }}>
@@ -68,12 +68,12 @@ export function About({ hideImage = false, isHome = false }) {
                                     ) : (
                                         <>
                                             I'm a digital designer and Framer developer passionate about crafting meaningful, user-centered experiences.
-                                            <span style={{ 
-                                                display: "inline-block", 
-                                                width: 10, 
-                                                height: 10, 
-                                                borderRadius: "50%", 
-                                                background: "var(--accent)", 
+                                            <span style={{
+                                                display: "inline-block",
+                                                width: 10,
+                                                height: 10,
+                                                borderRadius: "50%",
+                                                background: "var(--accent)",
                                                 marginLeft: 12,
                                                 verticalAlign: "middle"
                                             }} />
@@ -81,11 +81,11 @@ export function About({ hideImage = false, isHome = false }) {
                                     )}
                                 </p>
                                 {!isHome && (
-                                    <p style={{ 
-                                        fontSize: "clamp(1rem, 1.2vw, 1.25rem)", 
-                                        lineHeight: 1.6, 
-                                        color: "rgba(255,255,255,0.8)", 
-                                        marginBottom: 48 
+                                    <p style={{
+                                        fontSize: "clamp(1rem, 1.2vw, 1.25rem)",
+                                        lineHeight: 1.6,
+                                        color: "rgba(255,255,255,0.8)",
+                                        marginBottom: 48
                                     }}>
                                         With a strong foundation in visual design and a deep understanding of interactive systems, I bring ideas to life through thoughtful design, smooth animations, and responsive layouts.
                                     </p>
@@ -95,11 +95,11 @@ export function About({ hideImage = false, isHome = false }) {
                             {isHome && (
                                 <>
                                     {/* Stats Grid */}
-                                    <div style={{ 
-                                        display: "grid", 
-                                        gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", 
+                                    <div style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
                                         gap: 24,
-                                        marginBottom: 32 
+                                        marginBottom: 32
                                     }}>
                                         {stats.map((stat, i) => (
                                             <div key={i}>
@@ -131,9 +131,9 @@ export function About({ hideImage = false, isHome = false }) {
                             <div style={{ display: "flex", alignItems: "center", gap: 40, flexWrap: "wrap" }}>
                                 <div style={{ display: "flex", gap: isHome ? 20 : 24 }}>
                                     {socials.map(social => (
-                                        <motion.a 
+                                        <motion.a
                                             key={social.id}
-                                            href="#" 
+                                            href="#"
                                             whileHover={{ scale: 1.15, color: "var(--accent)" }}
                                             style={{ color: "#fff", transition: "0.2s" }}
                                         >
@@ -177,11 +177,11 @@ export function About({ hideImage = false, isHome = false }) {
                             transition={{ duration: isHome ? 1 : 0.8, ease: isHome ? "circOut" : "easeOut", delay: isHome ? 0 : 0.2 }}
                             style={{ flex: "1", minWidth: 320, display: "flex", justifyContent: isHome ? "center" : "flex-end" }}
                         >
-                            <div style={{ 
-                                width: "100%", 
-                                maxWidth: isHome ? 440 : 480, 
-                                borderRadius: 48, 
-                                overflow: "hidden", 
+                            <div style={{
+                                width: "100%",
+                                maxWidth: isHome ? 440 : 480,
+                                borderRadius: 48,
+                                overflow: "hidden",
                                 border: "1px solid rgba(255,255,255,0.1)",
                                 boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
                                 position: "relative",
@@ -195,7 +195,7 @@ export function About({ hideImage = false, isHome = false }) {
 
                 </div>
             </div>
-            
+
             {/* Background Texture Overlay */}
             <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
         </section>
