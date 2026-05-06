@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FiPlus, FiTrash2, FiAward } from "react-icons/fi";
+import { FiPlus, FiTrash2, FiAward, FiEdit2 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { adminService } from "../../services/adminService";
 import { Modal } from "../../components/common/Modal";
@@ -9,6 +9,8 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 export const ManageExperience = () => {
   const [items, setItems]   = useState([]);
   const [isAdding, setIsAdding] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ role: "", company: "", duration: "", description: "" });
   const [deleteModal, setDeleteModal] = useState({ isOpen: false, id: null });
   const { width } = useWindowSize();
@@ -21,14 +23,31 @@ export const ManageExperience = () => {
     load();
   }, []);
 
-  const handleAdd = async (e) => {
+  const handleEdit = (item) => {
+    setForm({ role: item.role, company: item.company, duration: item.duration, description: item.description });
+    setEditingId(item._id || item.id);
+    setIsEditing(true);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.role) return;
-    const n = await adminService.addExperience(form);
-    if (n) {
-      setItems(prev => [n, ...prev]);
-      setIsAdding(false);
-      setForm({ role: "", company: "", duration: "", description: "" });
+
+    if (isEditing) {
+      const updated = await adminService.updateExperience(editingId, form);
+      if (updated) {
+        setItems(prev => prev.map(i => (i._id || i.id) === editingId ? updated : i));
+        setIsEditing(false);
+        setEditingId(null);
+        setForm({ role: "", company: "", duration: "", description: "" });
+      }
+    } else {
+      const n = await adminService.addExperience(form);
+      if (n) {
+        setItems(prev => [n, ...prev]);
+        setIsAdding(false);
+        setForm({ role: "", company: "", duration: "", description: "" });
+      }
     }
   };
 
@@ -109,7 +128,7 @@ export const ManageExperience = () => {
 
       <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         {items.map(item => (
-          <div key={item.id} style={{ 
+          <div key={item._id || item.id} style={{ 
             background: "rgba(255,255,255,0.03)", 
             border: "1px solid rgba(255,255,255,0.05)", 
             borderRadius: "20px", 
@@ -141,7 +160,7 @@ export const ManageExperience = () => {
                 <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.9rem", margin: 0, lineHeight: 1.5 }}>{item.description}</p>
               </div>
             </div>
-            <button onClick={() => handleDelete(item.id)} style={{ 
+            <button onClick={() => handleDelete(item._id || item.id)} style={{ 
               alignSelf: width < 480 ? "flex-end" : "flex-start",
               background: "none", 
               border: "none", 

@@ -5,7 +5,9 @@ import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
-
+import Services from "./pages/Services";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 
 // Layout Component
 const AdminLayout = ({ children }) => {
@@ -85,6 +87,9 @@ function App() {
       <Routes>
         <Route path="/" element={<AdminLayout><Dashboard /></AdminLayout>} />
         <Route path="/projects" element={<AdminLayout><Projects /></AdminLayout>} />
+        <Route path="/services" element={<AdminLayout><Services /></AdminLayout>} />
+        <Route path="/profile" element={<AdminLayout><Profile /></AdminLayout>} />
+        <Route path="/settings" element={<AdminLayout><Settings /></AdminLayout>} />
   
         {/* Redirect any other route to dashboard */}
         <Route path="*" element={<Navigate to="/" />} />

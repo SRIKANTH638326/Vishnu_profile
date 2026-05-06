@@ -301,14 +301,28 @@ export const adminService = {
 
   deleteExperience: async (id) => {
     try {
-      await fetch(`${API_URL}/experience/${id}`, { 
+      const res = await fetch(`${API_URL}/experience/${id}`, { 
         method: "DELETE",
         headers: getHeaders()
       });
-      return true;
+      return res.ok;
     } catch (err) {
       console.error("Error deleting experience:", err);
       return false;
+    }
+  },
+
+  updateExperience: async (id, data) => {
+    try {
+      const res = await fetch(`${API_URL}/experience/${id}`, {
+        method: "PUT",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error updating experience:", err);
+      return null;
     }
   },
 

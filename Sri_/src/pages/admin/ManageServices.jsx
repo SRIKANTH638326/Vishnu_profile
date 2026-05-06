@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiPlus, FiTrash2, FiLayers, FiEdit2 } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { Modal } from "../../components/common/Modal";
 import { DeleteConfirmModal } from "../../components/admin/DeleteConfirmModal";
 import { adminService } from "../../services/adminService";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 export const ManageServices = () => {
   const [services, setServices] = useState([]);
