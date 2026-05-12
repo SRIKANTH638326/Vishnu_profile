@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { getAllProjects, createProject, updateProject, deleteProject } = require('../controllers/projectController');
+const { getAllProjects, getFeaturedProjects, getMoreProjects, getProjectById, createProject, updateProject, deleteProject } = require('../controllers/projectController');
 
 const upload = require('../middleware/upload');
 
 const auth = require('../middleware/authMiddleware');
 
 router.get('/', getAllProjects);
+router.get('/featured', getFeaturedProjects);
+router.get('/more', getMoreProjects);
+router.get('/:id', getProjectById);
 router.post('/', auth, createProject);
 router.put('/:id', auth, updateProject);
 router.delete('/:id', auth, deleteProject);

@@ -3,29 +3,30 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState(() => {
-    return localStorage.getItem("isAdmin") === "true";
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
   });
   const [token, setToken] = useState(() => {
     return localStorage.getItem("token");
   });
 
-  const login = (newToken) => {
-    setIsAdmin(true);
+  const login = (userData, newToken) => {
+    setUser(userData);
     setToken(newToken);
-    localStorage.setItem("isAdmin", "true");
+    localStorage.setItem("user", JSON.stringify(userData));
     localStorage.setItem("token", newToken);
   };
 
   const logout = () => {
-    setIsAdmin(false);
+    setUser(null);
     setToken(null);
-    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("user");
     localStorage.removeItem("token");
   };
 
   return (
-    <AdminContext.Provider value={{ isAdmin, token, setIsAdmin, login, logout }}>
+    <AdminContext.Provider value={{ user, token, isAdmin: !!user, login, logout }}>
       {children}
     </AdminContext.Provider>
   );

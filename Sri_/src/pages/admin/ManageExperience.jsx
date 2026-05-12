@@ -105,7 +105,7 @@ export const ManageExperience = () => {
       </div>
 
       <Modal isOpen={isAdding} onClose={() => setIsAdding(false)} title="Add Experience">
-        <form onSubmit={handleAdd}>
+        <form onSubmit={handleSubmit}>
           <div style={{ 
             display: "grid", 
             gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", 

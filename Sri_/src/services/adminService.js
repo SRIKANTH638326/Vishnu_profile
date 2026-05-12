@@ -30,6 +30,38 @@ export const adminService = {
       return [];
     }
   },
+
+  getFeaturedProjects: async () => {
+    try {
+      const res = await fetch(`${API_URL}/projects/featured`);
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (err) {
+      console.error("Error fetching featured projects:", err);
+      return [];
+    }
+  },
+
+  getMoreProjects: async () => {
+    try {
+      const res = await fetch(`${API_URL}/projects/more`);
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (err) {
+      console.error("Error fetching more projects:", err);
+      return [];
+    }
+  },
+
+  getProjectById: async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/projects/${id}`);
+      return await res.json();
+    } catch (err) {
+      console.error("Error fetching project by ID:", err);
+      return null;
+    }
+  },
   
   addProject: async (data) => {
     try {

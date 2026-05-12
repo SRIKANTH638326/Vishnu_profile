@@ -84,8 +84,7 @@ export function Projects() {
         const getProjects = async () => {
             setLoading(true);
             try {
-                const data = await adminService.getProjects();
-                // Merge static and live if needed, or just use live
+                const data = await adminService.getFeaturedProjects();
                 // If live is empty, use static
                 setProjects(data.length > 0 ? data : STATIC_PROJECTS);
             } catch (err) {

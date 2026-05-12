@@ -3,20 +3,32 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 exports.register = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     try {
+        // Check if requester is admin
+        const userCount = await User.countDocuments();
+        if (userCount > 0) {
+            const token = req.header('Authorization')?.split(' ')[1];
+            if (!token) {
+                return res.status(401).json({ success: false, message: "Authorization required to create users" });
+            }
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const requester = await User.findById(decoded.id);
+            if (!requester || requester.role !== 'admin') {
+                return res.status(403).json({ success: false, message: "Only admins can create new users" });
+            }
+        }
+
         let user = await User.findOne({ email });
         if (user) {
             return res.status(400).json({ success: false, message: "User already exists" });
         }
 
-        user = new User({ email, password });
+        user = new User({ email, password, role: role || 'user' });
         await user.save();
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
-
-        res.status(201).json({ success: true, token, message: "Registration successful" });
+        res.status(201).json({ success: true, message: "User created successfully" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Server error" });
@@ -38,9 +50,18 @@ exports.login = async (req, res) => {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        res.json({ success: true, token, message: "Login successful" });
+        res.json({ 
+            success: true, 
+            token, 
+            user: {
+                id: user._id,
+                email: user.email,
+                role: user.role
+            },
+            message: "Login successful" 
+        });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: "Server error" });

@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiArrowLeft, FiClock, FiCalendar, FiBriefcase, FiTag } from "react-icons/fi";
+import { FiArrowLeft, FiClock, FiCalendar, FiBriefcase, FiTag, FiExternalLink, FiGithub } from "react-icons/fi";
 import { adminService } from "../services/adminService";
 import { Reveal } from "../components/common/Reveal";
 import { useWindowSize } from "../hooks/useWindowSize";
+
+// Import images
+import festivalImg from "../assets/projects/festival.png";
+import abstractImg from "../assets/projects/abstract.png";
+import cyberpunkImg from "../assets/projects/cyberpunk.png";
+import packagingImg from "../assets/projects/packaging.png";
+
+const imageMap = {
+    "festival.png": festivalImg,
+    "abstract.png": abstractImg,
+    "cyberpunk.png": cyberpunkImg,
+    "packaging.png": packagingImg
+};
 
 export function ProjectDetail() {
   const { id } = useParams();
@@ -15,9 +28,8 @@ export function ProjectDetail() {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        const data = await adminService.getProjects();
-        const found = data.find(p => (p._id || p.id) === id);
-        setProject(found);
+        const data = await adminService.getProjectById(id);
+        setProject(data);
       } catch (err) {
         console.error("Error fetching project:", err);
       } finally {
@@ -28,7 +40,15 @@ export function ProjectDetail() {
   }, [id]);
 
   if (loading) return <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg)" }}><div className="loader"></div></div>;
-  if (!project) return <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg)" }}><h1>Project not found</h1></div>;
+  
+  if (!project || !project.title) {
+    return (
+      <div style={{ height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "var(--bg)", color: "#fff" }}>
+        <h1 style={{ marginBottom: "20px" }}>Project Not Found</h1>
+        <Link to="/projects" style={{ color: "var(--accent)" }}>Back to Projects</Link>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: "var(--bg)", minHeight: "100vh", paddingBottom: "100px" }}>
@@ -38,7 +58,7 @@ export function ProjectDetail() {
           initial={{ scale: 1.1 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          src={project.image || "https://via.placeholder.com/1920x1080"} 
+          src={project.image && imageMap[project.image] ? imageMap[project.image] : (project.image || "https://via.placeholder.com/1920x1080")} 
           alt={project.title} 
           style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.6 }}
         />
@@ -87,32 +107,61 @@ export function ProjectDetail() {
               </p>
             </Reveal>
 
-            {project.link && (
-              <Reveal delay={0.3}>
-                <motion.a 
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "16px 32px",
-                    background: "var(--accent)",
-                    color: "#000",
-                    borderRadius: "100px",
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    textDecoration: "none",
-                    boxShadow: "0 20px 40px rgba(196, 255, 107, 0.2)"
-                  }}
-                >
-                  Visit Live Project <FiExternalLink />
-                </motion.a>
-              </Reveal>
-            )}
+            <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+              {project.externalLink && (
+                <Reveal delay={0.3}>
+                  <motion.a 
+                    href={project.externalLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      padding: "16px 32px",
+                      background: "var(--accent)",
+                      color: "#000",
+                      borderRadius: "100px",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                      textDecoration: "none",
+                      boxShadow: "0 20px 40px rgba(196, 255, 107, 0.2)"
+                    }}
+                  >
+                    Live Preview <FiExternalLink />
+                  </motion.a>
+                </Reveal>
+              )}
+
+              {project.githubLink && (
+                <Reveal delay={0.4}>
+                  <motion.a 
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      padding: "16px 32px",
+                      background: "rgba(255,255,255,0.05)",
+                      color: "#fff",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "100px",
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                      textDecoration: "none",
+                    }}
+                  >
+                    View Source <FiGithub />
+                  </motion.a>
+                </Reveal>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -153,7 +202,7 @@ export function ProjectDetail() {
               boxShadow: "0 40px 100px rgba(0,0,0,0.5)"
             }}
           >
-             <img src={project.image} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Project visual" />
+             <img src={project.image && imageMap[project.image] ? imageMap[project.image] : (project.image || "https://via.placeholder.com/1920x1080")} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="Project visual" />
           </motion.div>
 
           {/* Solution & Challenge Grid */}

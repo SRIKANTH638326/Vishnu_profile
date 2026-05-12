@@ -53,7 +53,7 @@ const NavItem = ({ to, icon: Icon, label, active, external = false }) => (
 
 export const Sidebar = ({ isOpen, toggle, isMobile }) => {
   const location = useLocation();
-  const { logout } = useAdmin();
+  const { logout, user } = useAdmin();
 
   const mainItems = [
     { to: "/admin/dashboard", icon: FiGrid, label: "Dashboard" },
@@ -61,7 +61,7 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
     { to: "/admin/skills", icon: FiZap, label: "Skills" },
     { to: "/admin/experience", icon: FiAward, label: "Experience" },
     { to: "/admin/services", icon: FiLayers, label: "Services" },
-    { to: "/admin/users", icon: FiUsers, label: "Users" },
+    ...(user?.role === 'admin' ? [{ to: "/admin/users", icon: FiUsers, label: "Users" }] : []),
     { to: "/admin/profile", icon: FiUser, label: "Profile" },
     { to: "/admin/settings", icon: FiBriefcase, label: "Settings" },
   ];

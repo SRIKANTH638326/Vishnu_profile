@@ -1,4 +1,3 @@
-import { CaseStudies } from "../components/sections/CaseStudies";
 import { Projects } from "../components/sections/Projects";
 import { ProjectGallery } from "../components/sections/ProjectGallery";
 import { Reveal } from "../components/common/Reveal";
@@ -41,7 +40,6 @@ export function ProjectsPage() {
 
       <Projects />
       <ProjectGallery />
-      <CaseStudies />
     </div>
   );
 }

@@ -10,7 +10,8 @@ const ManageUsers = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    role: "user"
   });
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -45,12 +46,13 @@ const ManageUsers = () => {
     setSubmitting(true);
     const result = await adminService.registerUser({
       email: formData.email,
-      password: formData.password
+      password: formData.password,
+      role: formData.role
     });
 
     if (result.success) {
       setShowModal(false);
-      setFormData({ email: "", password: "", confirmPassword: "" });
+      setFormData({ email: "", password: "", confirmPassword: "", role: "user" });
       fetchUsers();
     } else {
       setFormError(result.message || "Failed to register user");
@@ -136,7 +138,7 @@ const ManageUsers = () => {
                 <div>
                   <h3 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px" }}>{user.email}</h3>
                   <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.4)" }}>
-                    Admin Access • Joined {new Date(user.createdAt).toLocaleDateString()}
+                    {user.role === 'admin' ? 'Admin Access' : 'User Access'} • Joined {new Date(user.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>
@@ -314,6 +316,28 @@ const ManageUsers = () => {
                       {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                     </button>
                   </div>
+                </div>
+
+                <div style={{ marginBottom: "32px" }}>
+                  <label style={{ display: "block", marginBottom: "8px", fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", fontWeight: "600", textTransform: "uppercase" }}>User Role</label>
+                  <select
+                    value={formData.role}
+                    onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "14px",
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "14px",
+                      color: "#fff",
+                      outline: "none",
+                      boxSizing: "border-box",
+                      cursor: "pointer"
+                    }}
+                  >
+                    <option value="user" style={{ background: "#111" }}>User (View Only)</option>
+                    <option value="admin" style={{ background: "#111" }}>Admin (Full Access)</option>
+                  </select>
                 </div>
 
                 {formError && (

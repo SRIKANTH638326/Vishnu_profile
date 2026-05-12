@@ -33,7 +33,7 @@ export const Login = () => {
       const data = await res.json();
 
       if (data.success) {
-        contextLogin(data.token);
+        contextLogin(data.user, data.token);
         navigate("/admin/dashboard");
       } else {
         setError(data.message || "Invalid login credentials");

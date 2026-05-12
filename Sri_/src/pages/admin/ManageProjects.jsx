@@ -25,7 +25,10 @@ export const ManageProjects = () => {
     solution: "",
     challenge: "",
     summary: "",
-    link: "",
+    githubLink: "",
+    externalLink: "",
+    isMoreProject: false,
+    isFeatured: false,
     gallery: []
   });
   const [imageFile, setImageFile] = useState(null);
@@ -84,7 +87,7 @@ export const ManageProjects = () => {
       title: "", category: "", description: "", image: "",
       year: "", industry: "", client: "", duration: "",
       problem: "", solution: "", challenge: "", summary: "",
-      link: "",
+      githubLink: "", externalLink: "", isMoreProject: false, isFeatured: false,
       gallery: []
     });
     setImageFile(null);
@@ -107,7 +110,10 @@ export const ManageProjects = () => {
       solution: project.solution || "",
       challenge: project.challenge || "",
       summary: project.summary || "",
-      link: project.link || "",
+      githubLink: project.githubLink || "",
+      externalLink: project.externalLink || project.link || "",
+      isMoreProject: project.isMoreProject || false,
+      isFeatured: project.isFeatured || false,
       gallery: project.gallery || []
     });
     setImagePreview(project.image);
@@ -259,14 +265,44 @@ export const ManageProjects = () => {
                     />
                   </div>
                   <div>
-                    <label style={labelStyle}>Live Project URL</label>
+                    <label style={labelStyle}>GitHub Repository URL</label>
                     <input 
                       type="url" 
-                      value={formData.link}
-                      onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+                      value={formData.githubLink}
+                      onChange={(e) => setFormData({ ...formData, githubLink: e.target.value })}
+                      placeholder="https://github.com/your-repo" 
+                      style={inputStyle} 
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle}>External Project URL</label>
+                    <input 
+                      type="url" 
+                      value={formData.externalLink}
+                      onChange={(e) => setFormData({ ...formData, externalLink: e.target.value })}
                       placeholder="https://example.com" 
                       style={inputStyle} 
                     />
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "10px" }}>
+                    <input 
+                      type="checkbox" 
+                      id="isFeatured"
+                      checked={formData.isFeatured}
+                      onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
+                      style={{ width: "20px", height: "20px", cursor: "pointer" }}
+                    />
+                    <label htmlFor="isFeatured" style={{ ...labelStyle, marginBottom: 0, cursor: "pointer" }}>Mark as Featured Project</label>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "10px" }}>
+                    <input 
+                      type="checkbox" 
+                      id="isMoreProject"
+                      checked={formData.isMoreProject}
+                      onChange={(e) => setFormData({ ...formData, isMoreProject: e.target.checked })}
+                      style={{ width: "20px", height: "20px", cursor: "pointer" }}
+                    />
+                    <label htmlFor="isMoreProject" style={{ ...labelStyle, marginBottom: 0, cursor: "pointer" }}>Show in "More Projects" Section</label>
                   </div>
                   <div>
                     <label style={labelStyle}>Brief Description</label>
@@ -399,7 +435,11 @@ export const ManageProjects = () => {
               </div>
               <div>
                 <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "8px" }}>{project.title}</h3>
-                <span style={tagStyle}>{project.category}</span>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                  <span style={tagStyle}>{project.category}</span>
+                  {project.isFeatured && <span style={{ ...tagStyle, background: "rgba(196, 255, 107, 0.2)", color: "var(--accent)" }}>Featured</span>}
+                  {project.isMoreProject && <span style={{ ...tagStyle, background: "rgba(255,255,255,0.1)", color: "#fff" }}>More Project</span>}
+                </div>
               </div>
               <div style={{ display: "flex", gap: "12px", borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: "16px", marginTop: "auto" }}>
                 <a 
@@ -439,7 +479,11 @@ export const ManageProjects = () => {
                     </div>
                   </td>
                   <td style={tdStyle}>
-                    <span style={tagStyle}>{project.category}</span>
+                    <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                      <span style={tagStyle}>{project.category}</span>
+                      {project.isFeatured && <span style={{ padding: "2px 8px", background: "rgba(196, 255, 107, 0.2)", borderRadius: "4px", fontSize: "0.7rem", color: "var(--accent)" }}>Featured</span>}
+                      {project.isMoreProject && <span style={{ padding: "2px 8px", background: "rgba(255,255,255,0.05)", borderRadius: "4px", fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>More</span>}
+                    </div>
                   </td>
                   <td style={tdStyle}>
                     <div style={{ display: "flex", gap: "12px" }}>
