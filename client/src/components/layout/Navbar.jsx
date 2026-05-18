@@ -5,13 +5,23 @@ import { NAV_LINKS } from "../../data/portfolioData";
 
 import portrait from "../../assets/hero-portrait.png";
 
+import { adminService } from "../../services/adminService";
+
 export function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 992 : false);
     const location = useLocation();
 
+    const [profile, setProfile] = useState(null);
+
     useEffect(() => {
+        const load = async () => {
+            const data = await adminService.getProfile();
+            if (data) setProfile(data);
+        };
+        load();
+        
         const h = () => setScrolled(window.scrollY > 50);
         const r = () => setIsMobile(window.innerWidth < 992);
         window.addEventListener("scroll", h, { passive: true });
@@ -128,7 +138,7 @@ export function Navbar() {
                                             justifyContent: "center",
                                             flexShrink: 0
                                         }}>
-                                        S
+                                        {profile?.fullName ? profile.fullName.charAt(0).toUpperCase() : "S"}
                                     </motion.div>
                                 </Link>
 
@@ -238,7 +248,7 @@ export function Navbar() {
                                     style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}
                                 >
                                     <div style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--border)", overflow: "hidden", border: "1px solid var(--border)" }}>
-                                        <img src={portrait} alt="Srikanth" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                        <img src={profile?.profileImage || portrait} alt="Srikanth" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                     </div>
                                     <button
                                         onClick={() => setMenuOpen(false)}

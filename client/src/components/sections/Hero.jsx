@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import portrait from "../../assets/hero-portrait.png";
+import { adminService } from "../../services/adminService";
+
 export function Hero({ theme, toggleTheme }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -7,6 +10,21 @@ export function Hero({ theme, toggleTheme }) {
     const mouseYSpring = useSpring(y);
     const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
     const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+    
+    const [profile, setProfile] = useState({
+        fullName: "Srikanth",
+        jobTitle: "Product Designer & Data Analyst blending aesthetics with insights."
+    });
+
+    useEffect(() => {
+        const load = async () => {
+            const data = await adminService.getProfile();
+            if (data) {
+                setProfile(data);
+            }
+        };
+        load();
+    }, []);
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -22,6 +40,8 @@ export function Hero({ theme, toggleTheme }) {
         x.set(0);
         y.set(0);
     };
+
+    const firstName = profile.fullName ? profile.fullName.split(" ")[0] : "Srikanth";
 
     return (
         <section id="Hero" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}
@@ -54,7 +74,7 @@ export function Hero({ theme, toggleTheme }) {
                         className="hero-left"
                     >
                         <span className="hero-name-label">
-                            Srikanth
+                            {firstName}
                         </span>
                         <h1 className="hero-main-title">
                             Digital
@@ -70,7 +90,7 @@ export function Hero({ theme, toggleTheme }) {
                     >
                         <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                             <div className="hero-portrait-card">
-                                <img src={portrait} alt="Srikanth" style={{ width: "100%", height: "auto", display: "block" }} />
+                                <img src={profile.profileImage || portrait} alt={firstName} style={{ width: "100%", height: "auto", display: "block" }} />
                                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
                             </div>
 
@@ -98,7 +118,7 @@ export function Hero({ theme, toggleTheme }) {
                             Designer
                         </h1>
                         <p className="hero-intro-text">
-                            Product Designer & Data Analyst blending aesthetics with insights.
+                            {profile.jobTitle}
                         </p>
                     </motion.div>
                 </div>

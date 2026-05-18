@@ -1,17 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiLinkedin, FiGithub, FiMail, FiGlobe } from "react-icons/fi";
+import { FiLinkedin, FiGithub, FiMail, FiGlobe, FiTwitter, FiInstagram, FiBookOpen, FiYoutube } from "react-icons/fi";
+import { adminService } from "../../services/adminService";
 
 export function Footer() {
     const currentYear = new Date().getFullYear();
+    const [socials, setSocials] = useState([]);
 
-    const socialLinks = [
-        { icon: FiLinkedin, href: "https://www.linkedin.com/in/srikanthc-270b00347", label: "LinkedIn" },
-        { icon: FiGithub, href: "https://github.com/srikanth638326", label: "GitHub" },
-        { icon: FiMail, href: "mailto:srikanthc061@gmail.com", label: "Email" },
-        { icon: FiGlobe, href: "https://srikanthc.dev", label: "Portfolio" }
-    ];
+    useEffect(() => {
+        const load = async () => {
+            const data = await adminService.getSocials();
+            if (data && data.length > 0) {
+                setSocials(data);
+            } else {
+                setSocials([
+                    { platform: "LinkedIn", url: "https://www.linkedin.com/in/srikanthc-270b00347", icon: "Linkedin" },
+                    { platform: "GitHub", url: "https://github.com/srikanth638326", icon: "Github" },
+                    { platform: "Email", url: "mailto:srikanthc061@gmail.com", icon: "Mail" },
+                    { platform: "Portfolio", url: "https://srikanthc.dev", icon: "Globe" }
+                ]);
+            }
+        };
+        load();
+    }, []);
+
+    const getIconComponent = (iconName) => {
+        switch (iconName?.toLowerCase()) {
+            case "linkedin": return <FiLinkedin size={20} />;
+            case "github": return <FiGithub size={20} />;
+            case "twitter": return <FiTwitter size={20} />;
+            case "instagram": return <FiInstagram size={20} />;
+            case "youtube": return <FiYoutube size={20} />;
+            case "mail": return <FiMail size={20} />;
+            case "behance": return <FiBookOpen size={20} />;
+            default: return <FiGlobe size={20} />;
+        }
+    };
 
     const navLinks = [
         { label: "Works", to: "/projects" },
@@ -33,40 +58,8 @@ export function Footer() {
         }}>
             <div className="container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 
-                {/* Logo and Icon */}
-                <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-                    {/* Squircle logo mark */}
-                    <div style={{ 
-                        width: "36px", 
-                        height: "36px", 
-                        borderRadius: "10px", 
-                        background: "#fff", 
-                        display: "flex", 
-                        alignItems: "center", 
-                        justifyContent: "center",
-                        position: "relative",
-                        overflow: "hidden"
-                    }}>
-                        <div style={{
-                            width: "18px",
-                            height: "18px",
-                            background: "#080808",
-                            transform: "rotate(45deg) translate(-2px, -2px)",
-                            borderRadius: "2px"
-                        }} />
-                    </div>
-                    <span style={{ 
-                        fontSize: "24px", 
-                        fontWeight: "800", 
-                        letterSpacing: "1px", 
-                        fontFamily: "var(--font-heading)",
-                        textTransform: "uppercase"
-                    }}>
-                        SRI_
-                    </span>
-                </div>
 
-                {/* Sub-capabilities list */}
+                {/* Sub-capabilities list
                 <div className="footer-capabilities" style={{ 
                     display: "flex", 
                     justifyContent: "center", 
@@ -82,15 +75,15 @@ export function Footer() {
                     <span>• WEB DEVELOPMENT</span>
                     <span>• UI/UX DESIGN</span>
                     <span>• DATA ANALYTICS</span>
-                </div>
+                </div> */}
 
-                {/* Horizontal Full Width Divider */}
+                {/* Horizontal Full Width Divider
                 <div style={{ 
                     width: "100%", 
                     height: "1px", 
                     background: "rgba(255, 255, 255, 0.08)", 
                     marginBottom: "48px" 
-                }} />
+                }} /> */}
 
                 {/* Middle Row Navigation */}
                 <div className="footer-menu" style={{ 
@@ -120,35 +113,32 @@ export function Footer() {
 
                 {/* Squircle Social Icons Row */}
                 <div style={{ display: "flex", gap: "16px", marginBottom: "48px" }}>
-                    {socialLinks.map((social) => {
-                        const IconComponent = social.icon;
-                        return (
-                            <motion.a
-                                key={social.label}
-                                href={social.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.08, y: -2 }}
-                                whileTap={{ scale: 0.95 }}
-                                style={{
-                                    width: "48px",
-                                    height: "48px",
-                                    borderRadius: "14px",
-                                    background: "rgba(255, 255, 255, 0.04)",
-                                    border: "1px solid rgba(255, 255, 255, 0.06)",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    color: "rgba(255, 255, 255, 0.7)",
-                                    transition: "all 0.3s",
-                                    cursor: "none"
-                                }}
-                                className="social-squircle"
-                            >
-                                <IconComponent size={20} />
-                            </motion.a>
-                        );
-                    })}
+                    {socials.map((social, i) => (
+                        <motion.a
+                            key={social._id || i}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.08, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            style={{
+                                width: "48px",
+                                height: "48px",
+                                borderRadius: "14px",
+                                background: "rgba(255, 255, 255, 0.04)",
+                                border: "1px solid rgba(255, 255, 255, 0.06)",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "rgba(255, 255, 255, 0.7)",
+                                transition: "all 0.3s",
+                                cursor: "none"
+                            }}
+                            className="social-squircle"
+                        >
+                            {getIconComponent(social.icon)}
+                        </motion.a>
+                    ))}
                 </div>
 
                 {/* Legal Policy Links */}
@@ -174,7 +164,7 @@ export function Footer() {
                     color: "rgba(255, 255, 255, 0.3)",
                     textAlign: "center"
                 }}>
-                    © {currentYear} SRI_. All Rights Reserved.
+                    © {currentYear} All Rights Reserved.
                 </div>
 
             </div>

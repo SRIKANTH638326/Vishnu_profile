@@ -19,10 +19,19 @@ const getHeaders = (isMultipart = false) => {
 };
 
 const getUserQueryParam = () => {
-  if (typeof window === "undefined") return "";
-  const params = new URLSearchParams(window.location.search);
-  const user = params.get("user");
-  return user ? `?user=${user}` : "";
+  try {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const user = JSON.parse(savedUser);
+      const userId = user?.id || user?._id;
+      if (userId) {
+        return `?user=${userId}`;
+      }
+    }
+  } catch (err) {
+    console.error("Error parsing user from localStorage:", err);
+  }
+  return "";
 };
 
 export const adminService = {
@@ -475,8 +484,8 @@ export const adminService = {
   deleteSocial: async (id) => {
     try {
       await fetch(`${API_URL}/socials/${id}`, { 
-        method: "DELETE",
-        headers: getHeaders()
+      	method: "DELETE",
+      	headers: getHeaders()
       });
       return true;
     } catch (err) {
@@ -491,6 +500,20 @@ export const adminService = {
       return await res.json();
     } catch (err) {
       console.error("Error fetching profile:", err);
+      return null;
+    }
+  },
+
+  updateProfile: async (data) => {
+    try {
+      const res = await fetch(`${API_URL}/profile`, {
+        method: "PUT",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      return await res.json();
+    } catch (err) {
+      console.error("Error updating profile:", err);
       return null;
     }
   },

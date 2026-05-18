@@ -4,17 +4,18 @@ import { adminService } from "../../services/adminService";
 import { SKILLS_DATA as STATIC_SKILLS } from "../../data/portfolioData";
 import { FiZap, FiLayout, FiFigma, FiCode, FiDatabase, FiLayers, FiHexagon, FiMonitor, FiCpu, FiMousePointer, FiMove } from "react-icons/fi";
 
-const iconMap = {
-    "Framer": <FiMove size={24} />,
-    "Figma": <FiFigma size={24} />,
-    "Spline": <FiZap size={24} />,
-    "X": <FiMonitor size={24} />,
-    "React": <FiCode size={24} />,
-    "Node.js": <FiDatabase size={24} />,
-    "MongoDB": <FiDatabase size={24} />,
-    "UI/UX": <FiLayout size={24} />,
-    "Design": <FiHexagon size={24} />,
-    "Default": <FiLayers size={24} />
+const getIcon = (name) => {
+    if (!name) return <FiLayers size={24} />;
+    const lower = name.toLowerCase();
+    if (lower.includes("figma")) return <FiFigma size={24} />;
+    if (lower.includes("framer")) return <FiMove size={24} />;
+    if (lower.includes("spline") || lower.includes("animation")) return <FiZap size={24} />;
+    if (lower.includes("react")) return <FiCode size={24} />;
+    if (lower.includes("node") || lower.includes("express")) return <FiDatabase size={24} />;
+    if (lower.includes("mongo") || lower.includes("sql") || lower.includes("database")) return <FiDatabase size={24} />;
+    if (lower.includes("ui") || lower.includes("ux") || lower.includes("tailwind") || lower.includes("css") || lower.includes("bootstrap")) return <FiLayout size={24} />;
+    if (lower.includes("design") || lower.includes("illustrator") || lower.includes("photoshop")) return <FiHexagon size={24} />;
+    return <FiLayers size={24} />;
 };
 
 export function Skills({ hideImage = false }) {
@@ -59,7 +60,7 @@ export function Skills({ hideImage = false }) {
                     gap: "100px"
                 }}>
                     <div>
-                        <h2 style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)", fontWeight: 800, textTransform: "uppercase", marginBottom: "40px" }}>
+                        <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "clamp(3.5rem, 8vw, 6rem)", fontWeight: 800, textTransform: "uppercase", marginBottom: "40px" }}>
                             My Tech <span style={{ color: "rgba(255,255,255,0.4)" }}>Stack</span>
                         </h2>
                         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -74,7 +75,7 @@ export function Skills({ hideImage = false }) {
                                     }}
                                 >
                                     <div style={{ minWidth: "64px", height: "64px", borderRadius: "16px", background: "rgba(255,255,255,0.03)", display: "flex", alignItems: "center", justifyContent: "center", color: skill.color || "#C4FF6B" }}>
-                                        {iconMap[skill.name] || iconMap.Default}
+                                        {getIcon(skill.name)}
                                     </div>
                                     <div>
                                         <h3 style={{ fontSize: "1.5rem", fontWeight: "700", marginBottom: "12px", display: "flex", alignItems: "center", gap: "12px" }}>

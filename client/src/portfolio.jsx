@@ -8,6 +8,7 @@ import { Footer } from "./components/layout/Footer";
 import Loader from "./components/common/Loader";
 import { ThemeToggle } from "./components/common/ThemeToggle";
 import "./styles/global.css";
+import { adminService } from "./services/adminService";
 
 // Pages
 import { Home } from "./pages/Home";
@@ -37,16 +38,31 @@ function ScrollToTop() {
   return null;
 }
 
+
 export default function App() {
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") || "dark";
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      const data = await adminService.getProfile();
+      if (data) {
+        setProfile(data);
+        if (data.siteTitle) {
+          document.title = data.siteTitle;
+        }
+      }
+    };
+    loadProfile();
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
