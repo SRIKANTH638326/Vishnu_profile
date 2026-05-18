@@ -185,7 +185,7 @@ export function About({ hideImage = false, isHome = false }) {
                                                 fontFamily: "var(--font-heading)"
                                             }}
                                         >
-                                            My Story
+                                            My Storys
                                         </motion.div>
                                     </Link>
                                 )}
