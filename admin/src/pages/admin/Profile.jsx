@@ -78,7 +78,10 @@ export const Profile = () => {
     phone: "",
     email: "",
     location: "",
-    profileImage: ""
+    profileImage: "",
+    heroTitle1: "Digital",
+    heroTitle2: "Designer",
+    heroBubbleText: "Hi"
   });
   const [loadingProfile, setLoadingProfile] = useState(false);
 
@@ -331,6 +334,7 @@ export const Profile = () => {
         transition={{ duration: 0.3 }}
       >
         {activeTab === "personal" && (
+          <>
           <ProfileSection title="Personal Information" icon={FiUser} width={width}>
             <div style={{ marginBottom: "20px" }}>
               <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>Profile Image</label>
@@ -382,22 +386,7 @@ export const Profile = () => {
               </div>
             </div>
 
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
-              gap: "20px" 
-            }}>
-              <InputGroup 
-                label="First Name" 
-                value={getFirstName()} 
-                onChange={e => handleNameChange(e.target.value, getLastName())} 
-              />
-              <InputGroup 
-                label="Last Name" 
-                value={getLastName()} 
-                onChange={e => handleNameChange(getFirstName(), e.target.value)} 
-              />
-            </div>
+
             <InputGroup 
               label="Professional Bio" 
               placeholder="Short bio for your profile..." 
@@ -429,6 +418,56 @@ export const Profile = () => {
               />
             </div>
           </ProfileSection>
+          <ProfileSection title="Hero Section Content" icon={FiEdit2} width={width}>
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
+              gap: "20px",
+              marginBottom: "20px"
+            }}>
+              <InputGroup 
+                label="First Name (Hero Label)" 
+                value={getFirstName()} 
+                onChange={e => handleNameChange(e.target.value, getLastName())} 
+              />
+              <InputGroup 
+                label="Last Name" 
+                value={getLastName()} 
+                onChange={e => handleNameChange(getFirstName(), e.target.value)} 
+              />
+            </div>
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
+              gap: "20px" 
+            }}>
+              <InputGroup 
+                label="Hero Title 1 (Left)" 
+                placeholder="Digital" 
+                value={profile.heroTitle1} 
+                onChange={e => setProfile({ ...profile, heroTitle1: e.target.value })} 
+              />
+              <InputGroup 
+                label="Hero Title 2 (Right)" 
+                placeholder="Designer" 
+                value={profile.heroTitle2} 
+                onChange={e => setProfile({ ...profile, heroTitle2: e.target.value })} 
+              />
+            </div>
+            <InputGroup 
+              label="Job Title (Subtitle)" 
+              placeholder="Elite Full Stack Developer" 
+              value={profile.jobTitle} 
+              onChange={e => setProfile({ ...profile, jobTitle: e.target.value })} 
+            />
+            <InputGroup 
+              label="Floating Bubble Text" 
+              placeholder="Hi" 
+              value={profile.heroBubbleText} 
+              onChange={e => setProfile({ ...profile, heroBubbleText: e.target.value })} 
+            />
+          </ProfileSection>
+          </>
         )}
 
         {activeTab === "contact" && (

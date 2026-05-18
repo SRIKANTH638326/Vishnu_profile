@@ -21,6 +21,7 @@ import { ManageSkills } from "./pages/admin/ManageSkills";
 import { ManageServices } from "./pages/admin/ManageServices";
 import ManageUsers from "./pages/admin/ManageUsers";
 import { Profile } from "./pages/admin/Profile";
+import { ManageImages } from "./pages/admin/ManageImages";
 
 export default function App() {
   const [theme, setTheme] = useState(() => {
@@ -75,6 +76,7 @@ export default function App() {
                   <Route path="settings" element={<Settings />} />
                   <Route path="services" element={<ManageServices />} />
                   <Route path="users" element={<ManageUsers />} />
+                  <Route path="images" element={<ManageImages />} />
                 </Route>
               </Route>
             </Routes>

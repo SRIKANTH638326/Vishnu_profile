@@ -21,6 +21,7 @@ const getIcon = (name) => {
 export function Skills({ hideImage = false }) {
     const [skills, setSkills] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [skillsImage, setSkillsImage] = useState("");
 
     useEffect(() => {
         const fetchSkills = async () => {
@@ -49,6 +50,14 @@ export function Skills({ hideImage = false }) {
             }
         };
         fetchSkills();
+    }, []);
+
+    useEffect(() => {
+        const loadImg = async () => {
+            const data = await adminService.getProfile();
+            if (data?.skillsImage) setSkillsImage(data.skillsImage);
+        };
+        loadImg();
     }, []);
 
     return (
@@ -95,9 +104,9 @@ export function Skills({ hideImage = false }) {
                         <div style={{ position: "sticky", top: "100px" }}>
                             <div style={{ width: "100%", borderRadius: "40px", overflow: "hidden" }}>
                                 <img
-                                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"
+                                    src={skillsImage || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop"}
                                     alt="Stack"
-                                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                                    style={{ width: "100%", height: "100%", objectFit: "cover", aspectRatio: "4/5" }}
                                 />
                             </div>
                         </div>

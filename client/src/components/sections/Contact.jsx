@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import portrait from "../../assets/hero-portrait.png";
 import { adminService } from "../../services/adminService";
@@ -8,6 +8,15 @@ export function Contact() {
     const [sent, setSent] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState("");
+    const [contactImage, setContactImage] = useState("");
+
+    useEffect(() => {
+        const load = async () => {
+            const data = await adminService.getProfile();
+            if (data?.contactImage) setContactImage(data.contactImage);
+        };
+        load();
+    }, []);
 
     const submit = async () => {
         if (form.name && form.email && form.message) {
@@ -56,7 +65,7 @@ export function Contact() {
                             border: "1px solid var(--border)",
                             boxShadow: "0 40px 100px rgba(0,0,0,0.4)"
                         }}>
-                            <img src={portrait} alt="Portrait" style={{ width: "100%", height: "auto", display: "block", objectFit: "cover" }} />
+                            <img src={contactImage || portrait} alt="Portrait" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", aspectRatio: "4/5" }} />
                         </div>
 
                         {/* Special Hand Badge */}

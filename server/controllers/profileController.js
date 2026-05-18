@@ -3,16 +3,20 @@ const Profile = require('../models/Profile');
 exports.getProfile = async (req, res) => {
     try {
         const { user } = req.query;
-        if (!user) {
-            return res.status(400).json({ message: "User query parameter is required" });
-        }
+        const query = user ? { user } : {};
 
-        let profile = await Profile.findOne({ user });
-        if (!profile) {
+        let profile = await Profile.findOne(query);
+        
+        if (!profile && user) {
             // Dynamically initialize with defaults if not found
             profile = new Profile({ user });
             await profile.save();
         }
+        
+        if (!profile) {
+            return res.status(404).json({ message: "No profile found" });
+        }
+
         res.json(profile);
     } catch (err) {
         res.status(500).json({ message: err.message });

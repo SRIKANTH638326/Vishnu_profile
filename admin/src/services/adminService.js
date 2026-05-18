@@ -497,6 +497,7 @@ export const adminService = {
   getProfile: async () => {
     try {
       const res = await fetch(`${API_URL}/profile${getUserQueryParam()}`);
+      if (!res.ok) return null;
       return await res.json();
     } catch (err) {
       console.error("Error fetching profile:", err);
@@ -511,6 +512,11 @@ export const adminService = {
         headers: getHeaders(),
         body: JSON.stringify(data),
       });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.error("Error updating profile:", err);
+        return null;
+      }
       return await res.json();
     } catch (err) {
       console.error("Error updating profile:", err);

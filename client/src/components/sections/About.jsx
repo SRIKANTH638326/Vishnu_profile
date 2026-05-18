@@ -210,9 +210,10 @@ export function About({ hideImage = false, isHome = false }) {
                                 border: "1px solid rgba(255,255,255,0.1)",
                                 boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
                                 position: "relative",
-                                transform: isHome ? "rotate(-5deg)" : "none"
+                                transform: isHome ? "rotate(-5deg)" : "none",
+                                aspectRatio: "4/5"
                             }}>
-                                <img src={profile.profileImage || portrait} alt="Srikanth" style={{ width: "100%", height: "auto", display: "block" }} />
+                                <img src={profile.aboutImage || profile.profileImage || portrait} alt="Srikanth" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                                 {isHome && <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.3), transparent)" }} />}
                             </div>
                         </motion.div>

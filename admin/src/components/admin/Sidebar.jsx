@@ -21,7 +21,8 @@ import {
   FiLayers,
   FiUser,
   FiUsers,
-  FiExternalLink
+  FiExternalLink,
+  FiImage
 } from "react-icons/fi";
 import { useAdmin } from "../../context/AdminContext";
 
@@ -77,6 +78,7 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
     { to: "/admin/services", icon: FiLayers, label: "Services" },
     ...(user?.role === 'admin' ? [{ to: "/admin/users", icon: FiUsers, label: "Users" }] : []),
     { to: "/admin/profile", icon: FiUser, label: "Profile" },
+    { to: "/admin/images", icon: FiImage, label: "Images" },
     { to: "/admin/settings", icon: FiBriefcase, label: "Settings" },
   ];
 

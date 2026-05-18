@@ -13,7 +13,10 @@ export function Hero({ theme, toggleTheme }) {
     
     const [profile, setProfile] = useState({
         fullName: "Srikanth",
-        jobTitle: "Product Designer & Data Analyst blending aesthetics with insights."
+        jobTitle: "Product Designer & Data Analyst blending aesthetics with insights.",
+        heroTitle1: "Digital",
+        heroTitle2: "Designer",
+        heroBubbleText: "Hi"
     });
 
     useEffect(() => {
@@ -77,7 +80,7 @@ export function Hero({ theme, toggleTheme }) {
                             {firstName}
                         </span>
                         <h1 className="hero-main-title">
-                            Digital
+                            {profile.heroTitle1 || "Digital"}
                         </h1>
                     </motion.div>
 
@@ -90,7 +93,7 @@ export function Hero({ theme, toggleTheme }) {
                     >
                         <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                             <div className="hero-portrait-card">
-                                <img src={profile.profileImage || portrait} alt={firstName} style={{ width: "100%", height: "auto", display: "block" }} />
+                                <img src={profile.profileImage || portrait} alt={firstName} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
                             </div>
 
@@ -102,7 +105,7 @@ export function Hero({ theme, toggleTheme }) {
                                 className="hero-hi-bubble"
                                 style={{ transform: "translateZ(80px)" }}
                             >
-                                <span style={{ color: "#000", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800 }}>Hi</span>
+                                <span style={{ color: "#000", fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800 }}>{profile.heroBubbleText || "Hi"}</span>
                             </motion.div>
                         </motion.div>
                     </motion.div>
@@ -115,7 +118,7 @@ export function Hero({ theme, toggleTheme }) {
                         className="hero-right"
                     >
                         <h1 className="hero-main-title designer-title">
-                            Designer
+                            {profile.heroTitle2 || "Designer"}
                         </h1>
                         <p className="hero-intro-text">
                             {profile.jobTitle}
@@ -151,6 +154,9 @@ export function Hero({ theme, toggleTheme }) {
                     line-height: 0.85;
                     margin: 0;
                 }
+                .designer-title {
+                    margin-bottom: 24px;
+                }
                 .hero-portrait-wrap {
                     position: relative;
                     width: 100%;
@@ -165,6 +171,7 @@ export function Hero({ theme, toggleTheme }) {
                     overflow: hidden;
                     border: 1px solid var(--border);
                     box-shadow: 0 50px 100px -20px rgba(0,0,0,0.7);
+                    aspect-ratio: 4 / 5;
                 }
                 .hero-hi-bubble {
                     position: absolute;

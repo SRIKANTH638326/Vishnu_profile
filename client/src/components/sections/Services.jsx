@@ -8,11 +8,15 @@ export function Services({ hideImage = false }) {
     const [services, setServices] = useState([]);
     const [openId, setOpenId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [servicesImage, setServicesImage] = useState("");
 
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const data = await adminService.getServices();
+                const [data, profileData] = await Promise.all([
+                    adminService.getServices(),
+                    adminService.getProfile()
+                ]);
                 if (data && data.length > 0) {
                     setServices(data);
                     setOpenId(data[0]._id || data[0].id);
@@ -20,6 +24,7 @@ export function Services({ hideImage = false }) {
                     setServices(STATIC_SERVICES);
                     setOpenId(STATIC_SERVICES[0].id);
                 }
+                if (profileData?.servicesImage) setServicesImage(profileData.servicesImage);
             } catch (err) {
                 setServices(STATIC_SERVICES);
                 setOpenId(STATIC_SERVICES[0].id);
@@ -73,7 +78,7 @@ export function Services({ hideImage = false }) {
                                 transition={{ duration: 1, ease: "circOut" }}
                                 className="services-image-card"
                             >
-                                <img src={workspaceImg} alt="Workspace" style={{ width: "100%", height: "auto", display: "block" }} />
+                                <img src={servicesImage || workspaceImg} alt="Workspace" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", aspectRatio: "4/5" }} />
                                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(45deg, rgba(196, 255, 107, 0.05), transparent)" }} />
                             </motion.div>
                         </div>

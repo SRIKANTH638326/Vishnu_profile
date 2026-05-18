@@ -12,6 +12,17 @@ const ProfileSchema = new mongoose.Schema({
     jobTitle: { type: String, default: 'Full Stack Developer & AI Enthusiast' },
     bio: { type: String, default: 'Hi, I\'m Srikanth — a digital designer and Framer developer passionate about crafting meaningful and impactful digital experiences.' },
     profileImage: { type: String, default: '' },
+    aboutImage: { type: String, default: '' },
+    ogImage: { type: String, default: '' },
+    contactImage: { type: String, default: '' },
+    servicesImage: { type: String, default: '' },
+    skillsImage: { type: String, default: '' },
+    experienceImage: { type: String, default: '' },
+    
+    // Hero Section Content
+    heroTitle1: { type: String, default: 'Digital' },
+    heroTitle2: { type: String, default: 'Designer' },
+    heroBubbleText: { type: String, default: 'Hi' },
     
     // Stats Info
     yearsOfExperience: { type: String, default: '12' },
