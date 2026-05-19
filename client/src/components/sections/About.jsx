@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import portrait from "../../assets/hero-portrait.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FiLinkedin, FiGithub, FiTwitter, FiInstagram, FiMail, FiGlobe, FiBookOpen } from "react-icons/fi";
 import { adminService } from "../../services/adminService";
 
 export function About({ hideImage = false, isHome = false }) {
+    const location = useLocation();
 
     const [socials, setSocials] = useState([]);
+    const [images, setImages] = useState({});
     const [profile, setProfile] = useState({
         fullName: "Srikanth C",
         jobTitle: "Digital Designer & Framer Developer",
@@ -28,9 +30,10 @@ export function About({ hideImage = false, isHome = false }) {
 
     useEffect(() => {
         const load = async () => {
-            const [socialData, profileData] = await Promise.all([
+            const [socialData, profileData, imageData] = await Promise.all([
                 adminService.getSocials(),
-                adminService.getProfile()
+                adminService.getProfile(),
+                adminService.getImages()
             ]);
             
             if (socialData && socialData.length > 0) {
@@ -45,6 +48,9 @@ export function About({ hideImage = false, isHome = false }) {
 
             if (profileData) {
                 setProfile(profileData);
+            }
+            if (imageData) {
+                setImages(imageData);
             }
         };
         load();
@@ -63,9 +69,17 @@ export function About({ hideImage = false, isHome = false }) {
     };
 
     return (
-        <section id="About" style={{ padding: isHome ? "140px 0" : (hideImage ? "80px 0" : "160px 0 100px"), background: "var(--bg)", position: "relative", overflow: "hidden" }}>
-            <div className="container">
-                <div style={{ display: "flex", alignItems: isHome ? "center" : "flex-start", gap: isHome ? 100 : 80, flexWrap: "wrap" }}>
+        <section id="About" style={{ 
+            padding: isHome ? "140px 0" : "0", 
+            minHeight: hideImage ? "100vh" : "auto",
+            display: "flex",
+            alignItems: "center",
+            background: "var(--bg)", 
+            position: "relative", 
+            overflow: "hidden" 
+        }}>
+            <div className="container" style={{ width: "100%" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: isHome ? 100 : 80, flexWrap: "wrap" }}>
 
                     {/* Left Column */}
                     <div style={{ flex: isHome ? "1.3" : (hideImage ? "1" : "1.2"), minWidth: 320 }}>
@@ -82,7 +96,7 @@ export function About({ hideImage = false, isHome = false }) {
                                 textTransform: "uppercase",
                                 lineHeight: isHome ? 1 : 0.8,
                                 color: "#fff",
-                                marginBottom: isHome ? 30 : 40,
+                                marginBottom: 24,
                                 letterSpacing: "-0.02em"
                             }}>
                                 About Me
@@ -170,7 +184,7 @@ export function About({ hideImage = false, isHome = false }) {
                                 </div>
 
                                 {isHome && (
-                                    <Link to="/about-us" style={{ textDecoration: "none" }}>
+                                    <Link to={`/about-us${location.search}`} style={{ textDecoration: "none" }}>
                                         <motion.div
                                             whileHover={{ backgroundColor: "var(--accent)", color: "#000" }}
                                             style={{
@@ -196,10 +210,10 @@ export function About({ hideImage = false, isHome = false }) {
                     {/* Right Column: Image */}
                     {!hideImage && (
                         <motion.div
-                            initial={isHome ? { opacity: 0, rotate: 10, scale: 0.9 } : { opacity: 0, x: 50 }}
-                            whileInView={isHome ? { opacity: 1, rotate: -5, scale: 1 } : { opacity: 1, x: 0 }}
+                            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                            whileInView={{ opacity: 1, x: 0, scale: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: isHome ? 1 : 0.8, ease: isHome ? "circOut" : "easeOut", delay: isHome ? 0 : 0.2 }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: isHome ? 0 : 0.2 }}
                             style={{ flex: "1", minWidth: 320, display: "flex", justifyContent: isHome ? "center" : "flex-end" }}
                         >
                             <div style={{
@@ -210,10 +224,10 @@ export function About({ hideImage = false, isHome = false }) {
                                 border: "1px solid rgba(255,255,255,0.1)",
                                 boxShadow: "0 40px 100px rgba(0,0,0,0.5)",
                                 position: "relative",
-                                transform: isHome ? "rotate(-5deg)" : "none",
+                                transform: "none",
                                 aspectRatio: "4/5"
                             }}>
-                                <img src={profile.aboutImage || profile.profileImage || portrait} alt="Srikanth" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                                <img src={images.about || images.hero || portrait} alt="Srikanth" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                                 {isHome && <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.3), transparent)" }} />}
                             </div>
                         </motion.div>
@@ -223,7 +237,7 @@ export function About({ hideImage = false, isHome = false }) {
             </div>
 
             {/* Background Texture Overlay */}
-            <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
+            <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
         </section>
     );
 }

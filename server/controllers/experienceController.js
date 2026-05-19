@@ -1,9 +1,18 @@
 const Experience = require('../models/Experience');
+const Profile = require('../models/Profile');
 
 exports.getAllExperience = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { user } : {};
+        let query = {};
+        if (user) {
+            query = { user };
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query = { user: profile.user };
+            }
+        }
         const experience = await Experience.find(query).sort({ createdAt: -1 });
         res.json(experience);
     } catch (err) {

@@ -23,16 +23,16 @@ export function Experience({ hideImage = false }) {
     useEffect(() => {
         const fetchExperience = async () => {
             try {
-                const [data, profileData] = await Promise.all([
+                const [data, imageData] = await Promise.all([
                     adminService.getExperience(),
-                    adminService.getProfile()
+                    adminService.getImages()
                 ]);
                 if (data && data.length > 0) {
                     setExperiences(data);
                 } else {
                     setExperiences(STATIC_EXPERIENCES);
                 }
-                if (profileData?.experienceImage) setExperienceImage(profileData.experienceImage);
+                if (imageData?.experience) setExperienceImage(imageData.experience);
             } catch (err) {
                 setExperiences(STATIC_EXPERIENCES);
             } finally {

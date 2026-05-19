@@ -13,9 +13,9 @@ export function Services({ hideImage = false }) {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const [data, profileData] = await Promise.all([
+                const [data, imageData] = await Promise.all([
                     adminService.getServices(),
-                    adminService.getProfile()
+                    adminService.getImages()
                 ]);
                 if (data && data.length > 0) {
                     setServices(data);
@@ -24,7 +24,7 @@ export function Services({ hideImage = false }) {
                     setServices(STATIC_SERVICES);
                     setOpenId(STATIC_SERVICES[0].id);
                 }
-                if (profileData?.servicesImage) setServicesImage(profileData.servicesImage);
+                if (imageData?.services) setServicesImage(imageData.services);
             } catch (err) {
                 setServices(STATIC_SERVICES);
                 setOpenId(STATIC_SERVICES[0].id);

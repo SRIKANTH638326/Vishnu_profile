@@ -1,9 +1,18 @@
 const Skill = require('../models/Skill');
+const Profile = require('../models/Profile');
 
 exports.getAllSkills = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { user } : {};
+        let query = {};
+        if (user) {
+            query = { user };
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query = { user: profile.user };
+            }
+        }
         const skills = await Skill.find(query).sort({ order: 1 });
         res.status(200).json(skills);
     } catch (error) {

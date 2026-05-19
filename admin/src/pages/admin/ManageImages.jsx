@@ -15,7 +15,7 @@ const SECTIONS = [
     id: "hero",
     label: "Hero Portrait",
     icon: FiMonitor,
-    field: "profileImage",
+    field: "hero",
     description: "Main portrait shown in the hero banner on the home page.",
     hint: "Best: tall portrait (4:5 ratio). Max 2MB.",
     page: "Home → Hero",
@@ -24,7 +24,7 @@ const SECTIONS = [
     id: "about",
     label: "About Section",
     icon: FiUser,
-    field: "aboutImage",
+    field: "about",
     description: "Image shown in the About Me section (home & about-us page).",
     hint: "Best: portrait or square. Max 2MB.",
     page: "Home & About Us → About",
@@ -33,7 +33,7 @@ const SECTIONS = [
     id: "contact",
     label: "Contact Section",
     icon: FiMail,
-    field: "contactImage",
+    field: "contact",
     description: "Portrait shown next to the contact form.",
     hint: "Best: portrait (4:5). Max 2MB.",
     page: "Contact Us",
@@ -42,7 +42,7 @@ const SECTIONS = [
     id: "services",
     label: "Services Section",
     icon: FiLayers,
-    field: "servicesImage",
+    field: "services",
     description: "Workspace image displayed alongside the services accordion.",
     hint: "Best: landscape or portrait. Max 2MB.",
     page: "About Us → Services",
@@ -51,7 +51,7 @@ const SECTIONS = [
     id: "skills",
     label: "Tech Stack Section",
     icon: FiZap,
-    field: "skillsImage",
+    field: "skills",
     description: "Image displayed beside the My Tech Stack skills list.",
     hint: "Best: landscape or portrait. Max 2MB.",
     page: "About Us → Tech Stack",
@@ -60,7 +60,7 @@ const SECTIONS = [
     id: "experience",
     label: "Experience Section",
     icon: FiAward,
-    field: "experienceImage",
+    field: "experience",
     description: "Workspace/studio image beside the experience timeline.",
     hint: "Best: portrait or square. Max 2MB.",
     page: "About Us → Experience",
@@ -69,7 +69,7 @@ const SECTIONS = [
     id: "og",
     label: "OG / Social Share",
     icon: FiGlobe,
-    field: "ogImage",
+    field: "og",
     description: "Preview image when your site is shared on social media.",
     hint: "Best: 1200×630px landscape. Max 2MB.",
     page: "Meta / Social preview",
@@ -88,7 +88,7 @@ export const ManageImages = () => {
   const { width } = useWindowSize();
   const isMobile = width < 640;
 
-  const [profile, setProfile] = useState({});
+  const [images, setImages] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -98,15 +98,15 @@ export const ManageImages = () => {
 
   useEffect(() => {
     const load = async () => {
-      const data = await adminService.getProfile();
-      if (data) setProfile(data);
+      const data = await adminService.getImages();
+      if (data) setImages(data);
       setLoading(false);
     };
     load();
   }, []);
 
   const currentSection = SECTIONS.find((s) => s.id === activeSection);
-  const currentImage = profile[currentSection?.field];
+  const currentImage = images[currentSection?.field];
 
   const handleFile = async (file) => {
     if (!file) return;
@@ -121,7 +121,7 @@ export const ManageImages = () => {
       return;
     }
     const base64 = await toBase64(file);
-    setProfile((prev) => ({ ...prev, [currentSection.field]: base64 }));
+    setImages((prev) => ({ ...prev, [currentSection.field]: base64 }));
   };
 
   const handleDrop = (e) => {
@@ -131,15 +131,15 @@ export const ManageImages = () => {
   };
 
   const handleRemove = () => {
-    setProfile((prev) => ({ ...prev, [currentSection.field]: "" }));
+    setImages((prev) => ({ ...prev, [currentSection.field]: "" }));
   };
 
   const handleSave = async () => {
     setSaving(true);
-    const res = await adminService.updateProfile(profile);
+    const res = await adminService.updateImages(images);
     setSaving(false);
     if (res) {
-      setProfile(res);
+      setImages(res);
       setToastMessage(`${currentSection.label} image saved!`);
     } else {
       setToastMessage("Failed to save. Please try again.");
@@ -212,7 +212,7 @@ export const ManageImages = () => {
             </div>
             {SECTIONS.map((sec) => {
               const Icon = sec.icon;
-              const hasImg = !!profile[sec.field];
+              const hasImg = !!images[sec.field];
               const isActive = activeSection === sec.id;
               return (
                 <motion.button
@@ -393,7 +393,7 @@ export const ManageImages = () => {
         }}>
           {SECTIONS.map((sec) => {
             const Icon = sec.icon;
-            const img = profile[sec.field];
+            const img = images[sec.field];
             const isActive = activeSection === sec.id;
             return (
               <motion.div

@@ -77,7 +77,7 @@ const InputGroup = ({ label, placeholder, type = "text", value, onChange }) => {
 export const Settings = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("Settings saved successfully!");
-  const [activeTab, setActiveTab] = useState("general");
+  const [activeTab, setActiveTab] = useState("seo");
   const { width } = useWindowSize();
 
   // Settings State mapped to dynamic Profile model
@@ -117,7 +117,6 @@ export const Settings = () => {
   };
 
   const tabs = [
-    { id: "general", label: "General", icon: FiUser },
     { id: "seo", label: "SEO & Global", icon: FiGlobe },
     { id: "security", label: "Security", icon: FiLock }
   ];
@@ -210,32 +209,7 @@ export const Settings = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {activeTab === "general" && (
-          <SettingSection title="General Profile" icon={FiUser} width={width}>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", 
-              gap: "20px" 
-            }}>
-              <InputGroup 
-                label="Full Name" 
-                value={profile.fullName} 
-                onChange={e => setProfile({ ...profile, fullName: e.target.value })} 
-              />
-              <InputGroup 
-                label="Job Title" 
-                value={profile.jobTitle} 
-                onChange={e => setProfile({ ...profile, jobTitle: e.target.value })} 
-              />
-            </div>
-            <InputGroup 
-              label="Bio" 
-              placeholder="Tell people about yourself..." 
-              value={profile.bio} 
-              onChange={e => setProfile({ ...profile, bio: e.target.value })} 
-            />
-          </SettingSection>
-        )}
+
 
         {activeTab === "seo" && (
           <SettingSection title="SEO & Global" icon={FiGlobe} width={width}>

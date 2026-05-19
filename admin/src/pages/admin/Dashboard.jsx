@@ -53,14 +53,44 @@ const ActivityRow = ({ label, time, color }) => (
   </div>
 );
 
+import { adminService } from "../../services/adminService";
+
 export const Dashboard = () => {
   const navigate = useNavigate();
   const [views, setViews] = useState(1284);
+  const [counts, setCounts] = useState({
+    projects: 0,
+    skills: 0,
+    services: 0,
+    experience: "0 yrs",
+  });
+  
   const { width } = useWindowSize();
   const isMobile = width < 768;
   const isTablet = width < 1024;
 
   useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const [projects, skills, services, profile] = await Promise.all([
+          adminService.getProjects(),
+          adminService.getSkills(),
+          adminService.getServices(),
+          adminService.getProfile()
+        ]);
+        
+        setCounts({
+          projects: projects?.length || 0,
+          skills: skills?.length || 0,
+          services: services?.length || 0,
+          experience: profile?.yearsOfExperience ? `${profile.yearsOfExperience} yrs` : "0 yrs",
+        });
+      } catch (err) {
+        console.error("Error fetching dashboard stats:", err);
+      }
+    };
+    fetchCounts();
+
     const interval = setInterval(() => {
       setViews(prev => prev + Math.floor(Math.random() * 2));
     }, 5000);
@@ -69,13 +99,10 @@ export const Dashboard = () => {
 
   const stats = [
     { title: "Total Views",    value: views.toLocaleString(), icon: FiUsers,       color: "#a3e635", to: "/admin/dashboard"  },
-    { title: "Projects",       value: "12",                   icon: FiBriefcase,   color: "#60a5fa", to: "/admin/projects"   },
-    // { title: "Blog Posts",     value: "8",                    icon: FiFileText,    color: "#f472b6", to: "/admin/blogs"      },
-    // { title: "Messages",       value: "3",                    icon: FiMessageSquare, color: "#fbbf24", to: "/admin/messages" },
-    { title: "Experience",     value: "2 yrs",                icon: FiAward,       color: "#34d399", to: "/admin/experience" },
-    // { title: "Testimonials",   value: "8",                    icon: FiStar,        color: "#f97316", to: "/admin/testimonials" },
-    { title: "Skills",         value: "14",                   icon: FiZap,         color: "#a78bfa", to: "/admin/skills"    },
-    { title: "Services",       value: "5",                    icon: FiLayers,      color: "#38bdf8", to: "/admin/services"  },
+    { title: "Projects",       value: counts.projects.toString(), icon: FiBriefcase,   color: "#60a5fa", to: "/admin/projects"   },
+    { title: "Experience",     value: counts.experience,          icon: FiAward,       color: "#34d399", to: "/admin/experience" },
+    { title: "Skills",         value: counts.skills.toString(),   icon: FiZap,         color: "#a78bfa", to: "/admin/skills"    },
+    { title: "Services",       value: counts.services.toString(), icon: FiLayers,      color: "#38bdf8", to: "/admin/services"  },
   ];
 
   const recentActivity = [

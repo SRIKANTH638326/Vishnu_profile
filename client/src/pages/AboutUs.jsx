@@ -67,8 +67,8 @@ export function AboutUs() {
         <div style={{ 
           flex: "1", 
           position: "sticky", 
-          top: "100px", 
-          height: "calc(100vh - 200px)", 
+          top: "0px", 
+          height: "100vh", 
           display: "flex", 
           alignItems: "center",
           justifyContent: "center",

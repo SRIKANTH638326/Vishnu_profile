@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiArrowLeft, FiClock, FiCalendar, FiBriefcase, FiTag, FiExternalLink, FiGithub } from "react-icons/fi";
 import { adminService } from "../services/adminService";
@@ -24,6 +24,7 @@ export function ProjectDetail() {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const { width } = useWindowSize();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -45,7 +46,7 @@ export function ProjectDetail() {
     return (
       <div style={{ height: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "var(--bg)", color: "#fff" }}>
         <h1 style={{ marginBottom: "20px" }}>Project Not Found</h1>
-        <Link to="/projects" style={{ color: "var(--accent)" }}>Back to Projects</Link>
+        <Link to={`/projects${location.search}`} style={{ color: "var(--accent)" }}>Back to Projects</Link>
       </div>
     );
   }
@@ -72,7 +73,7 @@ export function ProjectDetail() {
           padding: "0 5% 80px"
         }}>
           <div className="container">
-            <Link to="/projects" style={{ 
+            <Link to={`/projects${location.search}`} style={{ 
               display: "flex", 
               alignItems: "center", 
               gap: "10px", 

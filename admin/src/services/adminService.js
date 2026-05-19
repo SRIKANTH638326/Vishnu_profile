@@ -523,4 +523,34 @@ export const adminService = {
       return null;
     }
   },
+
+  getImages: async () => {
+    try {
+      const res = await fetch(`${API_URL}/images${getUserQueryParam()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.error("Error fetching images:", err);
+      return null;
+    }
+  },
+
+  updateImages: async (data) => {
+    try {
+      const res = await fetch(`${API_URL}/images`, {
+        method: "PUT",
+        headers: getHeaders(),
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        console.error("Error updating images:", err);
+        return null;
+      }
+      return await res.json();
+    } catch (err) {
+      console.error("Error updating images:", err);
+      return null;
+    }
+  },
 };

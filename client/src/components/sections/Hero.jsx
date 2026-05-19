@@ -18,12 +18,19 @@ export function Hero({ theme, toggleTheme }) {
         heroTitle2: "Designer",
         heroBubbleText: "Hi"
     });
+    const [heroImage, setHeroImage] = useState("");
 
     useEffect(() => {
         const load = async () => {
-            const data = await adminService.getProfile();
-            if (data) {
-                setProfile(data);
+            const [profileData, imageData] = await Promise.all([
+                adminService.getProfile(),
+                adminService.getImages()
+            ]);
+            if (profileData) {
+                setProfile(profileData);
+            }
+            if (imageData?.hero) {
+                setHeroImage(imageData.hero);
             }
         };
         load();
@@ -93,7 +100,7 @@ export function Hero({ theme, toggleTheme }) {
                     >
                         <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}>
                             <div className="hero-portrait-card">
-                                <img src={profile.profileImage || portrait} alt={firstName} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                                <img src={heroImage || portrait} alt={firstName} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.4), transparent)" }} />
                             </div>
 
@@ -231,10 +238,7 @@ export function Hero({ theme, toggleTheme }) {
             `}</style>
 
             {/* Background Texture Overlay */}
-            <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
-
-            {/* Background Texture Overlay */}
-            <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
+            <div style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none", background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")` }} />
         </section>
     );
 }

@@ -1,9 +1,18 @@
 const Project = require('../models/Project');
+const Profile = require('../models/Profile');
 
 exports.getAllProjects = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { user } : {};
+        let query = {};
+        if (user) {
+            query = { user };
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query = { user: profile.user };
+            }
+        }
         const projects = await Project.find(query);
         res.status(200).json(projects);
     } catch (error) {
@@ -14,7 +23,15 @@ exports.getAllProjects = async (req, res) => {
 exports.getFeaturedProjects = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { isFeatured: true, user } : { isFeatured: true };
+        let query = { isFeatured: true };
+        if (user) {
+            query.user = user;
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query.user = profile.user;
+            }
+        }
         const projects = await Project.find(query);
         res.status(200).json(projects);
     } catch (error) {
@@ -25,7 +42,15 @@ exports.getFeaturedProjects = async (req, res) => {
 exports.getMoreProjects = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { isMoreProject: true, user } : { isMoreProject: true };
+        let query = { isMoreProject: true };
+        if (user) {
+            query.user = user;
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query.user = profile.user;
+            }
+        }
         const projects = await Project.find(query);
         res.status(200).json(projects);
     } catch (error) {

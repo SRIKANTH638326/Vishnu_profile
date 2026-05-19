@@ -12,8 +12,8 @@ export function Contact() {
 
     useEffect(() => {
         const load = async () => {
-            const data = await adminService.getProfile();
-            if (data?.contactImage) setContactImage(data.contactImage);
+            const data = await adminService.getImages();
+            if (data?.contact) setContactImage(data.contact);
         };
         load();
     }, []);

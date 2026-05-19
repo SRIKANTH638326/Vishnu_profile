@@ -30,6 +30,7 @@ app.use('/api/experience', require('./routes/experienceRoutes'));
 app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/socials', require('./routes/socialRoutes'));
 app.use('/api/profile', require('./routes/profileRoutes'));
+app.use('/api/images', require('./routes/imageRoutes'));
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {

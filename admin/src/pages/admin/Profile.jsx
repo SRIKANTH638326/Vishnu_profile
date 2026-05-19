@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { 
-  FiSave, 
-  FiUser, 
-  FiMail, 
-  FiPhone, 
-  FiMapPin, 
-  FiGlobe, 
-  FiPlus, 
-  FiTrash2, 
-  FiEdit2, 
-  FiExternalLink, 
-  FiTwitter, 
-  FiGithub, 
-  FiInstagram, 
-  FiYoutube, 
-  FiBookOpen 
+import {
+  FiSave,
+  FiUser,
+  FiMail,
+  FiPhone,
+  FiMapPin,
+  FiGlobe,
+  FiPlus,
+  FiTrash2,
+  FiEdit2,
+  FiExternalLink,
+  FiTwitter,
+  FiGithub,
+  FiInstagram,
+  FiYoutube,
+  FiBookOpen
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toast } from "../../components/common/Toast";
@@ -42,11 +42,11 @@ const ProfileSection = ({ title, icon: Icon, children, width }) => (
 const InputGroup = ({ label, placeholder, type = "text", value, onChange }) => (
   <div>
     <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>{label}</label>
-    <input 
-      type={type} 
+    <input
+      type={type}
       value={value || ""}
       onChange={onChange}
-      placeholder={placeholder} 
+      placeholder={placeholder}
       style={{
         width: "100%",
         padding: "12px 16px",
@@ -55,7 +55,7 @@ const InputGroup = ({ label, placeholder, type = "text", value, onChange }) => (
         borderRadius: "12px",
         color: "#fff",
         outline: "none"
-      }} 
+      }}
     />
   </div>
 );
@@ -170,7 +170,7 @@ export const Profile = () => {
     else if (p === "Dribbble") icon = "Dribbble";
     else if (p === "YouTube") icon = "Youtube";
     else if (p === "Email") icon = "Mail";
-    
+
     setSocialForm({ ...socialForm, platform: p, icon });
   };
 
@@ -254,10 +254,10 @@ export const Profile = () => {
         marginBottom: "40px"
       }}>
         <div>
-          <h2 style={{ 
-            fontSize: width < 640 ? "1.6rem" : "2rem", 
-            fontFamily: "Antonio, sans-serif", 
-            marginBottom: "8px" 
+          <h2 style={{
+            fontSize: width < 640 ? "1.6rem" : "2rem",
+            fontFamily: "Antonio, sans-serif",
+            marginBottom: "8px"
           }}>
             My Profile
           </h2>
@@ -292,10 +292,10 @@ export const Profile = () => {
       </div>
 
       {/* Tabs Header */}
-      <div style={{ 
-        display: "flex", 
-        gap: "8px", 
-        marginBottom: "32px", 
+      <div style={{
+        display: "flex",
+        gap: "8px",
+        marginBottom: "32px",
         borderBottom: "1px solid rgba(255,255,255,0.05)",
         paddingBottom: "8px",
         overflowX: "auto",
@@ -327,7 +327,7 @@ export const Profile = () => {
         ))}
       </div>
 
-      <motion.div 
+      <motion.div
         key={activeTab}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -335,164 +335,164 @@ export const Profile = () => {
       >
         {activeTab === "personal" && (
           <>
-          <ProfileSection title="Personal Information" icon={FiUser} width={width}>
-            <div style={{ marginBottom: "20px" }}>
-              <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>Profile Image</label>
-              <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-                <div style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "50%",
-                  background: "rgba(255,255,255,0.05)",
-                  border: "2px dashed rgba(255,255,255,0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden"
-                }}>
-                  {profile.profileImage ? (
-                    <img src={profile.profileImage} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  ) : (
-                    <FiUser size={30} color="rgba(255,255,255,0.2)" />
-                  )}
-                </div>
-                <div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="profile-image-upload"
-                    style={{ display: "none" }}
-                    onChange={handleImageUpload}
-                  />
-                  <label
-                    htmlFor="profile-image-upload"
-                    style={{
-                      padding: "8px 16px",
-                      background: "var(--accent)",
-                      color: "#000",
-                      borderRadius: "8px",
-                      fontSize: "0.9rem",
-                      fontWeight: "600",
-                      cursor: "pointer",
-                      display: "inline-block"
-                    }}
-                  >
-                    Upload New Image
-                  </label>
-                  <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", marginTop: "8px" }}>
-                    Recommended: Square image, max 2MB.
-                  </p>
+            <ProfileSection title="Personal Information" icon={FiUser} width={width}>
+              <div style={{ marginBottom: "20px" }}>
+                <label style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.5)" }}>Profile Image</label>
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+                  <div style={{
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "2px dashed rgba(255,255,255,0.1)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    overflow: "hidden"
+                  }}>
+                    {profile.profileImage ? (
+                      <img src={profile.profileImage} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      <FiUser size={30} color="rgba(255,255,255,0.2)" />
+                    )}
+                  </div>
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      id="profile-image-upload"
+                      style={{ display: "none" }}
+                      onChange={handleImageUpload}
+                    />
+                    <label
+                      htmlFor="profile-image-upload"
+                      style={{
+                        padding: "8px 16px",
+                        background: "var(--accent)",
+                        color: "#000",
+                        borderRadius: "8px",
+                        fontSize: "0.9rem",
+                        fontWeight: "600",
+                        cursor: "pointer",
+                        display: "inline-block"
+                      }}
+                    >
+                      Upload New Image
+                    </label>
+                    <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.4)", marginTop: "8px" }}>
+                      Recommended: Square image, max 2MB.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
 
-            <InputGroup 
-              label="Professional Bio" 
-              placeholder="Short bio for your profile..." 
-              value={profile.bio} 
-              onChange={e => setProfile({ ...profile, bio: e.target.value })} 
-            />
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr 1fr", 
-              gap: "20px" 
-            }}>
-              <InputGroup 
-                label="Years of Experience" 
-                placeholder="12" 
-                value={profile.yearsOfExperience} 
-                onChange={e => setProfile({ ...profile, yearsOfExperience: e.target.value })} 
+              <InputGroup
+                label="Professional Bio"
+                placeholder="Short bio for your profile..."
+                value={profile.bio}
+                onChange={e => setProfile({ ...profile, bio: e.target.value })}
               />
-              <InputGroup 
-                label="Completed Projects" 
-                placeholder="270" 
-                value={profile.completedProjects} 
-                onChange={e => setProfile({ ...profile, completedProjects: e.target.value })} 
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr 1fr",
+                gap: "20px"
+              }}>
+                <InputGroup
+                  label="Years of Experience"
+                  placeholder="12"
+                  value={profile.yearsOfExperience}
+                  onChange={e => setProfile({ ...profile, yearsOfExperience: e.target.value })}
+                />
+                <InputGroup
+                  label="Completed Projects"
+                  placeholder="270"
+                  value={profile.completedProjects}
+                  onChange={e => setProfile({ ...profile, completedProjects: e.target.value })}
+                />
+                <InputGroup
+                  label="Clients Worldwide"
+                  placeholder="50+"
+                  value={profile.clientsWorldwide}
+                  onChange={e => setProfile({ ...profile, clientsWorldwide: e.target.value })}
+                />
+              </div>
+            </ProfileSection>
+            <ProfileSection title="Hero Section Content" icon={FiEdit2} width={width}>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr",
+                gap: "20px",
+                marginBottom: "20px"
+              }}>
+                <InputGroup
+                  label="First Name (Hero Label)"
+                  value={getFirstName()}
+                  onChange={e => handleNameChange(e.target.value, getLastName())}
+                />
+                <InputGroup
+                  label="Last Name"
+                  value={getLastName()}
+                  onChange={e => handleNameChange(getFirstName(), e.target.value)}
+                />
+              </div>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr",
+                gap: "20px"
+              }}>
+                <InputGroup
+                  label="Hero Title 1 (Left)"
+                  placeholder="Digital"
+                  value={profile.heroTitle1}
+                  onChange={e => setProfile({ ...profile, heroTitle1: e.target.value })}
+                />
+                <InputGroup
+                  label="Hero Title 2 (Right)"
+                  placeholder="Designer"
+                  value={profile.heroTitle2}
+                  onChange={e => setProfile({ ...profile, heroTitle2: e.target.value })}
+                />
+              </div>
+              <InputGroup
+                label="Job Title (Subtitle)"
+                placeholder="Elite Full Stack Developer"
+                value={profile.jobTitle}
+                onChange={e => setProfile({ ...profile, jobTitle: e.target.value })}
               />
-              <InputGroup 
-                label="Clients Worldwide" 
-                placeholder="50+" 
-                value={profile.clientsWorldwide} 
-                onChange={e => setProfile({ ...profile, clientsWorldwide: e.target.value })} 
+              <InputGroup
+                label="Floating Bubble Text"
+                placeholder="Hi"
+                value={profile.heroBubbleText}
+                onChange={e => setProfile({ ...profile, heroBubbleText: e.target.value })}
               />
-            </div>
-          </ProfileSection>
-          <ProfileSection title="Hero Section Content" icon={FiEdit2} width={width}>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
-              gap: "20px",
-              marginBottom: "20px"
-            }}>
-              <InputGroup 
-                label="First Name (Hero Label)" 
-                value={getFirstName()} 
-                onChange={e => handleNameChange(e.target.value, getLastName())} 
-              />
-              <InputGroup 
-                label="Last Name" 
-                value={getLastName()} 
-                onChange={e => handleNameChange(getFirstName(), e.target.value)} 
-              />
-            </div>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
-              gap: "20px" 
-            }}>
-              <InputGroup 
-                label="Hero Title 1 (Left)" 
-                placeholder="Digital" 
-                value={profile.heroTitle1} 
-                onChange={e => setProfile({ ...profile, heroTitle1: e.target.value })} 
-              />
-              <InputGroup 
-                label="Hero Title 2 (Right)" 
-                placeholder="Designer" 
-                value={profile.heroTitle2} 
-                onChange={e => setProfile({ ...profile, heroTitle2: e.target.value })} 
-              />
-            </div>
-            <InputGroup 
-              label="Job Title (Subtitle)" 
-              placeholder="Elite Full Stack Developer" 
-              value={profile.jobTitle} 
-              onChange={e => setProfile({ ...profile, jobTitle: e.target.value })} 
-            />
-            <InputGroup 
-              label="Floating Bubble Text" 
-              placeholder="Hi" 
-              value={profile.heroBubbleText} 
-              onChange={e => setProfile({ ...profile, heroBubbleText: e.target.value })} 
-            />
-          </ProfileSection>
+            </ProfileSection>
           </>
         )}
 
         {activeTab === "contact" && (
           <ProfileSection title="Contact Details" icon={FiMail} width={width}>
-            <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr", 
-              gap: "20px" 
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: width < 480 ? "1fr" : "1fr 1fr",
+              gap: "20px"
             }}>
-              <InputGroup 
-                label="Email Address" 
-                value={profile.email} 
-                onChange={e => setProfile({ ...profile, email: e.target.value })} 
+              <InputGroup
+                label="Email Address"
+                value={profile.email}
+                onChange={e => setProfile({ ...profile, email: e.target.value })}
               />
-              <InputGroup 
-                label="Phone Number" 
-                value={profile.phone} 
-                onChange={e => setProfile({ ...profile, phone: e.target.value })} 
+              <InputGroup
+                label="Phone Number"
+                value={profile.phone}
+                onChange={e => setProfile({ ...profile, phone: e.target.value })}
               />
             </div>
-            <InputGroup 
-              label="Location" 
-              icon={FiMapPin} 
-              value={profile.location} 
-              onChange={e => setProfile({ ...profile, location: e.target.value })} 
+            <InputGroup
+              label="Location"
+              icon={FiMapPin}
+              value={profile.location}
+              onChange={e => setProfile({ ...profile, location: e.target.value })}
             />
           </ProfileSection>
         )}
@@ -512,9 +512,9 @@ export const Profile = () => {
               <form onSubmit={handleSocialSubmit} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                 <div>
                   <label style={{ display: "block", marginBottom: "8px", fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>Platform</label>
-                  <select 
-                    value={socialForm.platform} 
-                    onChange={e => handlePlatformChange(e.target.value)} 
+                  <select
+                    value={socialForm.platform}
+                    onChange={e => handlePlatformChange(e.target.value)}
                     style={{
                       width: "100%",
                       padding: "12px 16px",
@@ -540,10 +540,10 @@ export const Profile = () => {
 
                 <div>
                   <label style={{ display: "block", marginBottom: "8px", fontSize: "0.85rem", color: "rgba(255,255,255,0.5)" }}>Profile / Connection URL</label>
-                  <input 
-                    type="url" 
-                    value={socialForm.url} 
-                    onChange={e => setSocialForm({ ...socialForm, url: e.target.value })} 
+                  <input
+                    type="url"
+                    value={socialForm.url}
+                    onChange={e => setSocialForm({ ...socialForm, url: e.target.value })}
                     placeholder={socialForm.platform === "Email" ? "mailto:name@example.com" : `https://${socialForm.platform.toLowerCase().replace(/\s/g, "")}.com/username`}
                     required
                     style={{
@@ -554,14 +554,14 @@ export const Profile = () => {
                       borderRadius: "12px",
                       color: "#fff",
                       outline: "none"
-                    }} 
+                    }}
                   />
                 </div>
 
                 <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                   {editingSocialId && (
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => {
                         setEditingSocialId(null);
                         setSocialForm({ platform: "LinkedIn", url: "", icon: "Linkedin" });
@@ -580,8 +580,8 @@ export const Profile = () => {
                       Cancel
                     </button>
                   )}
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     style={{
                       flex: 2,
                       padding: "12px",
@@ -604,14 +604,14 @@ export const Profile = () => {
               <h3 style={{ fontSize: "1.1rem", fontWeight: "600", fontFamily: "Antonio, sans-serif" }}>
                 Connected Social Profiles ({socials.length})
               </h3>
-              
+
               {loadingSocials ? (
                 <div style={{ padding: "40px", color: "rgba(255,255,255,0.3)", textAlign: "center" }}>Loading profiles...</div>
               ) : socials.length === 0 ? (
-                <div style={{ 
-                  padding: "48px", 
-                  background: "rgba(255,255,255,0.01)", 
-                  border: "1px dashed rgba(255,255,255,0.1)", 
+                <div style={{
+                  padding: "48px",
+                  background: "rgba(255,255,255,0.01)",
+                  border: "1px dashed rgba(255,255,255,0.1)",
                   borderRadius: "24px",
                   textAlign: "center",
                   color: "rgba(255,255,255,0.4)"
@@ -623,8 +623,8 @@ export const Profile = () => {
               ) : (
                 <div style={{ display: "grid", gridTemplateColumns: width < 640 ? "1fr" : "1fr 1fr", gap: "16px" }}>
                   {socials.map(social => (
-                    <motion.div 
-                      key={social._id || social.id} 
+                    <motion.div
+                      key={social._id || social.id}
                       whileHover={{ y: -2 }}
                       style={{
                         background: "rgba(255,255,255,0.03)",
@@ -657,16 +657,16 @@ export const Profile = () => {
                           </div>
                         </div>
                         <div style={{ display: "flex", gap: "6px" }}>
-                          <button 
-                            onClick={() => handleSocialEdit(social)} 
+                          <button
+                            onClick={() => handleSocialEdit(social)}
                             style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", transition: "0.2s" }}
                             onMouseEnter={e => e.currentTarget.style.color = "var(--accent)"}
                             onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.4)"}
                           >
                             <FiEdit2 size={15} />
                           </button>
-                          <button 
-                            onClick={() => handleSocialDelete(social._id || social.id)} 
+                          <button
+                            onClick={() => handleSocialDelete(social._id || social.id)}
                             style={{ background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", transition: "0.2s" }}
                             onMouseEnter={e => e.currentTarget.style.color = "#ff4d4d"}
                             onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.4)"}
@@ -675,9 +675,9 @@ export const Profile = () => {
                           </button>
                         </div>
                       </div>
-                      <a 
-                        href={social.url} 
-                        target="_blank" 
+                      <a
+                        href={social.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                         style={{
                           fontSize: "0.85rem",
@@ -704,9 +704,9 @@ export const Profile = () => {
 
       <AnimatePresence>
         {showToast && (
-          <Toast 
-            message={toastMessage} 
-            onClose={() => setShowToast(false)} 
+          <Toast
+            message={toastMessage}
+            onClose={() => setShowToast(false)}
           />
         )}
       </AnimatePresence>

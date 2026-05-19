@@ -43,6 +43,10 @@ export function Navbar() {
         }
     };
 
+    const getPathWithQuery = (link) => {
+        return getPath(link) + location.search;
+    };
+
 
     const isActive = (link) => {
         const path = getPath(link);
@@ -121,7 +125,7 @@ export function Navbar() {
                                 style={{ display: "flex", alignItems: "center", gap: 6 }}
                             >
                                 {/* Profile Area (Small) */}
-                                <Link to="/" style={{ textDecoration: "none" }}>
+                                <Link to={`/${location.search}`} style={{ textDecoration: "none" }}>
                                     <motion.div
                                         layout
                                         style={{
@@ -161,7 +165,7 @@ export function Navbar() {
                                                 {NAV_LINKS.map((link) => (
                                                     <Link 
                                                         key={link} 
-                                                        to={getPath(link)}
+                                                        to={getPathWithQuery(link)}
                                                         style={{
                                                             padding: "8px 18px",
                                                             fontSize: 13,
@@ -277,7 +281,7 @@ export function Navbar() {
                                     {NAV_LINKS.map((link, i) => (
                                         <Link
                                             key={link}
-                                            to={getPath(link)}
+                                            to={getPathWithQuery(link)}
                                             onClick={() => setMenuOpen(false)}
                                             style={{
                                                 fontSize: 20,
@@ -300,8 +304,8 @@ export function Navbar() {
                                 </div>
 
                                 {/* Expanded Footer */}
-                                <Link
-                                    to="/contact-us"
+                                        <Link
+                                            to={`/contact-us${location.search}`}
                                     onClick={() => setMenuOpen(false)}
                                     style={{ textDecoration: "none" }}
                                 >

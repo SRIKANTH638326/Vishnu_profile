@@ -54,8 +54,8 @@ export function Skills({ hideImage = false }) {
 
     useEffect(() => {
         const loadImg = async () => {
-            const data = await adminService.getProfile();
-            if (data?.skillsImage) setSkillsImage(data.skillsImage);
+            const data = await adminService.getImages();
+            if (data?.skills) setSkillsImage(data.skills);
         };
         loadImg();
     }, []);

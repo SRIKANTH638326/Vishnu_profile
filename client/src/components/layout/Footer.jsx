@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiLinkedin, FiGithub, FiMail, FiGlobe, FiTwitter, FiInstagram, FiBookOpen, FiYoutube } from "react-icons/fi";
 import { adminService } from "../../services/adminService";
 
 export function Footer() {
+    const location = useLocation();
     const currentYear = new Date().getFullYear();
     const [socials, setSocials] = useState([]);
 
@@ -96,7 +97,7 @@ export function Footer() {
                     {navLinks.map((link) => (
                         <Link 
                             key={link.label} 
-                            to={link.to} 
+                            to={link.to + location.search} 
                             style={{ 
                                 color: "rgba(255, 255, 255, 0.8)", 
                                 fontSize: "15px", 

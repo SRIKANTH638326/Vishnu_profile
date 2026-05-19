@@ -1,9 +1,18 @@
 const SocialConnection = require('../models/SocialConnection');
+const Profile = require('../models/Profile');
 
 exports.getAllSocials = async (req, res) => {
     try {
         const { user } = req.query;
-        const query = user ? { user } : {};
+        let query = {};
+        if (user) {
+            query = { user };
+        } else {
+            const profile = await Profile.findOne({});
+            if (profile && profile.user) {
+                query = { user: profile.user };
+            }
+        }
         const socials = await SocialConnection.find(query).sort({ createdAt: 1 });
         res.json(socials);
     } catch (err) {
