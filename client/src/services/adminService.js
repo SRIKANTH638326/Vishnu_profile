@@ -74,7 +74,7 @@ export const adminService = {
       return null;
     }
   },
-  
+
   addProject: async (data) => {
     try {
       const res = await fetch(`${API_URL}/projects`, {
@@ -105,7 +105,7 @@ export const adminService = {
 
   deleteProject: async (id) => {
     try {
-      await fetch(`${API_URL}/projects/${id}`, { 
+      await fetch(`${API_URL}/projects/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -158,7 +158,7 @@ export const adminService = {
 
   deleteBlog: async (id) => {
     try {
-      await fetch(`${API_URL}/blogs/${id}`, { 
+      await fetch(`${API_URL}/blogs/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -185,7 +185,7 @@ export const adminService = {
 
   deleteMessage: async (id) => {
     try {
-      await fetch(`${API_URL}/messages/${id}`, { 
+      await fetch(`${API_URL}/messages/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -252,7 +252,7 @@ export const adminService = {
 
   deleteSkill: async (id) => {
     try {
-      await fetch(`${API_URL}/skills/${id}`, { 
+      await fetch(`${API_URL}/skills/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -359,7 +359,7 @@ export const adminService = {
 
   deleteExperience: async (id) => {
     try {
-      const res = await fetch(`${API_URL}/experience/${id}`, { 
+      const res = await fetch(`${API_URL}/experience/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -412,7 +412,7 @@ export const adminService = {
 
   deleteService: async (id) => {
     try {
-      await fetch(`${API_URL}/services/${id}`, { 
+      await fetch(`${API_URL}/services/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
@@ -479,7 +479,7 @@ export const adminService = {
 
   deleteSocial: async (id) => {
     try {
-      await fetch(`${API_URL}/socials/${id}`, { 
+      await fetch(`${API_URL}/socials/${id}`, {
         method: "DELETE",
         headers: getHeaders()
       });
