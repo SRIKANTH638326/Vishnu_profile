@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const resetPassword = async (email, newPassword) => {
     try {
-        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/portfolio');
+        await mongoose.connect(process.env.MONGO_URI || 'b+srv://srikanthc061_db_user:RGxna9G3Dp9tL3kZ@cluster0.2nmsyge.mongodb.net/portfolioDB');
         const user = await User.findOne({ email });
         if (user) {
             user.password = newPassword; // The pre-save hook will hash it
