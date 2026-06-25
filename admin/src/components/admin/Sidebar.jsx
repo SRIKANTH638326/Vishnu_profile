@@ -167,7 +167,7 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
         
         <div style={{ marginTop: "auto", paddingTop: "20px" }}>
           <NavItem 
-            to={user?.role === 'admin' ? "http://localhost:5173" : (user ? `http://localhost:5173/?user=${user.id || user._id}` : "http://localhost:5173")} 
+            to={user?.role === 'admin' ? (import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174") : (user ? `${import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174"}/?user=${user.id || user._id}` : (import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174"))} 
             icon={FiExternalLink} 
             label="View Website" 
             external={true}
