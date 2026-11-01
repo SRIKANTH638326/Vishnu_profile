@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,8 +14,6 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Serve Static Files
-const path = require('path');
-const fs = require('fs');
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)){
     fs.mkdirSync(uploadsDir);
@@ -33,9 +33,16 @@ app.use('/api/profile', require('./routes/profileRoutes'));
 app.use('/api/images', require('./routes/imageRoutes'));
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+if (!process.env.MONGO_URI) {
+    console.error("❌ ERROR: MONGO_URI is not defined in server/.env!");
+} else {
+    mongoose.connect(process.env.MONGO_URI)
+      .then(() => console.log("MongoDB Connected"))
+      .catch(err => {
+        console.error("❌ MongoDB Connection Error:", err.message);
+        console.error("👉 Please ensure your IP address is whitelisted in MongoDB Atlas Network Access (0.0.0.0/0).");
+      });
+}
 
 // Health Check Route
 app.get('/', (req, res) => {

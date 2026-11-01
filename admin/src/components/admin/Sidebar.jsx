@@ -167,7 +167,10 @@ export const Sidebar = ({ isOpen, toggle, isMobile }) => {
         
         <div style={{ marginTop: "auto", paddingTop: "20px" }}>
           <NavItem 
-            to={user?.role === 'admin' ? (import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174") : (user ? `${import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174"}/?user=${user.id || user._id}` : (import.meta.env.VITE_FRONTEND_URL || "http://localhost:5174"))} 
+            to={(() => {
+              const base = (import.meta.env.VITE_FRONTEND_URL || "http://localhost:5173").replace(/\/api\/?$/, "").replace(/\/$/, "");
+              return user?.role === 'admin' ? base : (user ? `${base}/?user=${user.id || user._id}` : base);
+            })()} 
             icon={FiExternalLink} 
             label="View Website" 
             external={true}

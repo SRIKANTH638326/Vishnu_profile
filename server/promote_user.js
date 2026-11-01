@@ -1,19 +1,25 @@
 const mongoose = require('mongoose');
 const User = require('./models/User');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const promote = async (email) => {
     try {
-        await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/portfolio');
-        const user = await User.findOneAndUpdate({ email }, { role: 'admin' }, { new: true });
+        const mongoUri = process.env.MONGO_URI || 'mongodb+srv://srikanthc061_db_user:Srikanth2026@cluster0.2nmsyge.mongodb.net/portfolioDB?retryWrites=true&w=majority';
+        await mongoose.connect(mongoUri);
+        const user = await User.findOneAndUpdate(
+            { email: { $regex: new RegExp(`^${email.toLowerCase().trim()}$`, 'i') } },
+            { role: 'admin' },
+            { new: true }
+        );
         if (user) {
-            console.log(`User ${email} has been promoted to ADMIN.`);
+            console.log(`✅ User ${email} has been promoted to ADMIN.`);
         } else {
-            console.log(`User ${email} not found.`);
+            console.log(`⚠️ User ${email} not found.`);
         }
         process.exit(0);
     } catch (err) {
-        console.error(err);
+        console.error("❌ Promote error:", err.message);
         process.exit(1);
     }
 };

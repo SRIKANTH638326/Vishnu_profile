@@ -107,6 +107,7 @@ export default function App() {
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/projects/:id" element={<ProjectDetail />} />
               <Route path="/contact-us" element={<ContactPage />} />
+              <Route path="*" element={<Home />} />
             </Routes>
           </PublicLayout>
 

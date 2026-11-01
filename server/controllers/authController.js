@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
 // Register a new user
 exports.register = async (req, res) => {
@@ -58,7 +59,23 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        if (!email || !password) {
+            return res.status(400).json({ success: false, message: "Email and password are required" });
+        }
+
+        if (mongoose.connection.readyState !== 1) {
+            console.error("MongoDB not connected. Ready state:", mongoose.connection.readyState);
+            return res.status(503).json({ 
+                success: false, 
+                message: "Database not connected. Please verify MongoDB Atlas connection and whitelist IP address (0.0.0.0/0)." 
+            });
+        }
+
+        const normalizedEmail = email.trim().toLowerCase();
+        const user = await User.findOne({ 
+            email: { $regex: new RegExp(`^${normalizedEmail}$`, 'i') } 
+        });
+
         if (!user) {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
@@ -68,7 +85,8 @@ exports.login = async (req, res) => {
             return res.status(401).json({ success: false, message: "Invalid email or password" });
         }
 
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        const secret = process.env.JWT_SECRET || 'your_super_secret_key_12345';
+        const token = jwt.sign({ id: user._id, role: user.role }, secret, { expiresIn: '1d' });
 
         res.json({ 
             success: true, 
@@ -81,8 +99,8 @@ exports.login = async (req, res) => {
             message: "Login successful" 
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: "Server error" });
+        console.error("Login server error:", err);
+        res.status(500).json({ success: false, message: `Server error: ${err.message || 'Internal server error'}` });
     }
 };
 

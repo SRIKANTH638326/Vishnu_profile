@@ -2,9 +2,9 @@
   "name": "personal-portfolio-root",
   "private": true,
   "scripts": {
-    "install": "npm install --prefix client && npm install --prefix server && npm install --prefix admin",
     "dev": "npm run dev --prefix client",
-    "build": "npm run build --prefix client",
-    "start": "npm start --prefix server"
+    "dev:admin": "npm run dev --prefix admin",
+    "dev:server": "npm run dev --prefix server",
+    "build": "npm run build --prefix client"
   }
 }
