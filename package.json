@@ -5,6 +5,8 @@
     "dev": "npm run dev --prefix client",
     "dev:admin": "npm run dev --prefix admin",
     "dev:server": "npm run dev --prefix server",
-    "build": "npm run build --prefix client"
+    "build": "npm run build --prefix client",
+    "build:admin": "npm run build --prefix admin",
+    "build:all": "npm run build --prefix client && npm run build --prefix admin"
   }
 }
